@@ -512,6 +512,10 @@ form.remove-form button {
   font-size:.75em;
   display:block;
 }
+.author-note {
+	vertical-align: super;
+	font-size: 75%;
+}
 .data-location-description {
   font-size:.85em;
   color:rgb(110,110,110);
@@ -750,7 +754,7 @@ p#phone_number strong a {
     display:none !important;
   }
   #dataset-full-view-container {
-    width:85% !important;
+    width:80% !important;
     margin-left:7em !important;
     margin-bottom:5em;
   }

@@ -54,6 +54,7 @@ bin/*
 # ignore files that will be customized
 app/config/**/parameters.yml
 app/config/common/security.yml
+app/config/common/config.yml
 app/Resources/views/institution/*
 web/css/institution/*
 src/AppBundle/Form/Type/ContactFormEmailType.php
