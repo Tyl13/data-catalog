@@ -198,6 +198,15 @@ class Dataset implements JsonSerializable {
    */
   protected $dataset_formats;
 
+  /**
+   * @ORM\ManyToMany(targetEntity="ResourceType", cascade={"persist"}, inversedBy="datasets")
+   * @ORM\JoinTable(name="datasets_resource_types",
+   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
+   *                inverseJoinColumns={@ORM\JoinColumn(name="resource_type_id",referencedColumnName="resource_type_id")}
+   *                )
+   */
+  protected $resource_types;
+
 
   /**
    * @ORM\ManyToMany(targetEntity="Award", cascade={"persist"}, inversedBy="datasets")
@@ -459,6 +468,7 @@ class Dataset implements JsonSerializable {
   {
     $this->date_added = new \DateTime("now");
     $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->resource_types = new \Doctrine\Common\Collections\ArrayCollection();
     $this->awards = new \Doctrine\Common\Collections\ArrayCollection();
     $this->access_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
     $this->data_collection_instruments = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1075,6 +1085,47 @@ class Dataset implements JsonSerializable {
     {
         return $this->dataset_formats;
     }
+
+
+
+
+    /**
+     * Add resource_types
+     *
+     * @param \AppBundle\Entity\ResourceType $resourceTypes
+     * @return Dataset
+     */
+    public function addResourceType(\AppBundle\Entity\ResourceType $resourceTypes)
+    {
+        $this->resource_types[] = $resourceTypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove resource_types
+     *
+     * @param \AppBundle\Entity\ResourceType $resourceTypes
+     */
+    public function removeResourceType(\AppBundle\Entity\ResourceType $resourceTypes)
+    {
+        $this->resource_types->removeElement($resourceTypes);
+    }
+
+    /**
+     * Get resource_types
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getResourceTypes()
+    {
+        return $this->resource_types;
+    }
+
+
+
+
+
 
     /**
      * Add awards
@@ -1752,6 +1803,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
       foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+      foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
       foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
@@ -1790,6 +1842,7 @@ class Dataset implements JsonSerializable {
         'related_equipment'         => $equipment,
         'related_software'          => $software,
         'dataset_formats'           => $formats,
+        'resource_types'            => $resource_types,
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,
@@ -1813,12 +1866,13 @@ class Dataset implements JsonSerializable {
      */
      public function serializeForSolr() {
         
-       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = [];
+       $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = $resource_types = [];
        $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
        $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
        $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
        $accession_numbers = $access_instructions = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+       foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
        foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
@@ -1864,6 +1918,7 @@ class Dataset implements JsonSerializable {
          'corresponding_authors' => $corresponding_authors,
          'date_added'            => $this->date_added,
          'dataset_formats'       => $formats,
+				 'resource_types'        => $resource_types,
          'data_types'            => $data_type_array,
          'study_types'           => $types_of_study,
          'collection_standards'  => $stds,
@@ -1897,7 +1952,7 @@ class Dataset implements JsonSerializable {
      * @return array
      */
     public function serializeComplete() {
-      $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = [];
+      $formats = $awards = $restrictions = $stds = $genders = $sexes = $ages = $resource_types = [];
       $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
@@ -1915,6 +1970,7 @@ class Dataset implements JsonSerializable {
       foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getAllProperties(); }
       foreach ($this->related_software as $sw) { $software[]=$sw->getAllProperties(); }
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+      foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getAllProperties(); }
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
@@ -1953,6 +2009,7 @@ class Dataset implements JsonSerializable {
         'related_equipment'         => $equipment,
         'related_software'          => $software,
         'dataset_formats'           => $formats,
+				'resource_types'            => $resource_types,
         'data_types'                => $data_type_array,
         'data_collection_standards' => $stds,
         'awards'                    => $awards,

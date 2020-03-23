@@ -38,14 +38,19 @@ class DatasetAsAdminType extends AbstractType {
   protected $yearsIncludingPresent;
   protected $userIsAdmin;
   protected $datasetUid;
+  
+  protected $container;
 
-  public function __construct($userIsAdmin, $datasetUid) {
+  public function __construct($container, $userIsAdmin, $datasetUid) {
     $this->years = range(date('Y'),1790);
     $yearList = range(date('Y'),1790);
     array_unshift($yearList, "Present");
     $this->yearsIncludingPresent = array_combine($yearList, $yearList);
     $this->userIsAdmin = $userIsAdmin;
     $this->datasetUid = $datasetUid;
+    
+    $this->container=$container;
+  
   }
   
   /**
@@ -92,6 +97,7 @@ class DatasetAsAdminType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     //identifying information
+    
     $builder->add('dataset_uid', 'text', array(
       'disabled' => true,
       'data'     => $this->datasetUid,
@@ -222,6 +228,29 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
+
+		$rt_array=array(
+      'class'   => 'AppBundle:ResourceType',
+      'property'=> 'resource_type',
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC');
+      },
+      'required' => false,
+      'attr'    => array('id'=>'dataset_resource_types','style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Resource Type',
+    );
+
+    if ($options['data']->getResourceTypes() instanceof \Doctrine\Common\Collections\ArrayCollection) {
+      $rt_array['data'] = new \Doctrine\Common\Collections\ArrayCollection(array($this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceType", 4)));
+		}
+
+    $builder->add('resource_types', 'entity', $rt_array);
+
+		//print_r(($options['data']->getResourceTypes() instanceof \Doctrine\Common\Collections\ArrayCollection));
+		// print_r($this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceType", 4));
+
     $builder->add('dataset_size', 'text', array(
       'required' => false,
       'label'    => 'Dataset Size'

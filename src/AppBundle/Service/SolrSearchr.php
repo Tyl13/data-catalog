@@ -117,7 +117,7 @@ class SolrSearchr {
 
     $keywordQuery = $this->makeKeywordQuery();
     $facetQuery   = $this->makeFacetQuery();
-    $datesQuery   = $this->makeDateRangeFacetQuery();
+    //$datesQuery   = $this->makeDateRangeFacetQuery();
     $sortQuery    = $this->makeSortQuery();
     $startQuery   = $this->makeStartQuery();
     $rowsQuery    = $this->makeRowsQuery();
