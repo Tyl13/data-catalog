@@ -412,6 +412,15 @@ $(function () {
        </dd>
       {% endif %}
 
+      {% if (dataset.resourceTypes.count > 0) %}
+      <dt>Resource Type(s)</dt>
+       <dd>
+        {% for resource_type in dataset.resourceTypes %}
+        {{ resource_type.getDisplayName|trim }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+       </dd>
+      {% endif %}
+
       {% if (dataset.dataCollectionInstruments.count > 0) %}
        <dt>Data Collection Instruments</dt>
          <dd>

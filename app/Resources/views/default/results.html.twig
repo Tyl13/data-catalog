@@ -212,21 +212,9 @@
 </div>
 </div>
 <div class="col-sm-2 col-sm-pull-10" id="del-facets-pane">
-<!--
 <h4 class="facet-pane-header">Filter by</h4>
 
   <div class="checkbox facet-section" id="internal-only-filter-container">
-    <label>
-      <input 
-        class="" 
-        {% if "origin_fq:Internal" in currentSearch.facets %}
-          checked="checked"
-        {% endif %}
-        type="checkbox" 
-        id="internal-only-filter"
-      >
-        {{ institution_name_short }} Datasets Only 
-    </label>
   </div>
   {% for category,facets in results.facets if category != 'Origin' %}
     {% set facetSection = [] %}
@@ -256,6 +244,5 @@
        </div>
      {% endif %}
    {% endfor %}
-   -->
 </div>
 {% endblock %}

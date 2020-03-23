@@ -8,7 +8,7 @@ from datetime import date
 #submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true'
 
 
-db_output_url = 'http://testbox1.hsls.pitt.edu/data/api/dataset/all.json'
+db_output_url = 'http://testbox1.hsls.pitt.edu/api/dataset/all.json'
 solr_output_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/select/?q=*:*&wt=json'
 submit_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/update/json?commit=true&overwrite=true'
 remove_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/update/?commit=true'

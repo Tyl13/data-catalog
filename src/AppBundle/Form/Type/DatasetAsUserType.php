@@ -90,6 +90,18 @@ class DatasetAsUserType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
+    $builder->add('resource_types', 'entity', array(
+      'class'   => 'AppBundle:ResourceType',
+      'property'=> 'resource_type',
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC');
+      },
+      'required' => false,
+      'attr'    => array('id'=>'dataset_subject_population_ages','style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Resource Type',
+    ));
     $builder->add('data_collection_instruments', 'entity', array(
       'class'   => 'AppBundle:DataCollectionInstrument',
       'property'=> 'data_collection_instrument_name',

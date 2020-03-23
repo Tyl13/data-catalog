@@ -62,7 +62,7 @@ class AddController extends Controller {
     $dataset->setDatasetUid($datasetUid);
 
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $dataset, array(
+      $form = $this->createForm(new DatasetAsAdminType($this->container, $userIsAdmin, $datasetUid), $dataset, array(
           'action' => $this->generateUrl('ingest_dataset')));
       return $this->render('default/add_dataset_admin.html.twig', array(
         'form'=> $form->createView(),
@@ -102,7 +102,7 @@ class AddController extends Controller {
     $dataset->setDatasetUid($datasetUid);
     
     if ($userIsAdmin) {
-      $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $dataset);
+      $form = $this->createForm(new DatasetAsAdminType($this->container, $userIsAdmin, $datasetUid), $dataset);
     } else {
       $form = $this->createForm(new DatasetAsUserType($userIsAdmin, $datasetUid), $dataset);
     }
