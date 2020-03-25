@@ -458,7 +458,7 @@ $(function () {
       <dt>Resource Type(s)</dt>
        <dd>
         {% for resource_type in dataset.resourceTypes %}
-        {{ resource_type.getDisplayName|trim }}{% if not loop.last %}, {% endif %}
+  	      <a href="/search?keyword=resource_types:{{ resource_type.getDisplayName|trim }}">{{ resource_type.getDisplayName|trim }}</a>{% if not loop.last %}, {% endif %}
         {% endfor %}
        </dd>
       {% endif %}
