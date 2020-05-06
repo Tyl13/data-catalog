@@ -1917,6 +1917,7 @@ class Dataset implements JsonSerializable {
          'authors'               => $authors,
          'corresponding_authors' => $corresponding_authors,
          'date_added'            => $this->date_added,
+         'date_updated'          => $this->date_updated,
          'dataset_formats'       => $formats,
 				 'resource_types'        => $resource_types,
          'data_types'            => $data_type_array,

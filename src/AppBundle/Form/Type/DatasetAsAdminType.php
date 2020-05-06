@@ -243,7 +243,7 @@ class DatasetAsAdminType extends AbstractType {
     );
 
     if ($options['data']->getResourceTypes() instanceof \Doctrine\Common\Collections\ArrayCollection) {
-      $rt_array['data'] = new \Doctrine\Common\Collections\ArrayCollection(array($this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceType", 4)));
+      $rt_array['data'] = new \Doctrine\Common\Collections\ArrayCollection(array($this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceType", 11)));
 		}
 
     $builder->add('resource_types', 'entity', $rt_array);

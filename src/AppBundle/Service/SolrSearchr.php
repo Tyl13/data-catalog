@@ -130,7 +130,7 @@ class SolrSearchr {
            . '?'
            . $keywordQuery
            . $facetQuery
-           . $datesQuery
+        // . $datesQuery
            . $sortQuery
            . $startQuery
            . $rowsQuery
