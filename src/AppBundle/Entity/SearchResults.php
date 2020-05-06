@@ -101,6 +101,7 @@ class SearchResults {
         );
       }
     }
+    /*
 
     $timeframes = $translatedFacets['Timeframe'];
     
@@ -113,7 +114,8 @@ class SearchResults {
     //$translatedFacets['Timeframe'][2]['facetItem'] = $second . ' - ' . ($third-1);
     //$translatedFacets['Timeframe'][3]['facetItem'] = $third . ' - ' . ($fourth-1);
     //$translatedFacets['Timeframe'][4]['facetItem'] = $fourth . ' - Present';
-     
+    */
+
     return $translatedFacets;
   }
 
