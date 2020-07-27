@@ -38,6 +38,26 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
   */
 class GeneralController extends Controller
 {
+
+  /**
+   * Returns the homepage
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/", name="homepage")
+   */
+  public function homepageAction(Request $request) {
+    
+    return $this->render('static/home.html.twig', array()); 
+  
+  }
+
+
+
+
+
   /**
    * Performs searches and produces results pages
    *
@@ -45,7 +65,6 @@ class GeneralController extends Controller
    *
    * @return Response A Response instance
    *
-   * @Route("/", name="homepage")
    * @Route("/search", name="user_search_results")
    */
   public function indexAction(Request $request) {
@@ -72,6 +91,8 @@ class GeneralController extends Controller
     
   }
   
+
+
   
   /**
    * Produce the About page, checking if we have an institution-
@@ -95,6 +116,26 @@ class GeneralController extends Controller
 
 
   /**
+   * Produce the Help page
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   * @Route("/help", name="help")
+   */
+  public function helpAction(Request $request) {
+
+    if ($this->get('templating')->exists('institution/help.html.twig')) {
+      return $this->render('institution/help.html.twig',array()); 
+    }
+    else {
+      return $this->render('default/help.html.twig', array());
+    }
+
+  }
+
+
+  /**
    * Produce the Contact Us page and send emails to the 
    * users specified in parameters.yml
    * NOTE: The setTo() and setFrom() methods are supposed
@@ -112,7 +153,7 @@ class GeneralController extends Controller
 
     // Get email addresses and institution list from parameters.yml
     $emailTo = $this->container->getParameter('contact_email_to');
-    $emailFrom = $this->container->getParameter('contact_email_from');
+    //$emailFrom = $this->container->getParameter('contact_email_from');
     $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
 
     $em = $this->getDoctrine()->getManager();
@@ -120,6 +161,7 @@ class GeneralController extends Controller
     $form->handleRequest($request);
     if ($form->isValid()) {
       $email = $form->getData();
+	    $emailFrom = [ $form['email_address']->getData() => $form['full_name']->getData() ];
 
       // save their submission to the database first
       $em->persist($email);
@@ -149,6 +191,66 @@ class GeneralController extends Controller
     ));
 
   }
+
+
+  /**
+   * Produce the Submit Dataset contact page and send emails to the 
+   * users specified in parameters.yml
+   * NOTE: The setTo() and setFrom() methods are supposed
+   * to accept arrays for multiple recipients, but this appears
+   * not to work.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/submit-dataset", name="submitdataset")
+   */
+
+  public function submitdatasetAction(Request $request) {
+    $submitDatasetFormEmail = new \AppBundle\Entity\SubmitDatasetFormEmail();
+
+    // Get email addresses and institution list from parameters.yml
+    $emailTo = $this->container->getParameter('contact_email_to');
+    //$emailFrom = $this->container->getParameter('contact_email_from');
+    $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
+
+    $em = $this->getDoctrine()->getManager();
+    $form = $this->createForm(new \AppBundle\Form\Type\SubmitDatasetFormEmailType($affiliationOptions), $submitDatasetFormEmail);
+    $form->handleRequest($request);
+    if ($form->isValid()) {
+      $email = $form->getData();
+	    $emailFrom = [ $form['email_address']->getData() => $form['full_name']->getData() ];
+
+      // save their submission to the database first
+      $em->persist($email);
+      $em->flush();
+
+      $mailer = $this->get('mailer');
+      $message = $mailer->createMessage()
+        ->setSubject('New Submit Dataset Entry | Data Catalog')
+        ->setFrom($emailFrom)
+        ->setTo($emailTo)
+        ->setBody(
+          $this->renderView(
+            'default/submit_dataset_email.html.twig',
+            array('msg' => $email)
+          ),
+          'text/html'
+        );
+      $mailer->send($message);
+
+      return $this->render('default/submit_dataset_email_send_success.html.twig', array(
+        'form' => $form->createView(),
+      ));
+    }
+
+    return $this->render('default/submit_dataset.html.twig', array(
+      'form' => $form->createView(),
+    ));
+
+  }
+
 
 
   /**

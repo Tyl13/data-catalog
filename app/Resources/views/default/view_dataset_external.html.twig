@@ -70,7 +70,62 @@ $(function () {
 
 
 {% block JSONLD_output %}
-{{ JSONLD_output(dataset) }}
+{% spaceless %}
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "Dataset",
+"name": "{{ dataset.title }}",
+"description": "{{ dataset.description }}",
+"dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
+"dateModified": "{{ dataset.dateUpdated|date("Y-m-d") }}",
+"alternateName": [{% for title in dataset.datasetAlternateTitles %}"{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+"keywords": [{% for kw in dataset.subjectKeywords %}"{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+"author": [{% for auth in dataset.authors %}
+{
+      "@type": "Person",
+      "name":"{{ auth.fullName }}",
+      "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
+  "citation": [{% for pub in dataset.publications %}"{{ pub.citation|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "encoding": [{% for format in dataset.datasetFormats %}
+{
+      "@type": "MediaObject",
+      "encodingFormat":"{{ format.getDisplayName }}"
+      }{% if not loop.last %}, {% endif %}{% endfor %}],
+  "publisher": [{% for pubber in dataset.publishers %}
+{
+      "@type": "Organization",
+      "name":"{{ pubber.getDisplayName }}",
+      "url":"{{ pubber.publisherUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
+"mainEntityOfPage": "{{ app.request.uri }}",
+"url": "{{ app.request.uri }}",
+"isPartOf":
+{
+"@type": "DataCatalog",
+"name": "{{ site_name }}",
+"keywords":"science, dataset, research, data, data catalog",
+"url": "{{ site_base_url }}",
+"provider": {
+  "@type":"Organization",
+  "name":"{{ site_provider_name }}",
+  "url":"{{ site_provider_url }}",
+  "parentOrganization": {
+    "@type":"Organization",
+    "name": "{{ institution_name }}",
+    "address":"{{ institution_address }}",
+    "url":"{{ institution_url }}"
+   }
+ }
+},
+"sameAs": [{% for accessPoint in dataset.dataLocations %}"{{ accessPoint.getDataAccessUrl|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+"provider": [{% for provider in dataset.correspondingAuthors %}
+{
+      "@type": "Person",
+      "name":"{{ provider.fullName }}",
+      "url":"{{ provider.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}]
+}
+
+</script>
+{% endspaceless %}
 {% endblock %}
 
 
@@ -105,37 +160,69 @@ $(function () {
 				<div class="dataset-authors-section">
 					<span class="dataset-detail-authors">Author(s):
 						{% set correspondingAuthorExists = false %}
-						{% for author in dataset.getAuthorships %}
+            {% set institutionAuthorExists = false %}
+						{% for author in dataset.getAuthorships|slice(0,5) %}
+
+							{% if author.getPerson.isInstitutionAuthor %}
+							{% set institutionAuthorExists = true %}
+							{% endif %}
+
 							{% set popoverContent = '' %}
-							{% set authorNote = '' %}
-							{% set authorClass = '' %}
-							{% if author.getPerson.getBioUrl %}
-								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p>' %}
-							{% endif %}
-							{% if author.getPerson.getOrcidId %}
-								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getOrcidId ~ '" target="_blank">ORCID Profile</a></p>' %}
-							{% endif %}
-							{% if author.getPerson.getDatasetAssociations|length > 1 %}
-								{% set popoverContent = popoverContent ~ '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
-							{% endif %}
-							{% if author.isCorrespondingAuthor %}
-								{% set correspondingAuthorExists = true %}
-								{% set authorClass = authorClass ~ ' corresponding-author' %}
-								{% set authorNote = authorNote ~ '*' %}
-							{% endif %}
-
-							{% if popoverContent %}<a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}<span class="{{ authorClass }}">{{ author.getPerson.getFullName }}</span><span class="author-note">{{ authorNote }}</span>{% if popoverContent %}</a>{% endif %}{% if not loop.last %}, {% endif %}
-
+								{% if author.getPerson.getBioUrl %}
+									{% if author.getPerson.getDatasetAssociations|length > 1 %}
+										{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+									{% endif %}
+								{% else %}
+									{% if author.getPerson.getDatasetAssociations|length > 1 %}
+										{% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+									{% endif %}
+							 {% endif %}
+							 {% if author.isCorrespondingAuthor %}
+									{% if popoverContent %}<a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}{{ author.getPerson.getFullName }}*{% if popoverContent %}</a>{% endif %}{% if not loop.last %},{% endif %}{% if loop.last %}...{% endif %}
+									{% set correspondingAuthorExists = true %}
+							 {% else %}
+									{% if popoverContent %}<a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}{{ author.getPerson.getFullName }}{% if popoverContent %}</a>{% endif %}{% if not loop.last %}, {% endif %}{% if loop.last %}...{%endif %}
+							 {% endif %}
 						{% endfor %}
-						
-					</span>
+
+						{% if dataset.getAuthorships.count > 5 %}
+								<a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
+									 See more...
+								</a>
+							 <div class="collapse" id="collapsed-authors">
+							 {% for author in dataset.getAuthorships|slice(5,dataset.getAuthorships.count) %}
+
+									{% if author.getPerson.isInstitutionAuthor %}
+									{% set institutionAuthorExists = true %}
+									{% endif %}
+
+									{% set popoverContent = '' %}
+										{% if author.getPerson.getBioUrl %}
+											{% if author.getPerson.getDatasetAssociations|length > 1 %}
+												{% set popoverContent = '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">View profile</a></p><p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+											{% endif %}
+										 {% else %}
+											{% if author.getPerson.getDatasetAssociations|length > 1 %}
+												{% set popoverContent = '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+										 {% endif %}
+				
+									 {% endif %}
+									 {% if author.isCorrespondingAuthor %}
+											{% if popoverContent %}<a tabindex="0" class="corresponding-author author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}{{ author.getPerson.getFullName }}*{% if popoverContent %}</a>{% endif %}{% if not loop.last %}, {% endif %}
+											{% set correspondingAuthorExists = true %}
+									 {% else %}
+											{% if popoverContent %}<a tabindex="0" class="author-name{% if author.getPerson.isInstitutionAuthor %} institution-author{% endif %}" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}{{ author.getPerson.getFullName }}{% if popoverContent %}</a>{% endif %}{% if not loop.last %}, {% endif %}
+									 {% endif %}
+								{% endfor %}
+								</div>
+							{% endif %}
+						</span>
 					{% if correspondingAuthorExists %}
 						 <span class="corresponding-author-note">* Corresponding Author</span>
 					{% endif %}
 				</div>
 			{% endif %}
 		</span>
-
     </p>
   </div>
 </div>
@@ -267,10 +354,7 @@ $(function () {
           <dd>
            {% for location in dataset.dataLocations %}
               <div class="multiple-item-list">
-                {% if location.getDataAccessUrl is not null %}
-                  <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a>
-                {% endif %}
-                <p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+               <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
                {% if location.getAccessionNumber %}
                  <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
                {% endif %}
@@ -404,14 +488,33 @@ $(function () {
        {% endif %}
        
        {% if (dataset.relatedDatasets.count > 0) %}
-         {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'relatedDatasets':dataset.relatedDatasets})) }}
-       {% endif %}
+       <dt>Related Datasets</dt>
+        <dd id="related-datasets">
+         {% for related in dataset.relatedDatasets %}
+          <div class="multiple-item-list">
+           {{ render(controller('AppBundle:RelatedDataset:relatedDataset',{'id':related.relatedDatasetUid})) }}
+           {% if related.relationshipNotes %}
+           <p class="related-dataset-note">{{ related.relationshipNotes }}</p>
+           {% endif %}
+          </div>
+         {% endfor %}
+       </dd>
+         {% if (related.relationshipNotes is defined) %}
+         <dt>Related Dataset - Note</dt>
+         <dd>{{ related.relationshipNotes }}</dd>
+         {% endif %}
+   	     {% endif %}
+				 <dt>Data Catalog Record Updated</dt>
+				 <dd>{{ dataset.dateUpdated|date("Y-m-d") }}</dd>
+
      </dl>
     </div>
   </div>
 </div>
-<div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="{{ path('contact') }}">Let us know</a>!</div>
+<div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="/submit-dataset">Let us know</a>!</div>
+<div class="row" id="disclaimer"><p>Notice and Disclaimer: Please note that the information in this catalog is provided as a courtesy, as is, and with no representations or warranties of any kind.  When you contact the responsible individual(s) listed in each record, or, where applicable, access a data repository listed, you will be subject to terms and conditions required by the data custodian/data repository.  The University of Pittsburgh does not attempt to judge the scholarly quality of the data referenced and relies on the judgment and research expertise of those who created and/or deposited it.</p></div>
 </div>
+
 
 
 
