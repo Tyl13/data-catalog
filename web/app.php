@@ -14,6 +14,7 @@ $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 // also using APC.
 
 $apcLoader = new ApcClassLoader(sha1(__FILE__), $loader);
+// $loader = new ApcClassLoader('sf2', $classLoader);
 $loader->unregister();
 $apcLoader->register(true);
 
