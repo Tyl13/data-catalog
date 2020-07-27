@@ -26,12 +26,13 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
+ *
  * @ORM\Entity
- * @ORM\Table(name="contact_form_emails")
+ * @ORM\Table(name="submitdatasetform_emails")
  */
-class ContactFormEmail {
+class SubmitDatasetFormEmail {
   /**
-   * @ORM\Column(type="integer",name="email_id")
+   * @ORM\Column(type="integer",name="submitdataset_id")
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
@@ -64,17 +65,25 @@ class ContactFormEmail {
    */
   protected $email_address;
 
+  /**
+   * @ORM\Column(type="string",length=32,nullable=true)
+   */
+  protected $phone_number;
 
   /**
-   * @ORM\Column(type="string",length=128,nullable=true)
+   * @ORM\Column(type="string",length=1024,nullable=true)
    */
-  protected $affiliation;
+  protected $dataset_url;
 
   /**
-   * @ORM\Column(type="string",length=128,nullable=true)
+   * @ORM\Column(type="string",length=8192,nullable=true)
    */
-  protected $reason;
+  protected $details;
 
+  /**
+   * @ORM\Column(type="string",length=8192, nullable=true)
+   */
+  protected $comments;
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
@@ -82,11 +91,6 @@ class ContactFormEmail {
    */
   protected $checker;
 
-
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
-  protected $message_body;
 
 
   /**
@@ -114,7 +118,7 @@ class ContactFormEmail {
      * Set full_name
      *
      * @param string $fullName
-     * @return ContactFormEmail
+     * @return SubmitDatasetFormEmail
      */
     public function setFullName($fullName)
     {
@@ -137,7 +141,7 @@ class ContactFormEmail {
      * Set email_address
      *
      * @param string $emailAddress
-     * @return ContactFormEmail
+     * @return SubmitDatasetFormEmail
      */
     public function setEmailAddress($emailAddress)
     {
@@ -156,34 +160,37 @@ class ContactFormEmail {
         return $this->email_address;
     }
 
+
+
     /**
-     * Set affiliation
+     * Set phone_number
      *
-     * @param string $affiliation
-     * @return ContactFormEmail
+     * @param string $phoneNumber
+     * @return SubmitDatasetFormEmail
      */
-    public function setAffiliation($affiliation)
+    public function setPhoneNumber($phoneNumber)
     {
-        $this->affiliation = $affiliation;
+        $this->phone_number = $phoneNumber;
 
         return $this;
     }
 
     /**
-     * Get affiliation
+     * Get email_address
      *
      * @return string 
      */
-    public function getAffiliation()
+    public function getPhoneNumber()
     {
-        return $this->affiliation;
+        return $this->phone_number;
     }
+
 
     /**
      * Set school_center
      *
-     * @param string school_center
-     * @return ContactFormEmail
+     * @param string $school_center
+     * @return SubmitDatasetFormEmail
      */
     public function setSchoolCenter($school_center)
     {
@@ -205,8 +212,8 @@ class ContactFormEmail {
    /**
      * Set department
      *
-     * @param string department
-     * @return ContactFormEmail
+     * @param string $department
+     * @return SubmitDatasetFormEmail
      */
     public function setDepartment($department)
     {
@@ -227,60 +234,83 @@ class ContactFormEmail {
 	
 	
   /**
-     * Set reason
+     * Set dataset_url
      *
-     * @param string $reason
-     * @return ContactFormEmail
+     * @param string $datasetUrl
+     * @return SubmitDatasetFormEmail
      */
-    public function setReason($reason)
+    public function setDatasetUrl($datasetUrl)
     {
-        $this->reason = $reason;
+        $this->dataset_url = $datasetUrl;
 
         return $this;
     }
 
     /**
-     * Get reason
+     * Get dataset_url
      *
      * @return string 
      */
-    public function getReason()
+    public function getDatasetUrl()
     {
-        return $this->reason;
+        return $this->dataset_url;
     }
-	
-	
-	
-	
+
 	
     /**
-     * Set message_body
+     * Set details
      *
-     * @param string $messageBody
-     * @return ContactFormEmail
+     * @param string $details
+     * @return SubmitDatasetFormEmail
      */
-    public function setMessageBody($messageBody)
+    public function setDetails($details)
     {
-        $this->message_body = $messageBody;
+        $this->details = $details;
 
         return $this;
     }
 
     /**
-     * Get message_body
+     * Get details
      *
      * @return string 
      */
-    public function getMessageBody()
+    public function getDetails()
     {
-        return $this->message_body;
+        return $this->details;
     }
+
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return SubmitDatasetFormEmail
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
 
     /**
      * Set checker
      *
      * @param string $checker
-     * @return ContactFormEmail
+     * @return SubmitDatasetFormEmail
      */
     public function setChecker($checker)
     {
