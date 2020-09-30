@@ -85,17 +85,16 @@ class Person {
    */
   protected $email;
 
-
-  /**
-   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
-   */
-  protected $works_here;
-
-
+  
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    */
   protected $datasetAssociations;
+
+  /**
+   * @ORM\Column(type="boolean",length=128)
+   */
+  protected $is_institution_author = false;
 
 
   /**
@@ -264,6 +263,27 @@ class Person {
         return $this->email;
     }
 
+   /**
+     * Set is institution author
+     *
+     * @param string $institution
+     * @return Person
+     */
+    public function setIsInstitutionAuthor($institution)
+    {
+        $this->is_institution_author = $institution;
+        return $this;
+    }
+
+    /**
+     * Get is institution author
+     *
+     * @return string 
+     */
+    public function getIsInstitutionAuthor()
+    {
+        return $this->is_institution_author;
+    }
 
     /**
      * Set slug
@@ -311,32 +331,6 @@ class Person {
         return $this->orcid_id;
     }
 
-
-    /**
-     * Set works_here
-     *
-     * @param string $worksHere
-     * @return Person
-     */
-    public function setWorksHere($worksHere)
-    {
-        $this->works_here = $worksHere;
-
-        return $this;
-    }
-
-
-    /**
-     * Get works_here
-     *
-     * @return string 
-     */
-    public function getWorksHere()
-    {
-        return $this->works_here;
-    }
-
-
     public function getDatasetAssociations()
     {
       return $this->datasetAssociations->toArray();
@@ -381,8 +375,7 @@ class Person {
         'first_name'=>$this->first_name,
         'orcid_id'=>$this->orcid_id,
         'bio_url'=>$this->bio_url,
-        'email'=>$this->email,
-        'works_here'=>$this->works_here
+        'email'=>$this->email
       );
     }
 }

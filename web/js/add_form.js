@@ -64,6 +64,7 @@ jQuery(function($) {
     var fieldName = $(this).attr('data-fieldname');
     e.preventDefault();
     var url = $(this).attr('href');
+    console.log(url);
     $.get(url, function(data) {
       $("#addEntityFormModalContent").html(data);
       $("#addEntityFormModal").modal({show:true});
