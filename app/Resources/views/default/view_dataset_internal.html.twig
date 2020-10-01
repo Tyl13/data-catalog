@@ -68,33 +68,23 @@ $(function () {
 "url": "{{ app.request.uri }}",
 "isPartOf":
 {
-"@type": "DataCatalog",
-"name": "{{ site_name }}",
-"keywords":"science, dataset, research, data, data catalog",
-"url": "{{ site_base_url }}",
-"provider": {
-  "@type":"Organization",
-  "name":"{{ site_provider_name }}",
-  "url":"{{ site_provider_url }}",
-  "parentOrganization": {
-    "@type":"Organization",
-    "name": "{{ institution_name }}",
-    "address":"{{ institution_address }}",
-    "url":"{{ institution_url }}"
-   }
- }
-},
-"provider": {
-  "@type":"Organization",
-  "name":"{{ site_provider_name }}",
-  "url":"{{ site_provider_url }}",
-  "parentOrganization": {
-    "@type":"Organization",
-    "name": "{{ institution_name }}",
-    "address":"{{ institution_address }}",
-    "url":"{{ institution_url }}"
-   }
-}
+	"@type": "DataCatalog",
+	"name": "{{ site_name }}",
+	"keywords":"science, dataset, research, data, data catalog",
+	"url": "{{ site_base_url }}",
+	"provider": {
+		"@type":"Organization",
+		"name":"{{ site_provider_name }}",
+		"image":"https://datacatalog.hsls.pitt.edu/img/institution/dc-hsls-schema.jpg",
+		"url":"{{ site_provider_url }}",
+		"parentOrganization": {
+			"@type":"Organization",
+			"name": "{{ institution_name }}",
+			"address":"{{ institution_address }}",
+			"url":"{{ institution_url }}"
+		 }
+	 }
+	}
 }
 </script>
 {% endspaceless %}
