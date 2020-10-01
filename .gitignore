@@ -50,6 +50,7 @@ project
 .idea
 *.idea/*
 bin/*
+*.backup
 
 # ignore files that will be customized
 app/config/**/parameters.yml
