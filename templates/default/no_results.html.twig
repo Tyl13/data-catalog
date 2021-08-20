@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block page_scripts %}
+{% endblock %}
+
+
+
+{% block content %}
+{# {{ dump() }} #}
+<div class="container">
+<div class="row">
+<div id="search-stats-header" class="offset-2 clearfix">
+<div class="" id="facet-breadcrumbs">
+ {% if currentSearch.keyword %}
+   <button class="keyword-breadcrumb btn btn-outline-secondary btn-sm">
+     Keyword: "{{ currentSearch.keyword }}"
+   </button>
+   {% endif %} 
+ {% for facet in currentSearch.facets %}
+   {% set facetSplit = facet|split(':') %}
+    
+   <button data-machine-name="{{ facet }}" class="facetBreadcrumb btn btn-outline-secondary btn-sm">
+    {{ results.facetMappings[facetSplit[0]] }}:{{ facetSplit[1] }} 
+   </button>
+ {% endfor %}
+</div>
+ {% if (results.numResults) %}
+   <div id="numresults-wrapper">
+   Results Found: <span id="number-of-results">{{ results.numResults }}</span>
+   </div>
+{% endif %}
+</div>
+</div>
+<div class="row">
+<div class="col-8 offset-2" id="results-container">
+ <div class="spacer25"></div>
+  <h2 class="no-results">Sorry, this search returned no results.</h2> 
+  <p>Please try removing some search criteria or <a href="/">starting over</a>.</p>
+  <div class="spacer50"></div>
+  <div class="spacer25"></div>
+  <h4>Still not finding what you're looking for?</h4>
+   <strong><a style="font-size:1.1em;" href="{{ path('contact') }}">Contact us</a></strong> to suggest new datasets or new topic areas to cover.
+ 
+
+
+
+
+
+
+
+
+
+</div>    
+</div>    
+</div>    
+</div>
+</div>
+{% endblock %}
