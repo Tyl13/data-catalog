@@ -210,6 +210,9 @@ class DatasetAsAdminType extends AbstractType {
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
+      'choice_label' => function ($related_software) {
+        return $related_software->getDisplayName();
+    	},
       'required' => false,
       'attr'    => array('style'=>'width:100%'),
       'multiple' => true,
@@ -419,6 +422,16 @@ class DatasetAsAdminType extends AbstractType {
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');
       },
+      'choice_label' => function ($subject_of_study) {
+        $sos=$subject_of_study->getSubjectofStudy();
+        if ($subject_of_study->getSpecies()) {
+        	$sos.=", ".$subject_of_study->getSpecies();
+        }
+        if ($subject_of_study->getTissueCellLine()) {
+        	$sos.=", ".$subject_of_study->getTissueCellLine();
+        }
+        return $sos;
+    	},
       'multiple' => true,
       'attr'=>array('style'=>'width:100%'),
       'by_reference'=>false,

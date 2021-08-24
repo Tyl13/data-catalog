@@ -28,7 +28,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="related_software")
- * @UniqueEntity("software_name")
  */
 class RelatedSoftware {
   /**
@@ -39,7 +38,7 @@ class RelatedSoftware {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=128, unique=true)
+   * @ORM\Column(type="string",length=128, unique=false)
    */
   protected $software_name;
 
@@ -75,7 +74,13 @@ class RelatedSoftware {
    * @return string
    */
   public function getDisplayName() {
-    return $this->software_name;
+  	
+  	$sdn=$this->software_name;
+  	if (!empty($this->software_version)) {
+  		$sdn.=", ".$this->software_version;
+  	}
+  
+    return $sdn;
   }
 
 

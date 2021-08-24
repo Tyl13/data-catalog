@@ -242,9 +242,18 @@ $(function () {
     {% if dataset.subjectOfStudy is not empty %}
      <dt>Subject of Study</dt>
       <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
-         <div class="multiple-item-list"><a href="/search?keyword=subject_of_study:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         <div class="multiple-item-list"><a href="/search?keyword=subject_of_study_only:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         {% if subject.species is not empty or subject.getTissueCellLine is not empty %}
+         	<p class="related-dataset-note">
+         {% endif %}
          {% if subject.species is not empty %}
-           <p class="related-dataset-note">{{ subject.species }}</p>
+           <span>Species (Strain): </span>{{ subject.species }}<br/>
+         {% endif %}
+         {% if subject.getTissueCellLine is not empty %}
+           <span>Tissue/Cell Line: </span>{{ subject.getTissueCellLine }}
+         {% endif %}
+         {% if subject.species is not empty or subject.getTissueCellLine is not empty %}
+         	</p>
          {% endif %}
        {% endfor %}
       </dd>
@@ -373,14 +382,17 @@ $(function () {
        <dd id="software-used">
       {% for sw in dataset.relatedSoftware %}
         <div class="multiple-item-list">
-          {% if sw.softwareUrl %}
-            <a href="{{sw.softwareUrl}}" target="_blank">{{ sw.getDisplayName }}</a>
-          {% else %}
-            {{ sw.getDisplayName }}
-          {% endif %}
+        	{% spaceless %}
+          {% if sw.softwareUrl is not empty %}
+            <a href="{{sw.softwareUrl}}" target="_blank">{{ sw.getSoftwareName }}</a>
+          {% else %}<span>{{ sw.getSoftwareName }}</span>{% endif %}
+					{% if sw.softwareVersion is not empty %}
+						<span>, Version: {{ sw.softwareVersion }}</span>
+					{% endif %}
           {% if sw.softwareDescription %}
             <p class="related-dataset-note">{{ sw.softwareDescription }}</p>
           {% endif %}
+        	{% endspaceless %}
         </div>
       {% endfor %}
       </dd>
@@ -417,7 +429,12 @@ $(function () {
        <dt>Data Collection Instruments</dt>
          <dd>
       {% for instrument in dataset.dataCollectionInstruments %}
-        <div class="multiple-item-list">{{ instrument.getDisplayName }}</div>
+				{% if instrument.getUrl is not empty %}
+					<a href="{{instrument.getUrl}}" target="_blank">{{ instrument.getDisplayName }}</a>
+				{% else %}<span>{{ instrument.getDisplayName }}</span>{% endif %}
+				{% if instrument.getNotes %}
+					<p class="related-dataset-note">{{ instrument.getNotes }}</p>
+				{% endif %}
       {% endfor %}
          </dd>
       {% endif %}

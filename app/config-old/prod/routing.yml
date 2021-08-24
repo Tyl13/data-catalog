@@ -1,0 +1,16 @@
+data:
+    resource: "@AppBundle/Controller/"
+    type: annotation
+    prefix: /data
+index:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    static/home.html.twig
+
+#_main:
+#    resource: '@AppBundle/Resources/config/routing.yml'
+#app:
+#    resource: @AppBundle/Controller/
+#    type:     annotation
+

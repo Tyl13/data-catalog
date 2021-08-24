@@ -72,6 +72,9 @@ class DatasetAsUserType extends AbstractType {
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
+      'choice_label' => function ($related_software) {
+        return $related_software->getDisplayName();
+    	},
       'required' => false,
       'attr'    => array('style'=>'width:100%'),
       'multiple' => true,

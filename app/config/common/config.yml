@@ -57,8 +57,10 @@ swiftmailer:
     spool:     { type: memory }
 
 ewz_recaptcha:
-    public_key: 6Lc8IroUAAAAABtHc1OjCbnDE-M7gP5EQsqEMItP
-    private_key: 6Lc8IroUAAAAAA0U2ognGBTYJk3miN7fTu9x4WDP
+#    public_key:  6Le85SwUAAAAAEnmGt8kyR5Xx15tUqiQDLkrnmLe
+#    private_key: 6Le85SwUAAAAADalw-2f6Uf6I0UHFEvCxG8QoT8R
+    public_key: 6Ld14iwUAAAAAKzO4MyETL-wP-n2kf9qPG92cXWY
+    private_key: 6Ld14iwUAAAAAOZHPhcVRJigDljCjV-3tWR0W6NX
     # Not needed as "%kernel.default_locale%" is the default value for the locale key
     locale_key:  %kernel.default_locale%
 

@@ -1,0 +1,24 @@
+<request verb="ListIdentifiers" metadataPrefix="oai_dc">{{ base_url }}/oai</request>
+
+<ListIdentifiers>
+{% for result in results %}
+{% if result.published %}
+<header>
+<identifier>oai:{{ base_identifier }}:{{ result.getId() }}</identifier>
+<datestamp>{{ result.getDateUpdated()|date('Y-m-d') }}</datestamp>
+{% set showsetspc = 0 %}
+{% for url in result.getDataLocations() %}
+{% if 'd-scholarship.pitt.edu' in url.getDataAccessUrl() %}
+{% set showsetspc = 1 %}
+{% endif %}
+{% endfor %}
+{% if showsetspc == 1 %}
+<setSpec>DNI-Primo</setSpec>
+{% else %}
+<setSpec>PrimoIngest</setSpec>
+{% endif %}
+</header>
+{% endif %}
+{% endfor %}
+
+</ListIdentifiers>

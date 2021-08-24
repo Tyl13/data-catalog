@@ -1,0 +1,9 @@
+security:
+    providers:
+      in_memory:
+         memory:
+           users:
+             joel: { password: joelpassrighthere, roles: [ 'ROLE_ADMIN' ] }
+             iwema: {password: CatOscarPlusFrazzle, roles: [ 'ROLE_ADMIN' ] }
+             mar: {password: OpusStabCanonReferee, roles: [ 'ROLE_ADMIN' ] }
+             helenmary: {password: JuniperOilGodsdogEpsilon, roles: [ 'ROLE_ADMIN' ] }

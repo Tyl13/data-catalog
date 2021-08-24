@@ -1,0 +1,25 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+  app.ldap:
+    class: Symfony\Component\Ldap\LdapClient
+    arguments: ["%ldap.host%", "%ldap.port%"]
+  app.user_checker:
+    class: AppBundle\Security\UserChecker
+    arguments: ["@doctrine.orm.entity_manager", "@monolog.logger"]
+  AppBundle.type.access_restriction_selector:
+    class: AppBundle\Form\Type\AccessRestrictionSelectorType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: access_restriction_selector }
+  app.listener:
+    class: AppBundle\EventListener\DatasetEditListener
+    arguments: ["@security.token_storage"]
+    tags:
+      - { name: doctrine.event_listener, event: onFlush }
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

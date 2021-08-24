@@ -1,3 +1,14 @@
+<IfModule mod_rewrite.c>
+
+ #
+ # uncomment these lines to redirect to maintenance page
+ # RewriteEngine on
+ # RewriteCond %{REQUEST_URI} !/offline.html$ [NC]
+ # RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif) [NC]
+ # RewriteRule .* /offline.html [R=302,L]
+ </IfModule>
+
+
 # Use the front controller as index file. It serves as a fallback solution when
 # every other rewrite/redirect fails (e.g. in an aliased environment without
 # mod_rewrite). Additionally, this reduces the matching process for the
@@ -8,6 +19,7 @@
 DirectoryIndex app.php
 #DirectoryIndex app_dev.php
 ################################################
+
 
 
 <IfModule mod_rewrite.c>
@@ -73,3 +85,16 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<IfModule mod_headers.c>
+  # Disable content sniffing, since it's an attack vector.
+  # Header always set X-Content-Type-Options nosniff
+  # Disable Proxy header, since it's an attack vector.
+  # RequestHeader unset Proxy
+
+	# X-Frame-Options
+	Header set X-Frame-Options "ALLOW-FROM https://www.hsls.pitt.edu/"  
+	Header append X-Frame-Options "ALLOW-FROM https://stage2018.hsls.pitt.edu/"  
+
+</IfModule>
+

@@ -8,10 +8,10 @@ from datetime import date
 #submit_url = '<BASE URL OF YOUR SOLR INSTALLATION>/solr/data_catalog/update/json?commit=true&overwrite=true'
 
 
-db_output_url = 'http://testbox1.hsls.pitt.edu/api/Dataset/all.json?output_format=solr'
-solr_output_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/select/?q=*:*&wt=json'
-submit_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/update/json?commit=true&overwrite=true'
-remove_url = 'http://testbox1.hsls.pitt.edu:8983/solr/collection1/update/?commit=true'
+db_output_url = 'https://datacatalog.hsls.pitt.edu/api/Dataset/all.json?output_format=solr'
+solr_output_url = 'http://datacatalog.hsls.pitt.edu:8983/solr/collection1/select/?q=*:*&wt=json'
+submit_url = 'http://datacatalog.hsls.pitt.edu:8983/solr/collection1/update/json?commit=true&overwrite=true'
+remove_url = 'http://datacatalog.hsls.pitt.edu:8983/solr/collection1/update/?commit=true'
 
 db_response = urllib2.urlopen(db_output_url)
 db_json_output = db_response.read()
@@ -63,11 +63,11 @@ for row in db_parsed_json:
   for item in row:
     if not row[item]:
       row[item] = ''
-  if (row['date_added']):
+  if ('date_added' in row and row['date_added']):
     from_symfony = row['date_added']['date']
     solr_date = from_symfony.split()[0].strip() + 'T00:00:00Z'
     row['date_added'] = solr_date
-  if (row['date_updated']):
+  if ('date_updated' in row and row['date_updated']):
     from_symfony = row['date_updated']['date']
     solr_date = from_symfony.split()[0].strip() + 'T00:00:00Z'
     row['date_updated'] = solr_date

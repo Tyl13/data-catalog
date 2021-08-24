@@ -251,7 +251,7 @@ class DatasetType extends AbstractType {
       'attr'=>array('style'=>'width:100%'),
       'multiple'=>true,
       'by_reference'=>false,
-      'label'=>'Local Experts',
+      'label'=>'Authors',
     ));
     $builder->add('subject_domains', 'entity', array(
       'class' => 'AppBundle:SubjectDomain',

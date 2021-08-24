@@ -190,9 +190,25 @@ class UpdateController extends Controller {
    */
   public function updateEntityAction($entityName, $slug, Request $request) {
 
+		//
+		// Joel Marchewka, 20210615
+		
+		$display_name_exception_map = [
+			'Award' => 'Grant',
+			'Person' => 'Author',
+			
+		];
+		
+		//
+
+		if (!empty($display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))])) {
+			$entityTypeDisplayName=$display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))];
+		} else {
+    	$entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
+		}
+		
     $updateEntity   = 'AppBundle\Entity\\'.$entityName;
     $entityFormType = 'AppBundle\Form\Type\\' . $entityName . "Type";
-    $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
 
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->get('security.context')->isGranted('ROLE_ADMIN');
