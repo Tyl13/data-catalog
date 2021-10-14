@@ -69,6 +69,7 @@ class DatasetAsAdminType extends AbstractType {
     $builder->add('dataset_uid', TextType::class, array(
       'disabled' => true,
       'data'     => $options['datasetUid'],
+      'attr'     => array( 'data-tak-id-element' => '1'),
       'label'    => 'Dataset ID',
     ));
     $builder->add('title', TextType::class, array(
@@ -90,6 +91,7 @@ class DatasetAsAdminType extends AbstractType {
       'choices' => array('Internal'=>'Internal',
                          'External'=>'External'),
       'expanded'=>true,
+      'label_attr'=>['class'=>'form-choicetype'],
     ));
     $builder->add('description',  TextareaType::class, array(
       'required' => true,
@@ -178,6 +180,9 @@ class DatasetAsAdminType extends AbstractType {
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
+      'choice_label' => function ($related_software) {
+        return $related_software->getDisplayName();
+    	},
       'required' => false,
       'attr'    => array('style'=>'width:100%'),
       'multiple' => true,
@@ -196,6 +201,29 @@ class DatasetAsAdminType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset File Format',
     ));
+
+		$rt_array=array(
+      'class'   => 'App:ResourceType',
+      'choice_label'=> 'resource_type',
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC');
+      },
+      'required' => false,
+      'attr'    => array('id'=>'dataset_resource_types','style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Resource Type',
+    );
+
+    //if ($options['data']->getResourceTypes() instanceof \Doctrine\Common\Collections\ArrayCollection) {
+    //  $rt_array['data'] = new \Doctrine\Common\Collections\ArrayCollection(array($this->container->get('doctrine.orm.entity_manager')->getReference("App:ResourceType", 11)));
+		//}
+
+    $builder->add('resource_types', EntityType::class, $rt_array);
+
+		//print_r(($options['data']->getResourceTypes() instanceof \Doctrine\Common\Collections\ArrayCollection));
+		// print_r($this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceType", 4));
+
     $builder->add('dataset_size', TextType::class, array(
       'required' => false,
       'label'    => 'Dataset Size'
@@ -376,6 +404,16 @@ class DatasetAsAdminType extends AbstractType {
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');
       },
+      'choice_label' => function ($subject_of_study) {
+        $sos=$subject_of_study->getSubjectofStudy();
+        if ($subject_of_study->getSpecies()) {
+        	$sos.=", ".$subject_of_study->getSpecies();
+        }
+        if ($subject_of_study->getTissueCellLine()) {
+        	$sos.=", ".$subject_of_study->getTissueCellLine();
+        }
+        return $sos;
+    	},
       'multiple' => true,
       'attr'=>array('style'=>'width:100%'),
       'by_reference'=>false,

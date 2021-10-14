@@ -13,8 +13,14 @@ use App\Entity\Dataset;
 use App\Service\SolrSearchr;
 use App\Form\Type\DatasetType;
 use App\Form\Type\ContactFormEmailType;
+use App\Form\Type\SubmitDatasetFormEmailType;
 use App\Utils\Slugger;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -65,7 +71,7 @@ class GeneralController extends Controller
 
 
   /**
-   * Performs searches and produces results pages
+   * Returns the homepage
    *
    * @param Request The current HTTP request
    *
@@ -97,6 +103,8 @@ class GeneralController extends Controller
     
   }
   
+
+
   
   /**
    * Produce the About page, checking if we have an institution-
@@ -173,7 +181,7 @@ class GeneralController extends Controller
    *
    * @Route("/contact-us", name="contact")
    */
-  public function contactAction(Request $request) {
+  public function contactAction(Request $request, MailerInterface $mailer) {
     $contactFormEmail = new \App\Entity\ContactFormEmail();
 
     // Get email addresses and institution list from parameters.yml
@@ -190,26 +198,23 @@ class GeneralController extends Controller
     $form = $this->createForm(ContactFormEmailType::class, $contactFormEmail, ['affiliationOptions'=>$affiliationOptions]);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
+      
+      
       $email = $form->getData();
+	    $emailFrom = new Address($form['email_address']->getData(), $form['full_name']->getData());
 
       // save their submission to the database first
       $em->persist($email);
       $em->flush();
 
-      $mailer = $this->get('mailer');
-      $message = $mailer->createMessage()
-        ->setSubject('New Feedback about Data Catalog')
-        ->setFrom($emailFrom)
-        ->setTo($emailTo)
-        ->setBody(
-          $this->renderView(
-            'default/feedback_email.html.twig',
-            array('msg' => $email)
-          ),
-          'text/html'
-        );
+      $message = (new TemplatedEmail())
+        ->subject('New Feedback about Data Catalog')
+        ->from($emailFrom)
+        ->to($emailTo)
+        ->htmlTemplate('default/feedback_email.html.twig')
+        ->context(['msg' => $email ]);
       $mailer->send($message);
-
+	
       return $this->render('default/contact_email_send_success.html.twig', array(
         'form' => $form->createView(),
       ));
@@ -220,6 +225,61 @@ class GeneralController extends Controller
     ));
 
   }
+
+
+  /**
+   * Produce the Submit Dataset contact page and send emails to the 
+   * users specified in parameters.yml
+   * NOTE: The setTo() and setFrom() methods are supposed
+   * to accept arrays for multiple recipients, but this appears
+   * not to work.
+   *
+   * @param Request The current HTTP request
+   *
+   * @return Response A Response instance
+   *
+   * @Route("/submit-dataset", name="submitdataset")
+   */
+
+  public function submitdatasetAction(Request $request, MailerInterface $mailer) {
+    $submitDatasetFormEmail = new \App\Entity\SubmitDatasetFormEmail();
+
+    // Get email addresses and institution list from parameters.yml
+    $emailTo = $this->container->getParameter('contact_email_to');
+    //$emailFrom = $this->container->getParameter('contact_email_from');
+    $affiliationOptions = $this->container->getParameter('institutional_affiliation_options');
+
+    $em = $this->getDoctrine()->getManager();
+    $form = $this->createForm(SubmitDatasetFormEmailType::class, $submitDatasetFormEmail, ['affiliationOptions'=>$affiliationOptions]);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $email = $form->getData();
+	    $emailFrom = new Address($form['email_address']->getData(), $form['full_name']->getData());
+
+      // save their submission to the database first
+      $em->persist($email);
+      $em->flush();
+
+      $message = (new TemplatedEmail())
+        ->subject('New Submit Dataset Entry | Data Catalog')
+        ->from($emailFrom)
+        ->to($emailTo)
+        ->htmlTemplate('default/submit_dataset_email.html.twig')
+        ->context(['msg' => $email ]);
+
+      $mailer->send($message);
+
+      return $this->render('default/submit_dataset_email_send_success.html.twig', array(
+        'form' => $form->createView(),
+      ));
+    }
+
+    return $this->render('default/submit_dataset.html.twig', array(
+      'form' => $form->createView(),
+    ));
+
+  }
+
 
 
   /**
@@ -263,7 +323,7 @@ class GeneralController extends Controller
 	
 				$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('dataset_association'=>$uid, 'uuid'=>$request->get('tak')) );
 			
-				if (sizeof($tak)>0) {
+				if (!empty($tak)) {
 					
 					if (!$tak->getFirstAccess()) {
 						

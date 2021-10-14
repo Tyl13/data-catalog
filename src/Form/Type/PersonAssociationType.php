@@ -45,13 +45,13 @@ class PersonAssociationType extends AbstractType {
       'choice_label'=> 'full_name',
       'attr'=> array('style'=>'width:100%;', 'class'=>'author-add-form'),
       'multiple'=> false,
-      'label'   => false,
+      'label'   => 'Author',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.full_name','ASC');
       },
     ));
     $builder->add('display_order', NumberType::class, array(
-      'label' => false,
+      'label' => 'Display Position',
       'attr'     => array(
         'placeholder'=>'* Author Position #',
         'style'=>'width:100%',
@@ -70,6 +70,10 @@ class PersonAssociationType extends AbstractType {
     ));
 
 
+  }
+  
+  public function getBlockPrefix() {
+  	return 'person_association';
   }
 
   public function getName() {

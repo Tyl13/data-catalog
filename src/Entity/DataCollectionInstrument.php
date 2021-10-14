@@ -53,12 +53,12 @@ class DataCollectionInstrument {
   protected $slug;
 
   /**
-   * @ORM\Column(type="string", length=256, nullable=true)
+   * @ORM\Column(type="string", length=256)
    */
   protected $url;
 
   /**
-   * @ORM\Column(type="string", length=1026, nullable=true)
+   * @ORM\Column(type="string", length=1026)
    */
   protected $notes;
 

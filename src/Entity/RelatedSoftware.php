@@ -28,7 +28,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="related_software")
- * @UniqueEntity("software_name")
  */
 class RelatedSoftware {
   /**
@@ -39,7 +38,7 @@ class RelatedSoftware {
   protected $id;
 
   /**
-   * @ORM\Column(type="string",length=128, unique=true)
+   * @ORM\Column(type="string",length=128, unique=false)
    */
   protected $software_name;
 
@@ -47,6 +46,11 @@ class RelatedSoftware {
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
    */
   protected $software_description;
+
+  /**
+   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
+   */
+  protected $software_version;
 
   /**
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
@@ -70,7 +74,13 @@ class RelatedSoftware {
    * @return string
    */
   public function getDisplayName() {
-    return $this->software_name;
+  	
+  	$sdn=$this->software_name;
+  	if (!empty($this->software_version)) {
+  		$sdn.=", ".$this->software_version;
+  	}
+  
+    return $sdn;
   }
 
 
@@ -106,6 +116,30 @@ class RelatedSoftware {
     {
         return $this->software_name;
     }
+
+    /**
+     * Get software_version
+     *
+     * @return string 
+     */
+    public function getSoftwareVersion()
+    {
+        return $this->software_version;
+    }
+
+    /**
+     * Set software_version
+     *
+     * @param string $software_version
+     * @return RelatedSoftware
+     */
+    public function setSoftwareVersion($software_version)
+    {
+        $this->software_version = $software_version;
+
+        return $this;
+    }
+
 
     /**
      * Set software_description

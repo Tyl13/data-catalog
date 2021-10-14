@@ -1,0 +1,8 @@
+index:
+    resource: "@AppBundle/Controller/"
+    type: annotation
+    prefix: / 
+ioai:
+    path:     /oai
+    defaults: { _controller: AppBundle:OAI:index }
+

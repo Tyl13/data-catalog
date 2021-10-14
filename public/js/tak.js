@@ -28,7 +28,7 @@ jQuery(function($) {
   $('.btn-tak-add').click(function(e) {
     var fieldName = $(this).attr('data-fieldname');
     e.preventDefault();
-    var url = '/tak/gen/' + $('#dataset_dataset_uid').attr('value'); // $(this).attr('href');
+    var url = '/tak/gen/' + $("[data-tak-id-element='1']").attr('value'); // $(this).attr('href');
     $.get(url, function(data) {
       $("#addEntityFormModalContent").html(data);
       $("#addEntityFormModal").modal({show:true});

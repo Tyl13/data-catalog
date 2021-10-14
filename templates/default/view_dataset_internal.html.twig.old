@@ -1,0 +1,467 @@
+{% extends 'base.html.twig' %}
+{% from 'default/_JSONLD_output.html.twig' import JSONLD_output %}
+
+{% block page_scripts %}
+<script src="{{ asset('js/dataset_details.js') }}"></script>
+{% endblock %}
+
+
+{% block JSONLD_output %}
+{% spaceless %}
+<script type="application/ld+json">
+{"@context": "http://schema.org",
+"@type": "Dataset",
+"name": "{{ dataset.title }}",
+"description": "{{ dataset.description }}",
+"dateCreated": "{{ dataset.dateAdded|date("Y-m-d") }}",
+"dateModified": "{{ dataset.dateUpdated|date("Y-m-d") }}",
+"alternateName": [{% for title in dataset.datasetAlternateTitles %}"{{ title.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+"keywords": [{% for kw in dataset.subjectKeywords %}"{{ kw.getDisplayName|trim }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+"author": [{% for auth in dataset.authors %}
+{
+      "@type": "Person",
+      "name":"{{ auth.fullName }}",
+      "url":"{{ auth.bioUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
+  "citation": [{% for pub in dataset.publications %}"{{ pub.citation|trim }}"{% if not loop.last %}; {% endif %}{% endfor %}],
+  "encoding": [{% for format in dataset.datasetFormats %}
+{
+      "@type": "MediaObject",
+      "encodingFormat":"{{ format.getDisplayName }}"
+      }{% if not loop.last %}, {% endif %}{% endfor %}],
+  "publisher": [{% for pubber in dataset.publishers %}
+{
+      "@type": "Organization",
+      "name":"{{ pubber.getDisplayName }}",
+      "url":"{{ pubber.publisherUrl }}"}{% if not loop.last %}, {% endif %}{% endfor %}],
+"mainEntityOfPage": "{{ app.request.uri }}",
+"url": "{{ app.request.uri }}",
+"isPartOf":
+{
+	"@type": "DataCatalog",
+	"name": "{{ site_name }}",
+	"keywords":"science, dataset, research, data, data catalog",
+	"url": "{{ site_base_url }}",
+	"provider": {
+		"@type":"Organization",
+		"name":"{{ site_provider_name }}",
+		"image":"https://datacatalog.hsls.pitt.edu/img/institution/dc-hsls-schema.jpg",
+		"url":"{{ site_provider_url }}",
+		"parentOrganization": {
+			"@type":"Organization",
+			"name": "{{ institution_name }}",
+			"address":"{{ institution_address }}",
+			"url":"{{ institution_url }}"
+		 }
+	 }
+	}
+}
+</script>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block page_title %}
+ <title>{{ dataset.title }}</title>
+{% endblock %}
+
+
+{% block content %}
+<div id="dataset-full-view-container" class="col-10 offset-1">
+  <div class="" id="dataset-detail-titlebox">
+  {% if is_granted('ROLE_ADMIN') %}
+  <div class="update-dataset-link">
+   <a href="{{ path('update_dataset',{'uid':dataset.datasetUid}) }}">
+     Edit this dataset
+   </a>
+  </div>
+  {% endif %}
+     <div class="internal-dataset-badge details-page">{{ internal_dataset_text }}</div>
+     <h2 class="dataset-detail-maintitle">{{ dataset.title }} 
+       {% if dataset.published == false %}<small>[unpublished]</small>{%endif%}
+       {% if dataset.archived == true %}<small>[archived]</small>{%endif%}
+     </h2>
+      <span class="dataset-detail-alttitle">
+				{% if dataset.datasetAlternateTitles.count > 0 %}
+				 <h5>Alternate Titles(s): 
+					{% for title in dataset.datasetAlternateTitles %}
+					{{ title.getDisplayName|trim }}{% if not loop.last %}, {% endif %}
+					{% endfor %}
+					</h5>
+				{% endif %}
+			</span>
+			<p>
+				<span class="dataset-detail-id">UID: {{ dataset.id }}</span>
+			</p>
+
+			 {% if dataset.getAuthorships is not empty %}
+				<div class="dataset-authors-section">
+					<span class="dataset-detail-authors">Author(s):
+						{% set correspondingAuthorExists = false %}
+            {% set institutionAuthorExists = false %}
+						{% set authorCount = 0 %}
+						{% for author in dataset.getAuthorships %}
+							{% set popoverContent = '' %}
+							{% set authorClass = '' %}
+							{% set authorNote = '' %}
+							{% if author.getPerson.getBioUrl %}
+								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getBioUrl ~ '" target="_blank">Institutional profile</a></p>' %}
+							{% endif %}
+							{% if author.getPerson.getOrcidId %}
+								{% set popoverContent = popoverContent ~ '<p><a href="' ~ author.getPerson.getOrcidId ~ '" target="_blank">ORCID Profile</a></p>' %}
+							{% endif %}
+							{% if author.getPerson.getDatasetAssociations|length > 1 %}
+								{% set popoverContent = popoverContent ~ '<p><a href="/search?keyword=authors:%22' ~ author.getPerson.getFullName ~ '%22" target="_blank">View other datasets</a></p>' %}
+							{% endif %}
+							{% if author.isCorrespondingAuthor %}
+								{% set correspondingAuthorExists = true %}
+								{% set authorClass = authorClass ~ ' corresponding-author' %}
+								{% set authorNote = authorNote ~ '*' %}
+							{% endif %}
+							{% if author.getPerson.isInstitutionAuthor %}
+								{% set institutionAuthorExists = true %}
+								{% set authorClass = authorClass ~ ' institution-author' %}
+								{% set authorNote = authorNote ~ '+' %}
+							{% endif %}
+
+							{% if popoverContent %}<a tabindex="0" class="author-name" role="button" data-toggle="popover" title="{{ author.getPerson.getFullName }}" data-content="{{ popoverContent }}">{% endif %}<span class="{{ authorClass }}">{{ author.getPerson.getFullName }}</span><span class="author-note">{{ authorNote }}</span>{% if popoverContent %}</a>{% endif %}{% if not loop.last and authorCount != 4%}, {% endif %}
+
+							{% set authorCount = authorCount + 1 %}
+							{% if authorCount == 5 and not loop.last %}
+								&hellip;<a class="collapsed-toggle authors-collapse" data-toggle="collapse" href="#collapsed-authors" aria-expanded="false" aria-controls="collapsed-authors">
+									 See more...
+								</a>
+								<div class="collapse" id="collapsed-authors">
+							{% endif %}
+						{% endfor %}
+
+						{% if authorCount > 4 %}
+								</div>
+						{% endif %}
+						
+					</span>
+					{% if correspondingAuthorExists %}
+						 <span class="corresponding-author-note">* Corresponding Author</span>
+					{% endif %}
+           {% if institutionAuthorExists %}
+             <span class="institution-author-note">+ {{ institution_author_display }}</span>
+           {% endif %}
+				</div>
+			{% endif %}
+		</span>
+  </div>
+	<div class="row">
+   <div class="col-sm-7 col-sm-pull-0" id="dataset-detail-description">
+   <dl>
+     <dt>Description</dt>
+       <dd>{{ dataset.description|raw }}</dd>
+     
+      {% if dataset.subjectStartDate is not empty and dataset.subjectStartDate == dataset.subjectEndDate %}
+      <dt>Timeframe</dt>
+       <dd>{{ dataset.subjectStartDate }}</dd>
+      {% elseif dataset.subjectStartDate is not empty %}
+      <dt>Timeframe</dt>
+       <dd>{{ dataset.subjectStartDate }} - {{ dataset.subjectEndDate }}</dd>
+      {% endif %} 
+
+     {% if dataset.subjectGeographicAreaDetails is not empty %}
+     <dt>Geographic Coverage</dt>
+       <dd>
+       {% if dataset.subjectGeographicAreaDetails.count > 5 %}
+         {% for area in dataset.subjectGeographicAreaDetails|slice(0,5) %}
+           <div class="multiple-item-list">
+             {{ area.getDisplayName }}
+           </div>
+         {% endfor %}
+         <div class="collapse" id="collapsed-areas">
+           {% for area in dataset.subjectGeographicAreaDetails|slice(5,dataset.subjectGeographicAreaDetails.count) %}
+             <div class="multiple-item-list">
+               {{ area.getDisplayName }}
+             </div>
+           {% endfor %}
+         </div>
+         <a class="btn btn-sm btn-link collapsed-toggle" data-toggle="collapse" href="#collapsed-areas" aria-expanded="false" aria-controls="collapsed-areas">
+            See all...
+         </a>
+        {% else %}
+          
+          {% for area in dataset.subjectGeographicAreaDetails %}
+           <div class="multiple-item-list">
+            {{ area.getDisplayName }}
+           </div>
+          {% endfor %}
+        {% endif %}
+        </dd>
+       {% endif %}
+     
+
+        {% if dataset.localExperts|length > 0 %}
+         <dt>{{ local_expert_display }}</dt><dd>
+         {% for expert in dataset.localExperts %}
+            {% set popoverContent = '<p><a href="' ~ expert.bioUrl ~ '" target="_blank">View profile</a></p><p><a href="https://openredcap.nyumc.org/apps/redcap/surveys/?s=FRAFFH79JM" target="_blank">Contact this Local Expert</a></p>' %}
+            <div class="multiple-item-list">
+              <a class="local-expert-popover-link" href="#" data-toggle="popover" data-content="{{ popoverContent }}" data-original-title="{{ expert.fullName }}">{{ expert.fullName }}</a>
+            </div>
+         {% endfor %}
+         {% endif %}
+      </dd>
+      </dl>
+
+
+    {% if dataset.subjectOfStudy is not empty %}
+     <dt>Subject of Study</dt>
+      <dd id="subject-of-study">{% for subject in dataset.subjectOfStudy %}
+         <div class="multiple-item-list"><a href="/search?keyword=subject_of_study_only:{{ subject.getDisplayName }}">{{ subject.getDisplayName }}</a></div>
+         {% if subject.species is not empty or subject.getTissueCellLine is not empty %}
+         	<p class="related-dataset-note">
+         {% endif %}
+         {% if subject.species is not empty %}
+           <span>Species (Strain): </span>{{ subject.species }}<br/>
+         {% endif %}
+         {% if subject.getTissueCellLine is not empty %}
+           <span>Tissue/Cell Line: </span>{{ subject.getTissueCellLine }}
+         {% endif %}
+         {% if subject.species is not empty or subject.getTissueCellLine is not empty %}
+         	</p>
+         {% endif %}
+       {% endfor %}
+      </dd>
+     {% endif %}
+
+     
+    {% if dataset.subjectDomains is not empty %}
+     <dt>Subject Domain</dt>
+      <dd>{% for domain in dataset.subjectDomains %}
+         <div class="multiple-item-list"><a href="/search?keyword=subject_domain:{{ domain.getDisplayName }}">{{ domain.getDisplayName }}</a></div>
+       {% endfor %}
+      </dd>
+     {% endif %}
+
+     {% if (dataset.subjectPopulationAges.count > 0) %}
+        <dt>Population Age</dt>
+          <dd>{% for ageGroup in dataset.subjectPopulationAges %}
+           <div class="multiple-item-list">{{ ageGroup.getDisplayName }}</div>
+           {% endfor %}</dd>
+     {% endif %}
+     
+     {% if (dataset.subjectGenders is not empty ) %}
+        <dt>Subject Gender</dt>
+          <dd>{% for gender in dataset.subjectGenders %}
+           <div class="multiple-item-list">{{ gender.getDisplayName }}</div>
+           {% endfor %}</dd>
+     {% endif %}
+
+     {% if (dataset.subjectSexes is not empty ) %}
+        <dt>Subject Sex</dt>
+          <dd>{% for sex in dataset.subjectSexes %}
+           <div class="multiple-item-list">{{ sex.getDisplayName }}</div>
+           {% endfor %}</dd>
+       {% endif %}
+
+     {% if (dataset.subjectKeywords.count > 0) %}
+        <dt>Keywords</dt>
+         <dd>{% for keyword in dataset.subjectKeywords %}
+          <div class="multiple-item-list"><a href="/search?keyword=subject_keywords:{{ keyword.getDisplayName }}">{{ keyword.getDisplayName }}</a></div>
+          {% endfor %}
+          </dd>
+          {% endif %}
+     
+     </dl>
+    </div>
+    <div class="col-4" id="dataset-detail-sidebar">
+      <div id="dataset-detail-accesspanel" class="">
+       <div id="accesspanel-titlebox">
+          <h4>Access</h4>
+       </div>
+       <div id="accesspanel-details">
+       <dl>
+      
+      {% if (dataset.accessRestrictions.count > 0) %}
+       <dt>Restrictions</dt>
+         <dd class="dataset-detail-access-restrictions">
+          {% for restriction in dataset.accessRestrictions %}
+           <div class="multiple-item-list">{{ restriction.getDisplayName }}</div>
+          {% endfor %}
+         </dd>
+      {% endif %}
+      
+      <dt>Instructions</dt>
+         <dd>{{ dataset.accessInstructions|raw }}</dd>
+      <div id="access-buttons-container">
+         <dd>
+           {% for location in dataset.dataLocations %}
+              <div class="multiple-item-list">
+                {% if location.getDataAccessUrl is not empty %}
+                <a class="btn btn-primary" target="_blank" href="{{ location.getDataAccessUrl }}" onclick="trackOutboundLink('{{ location.getDataAccessUrl }}', '{{ dataset.title }} (via {{ location.getDataLocation }})');">Access via {{ location.getDataLocation }}</a><p class="data-location-description"><span class="data-location-title"></span> <span class="data-location-content">{{ location.getLocationContent }}</span>
+                {% endif %}
+               {% if location.getAccessionNumber %}
+                 <br/><span class="data-location-accession-number">Accession #: {{ location.getAccessionNumber  }}</span>
+               {% endif %}
+               </p>
+              </div>
+           {% endfor %} 
+          </dd>
+         </div>
+        </div>
+      </div> 
+  
+      {% if (dataset.publications.count > 0) %}
+       <dt>Associated Publications</dt>
+       <dd>
+      {% for pub in dataset.publications %}
+        <div class="assoc-publication multiple-item-list">
+         {% if pub.url is not null %}
+           <a href="{{ pub.url }}" target="_blank">{{ pub.citation|raw }}</a>
+         {% else %}
+           {{ pub.citation }}
+         {% endif %}
+        </div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+
+       {% if dataset.pubmedSearch is not empty %}
+       <dt>PubMed Search</dt>
+        <dd><a target="_blank" href="{{ dataset.pubmedSearch }}">View articles which use this dataset</a></dd>
+       {% endif %}
+
+      {% if (dataset.dataTypes.count > 0) %}
+       <dt>Data Type</dt>
+       <dd>
+      {% for type in dataset.dataTypes %}
+        <div class="multiple-item-list"><a href="/search?keyword=data_types:{{ type.getDisplayName }}">{{ type.getDisplayName }}</a></div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+   
+      {% if (dataset.relatedEquipment.count > 0) %}
+       <dt>Equipment Used</dt>
+       <dd id="equipment-used">
+      {% for equip in dataset.relatedEquipment %}
+        <div class="multiple-item-list">
+          {% if equip.equipmentUrl %}
+            <a href="{{ equip.equipmentUrl }}" target="_blank">{{ equip.getDisplayName }}</a>
+          {% else %}
+            {{ equip.getDisplayName }}
+          {% endif %}
+          {% if equip.equipmentDescription %}
+            <p class="related-dataset-note">{{ equip.equipmentDescription }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+
+      {% if (dataset.relatedSoftware is not empty) %}
+       <dt>Software Used</dt>
+       <dd id="software-used">
+      {% for sw in dataset.relatedSoftware %}
+        <div class="multiple-item-list">
+        	{% spaceless %}
+          {% if sw.softwareUrl is not empty %}
+            <a href="{{sw.softwareUrl}}" target="_blank">{{ sw.getSoftwareName }}</a>
+          {% else %}<span>{{ sw.getSoftwareName }}</span>{% endif %}
+					{% if sw.softwareVersion is not empty %}
+						<span>, Version: {{ sw.softwareVersion }}</span>
+					{% endif %}
+          {% if sw.softwareDescription %}
+            <p class="related-dataset-note">{{ sw.softwareDescription }}</p>
+          {% endif %}
+        	{% endspaceless %}
+        </div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+
+      {% if (dataset.studyTypes.count > 0) %}
+       <dt>Study Type</dt>
+       <dd>
+      {% for type in dataset.studyTypes %}
+        <div class="multiple-item-list">{{ type.getDisplayName }}</div>
+      {% endfor %}
+      </dd>
+      {% endif %}
+
+      {% if (dataset.datasetFormats.count > 0) %}
+      <dt>Dataset Format(s)</dt>
+       <dd>
+        {% for format in dataset.datasetFormats %}
+        {{ format.getDisplayName|trim }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+       </dd>
+      {% endif %}
+
+      {% if (dataset.resourceTypes.count > 0) %}
+      <dt>Resource Type(s)</dt>
+       <dd>
+        {% for resource_type in dataset.resourceTypes %}
+  	      <a href="/search?keyword=resource_types:{{ resource_type.getDisplayName|trim }}">{{ resource_type.getDisplayName|trim }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+       </dd>
+      {% endif %}
+
+      {% if (dataset.dataCollectionInstruments.count > 0) %}
+       <dt>Data Collection Instruments</dt>
+         <dd>
+      {% for instrument in dataset.dataCollectionInstruments %}
+				{% if instrument.getUrl is not empty %}
+					<a href="{{instrument.getUrl}}" target="_blank">{{ instrument.getDisplayName }}</a>
+				{% else %}<span>{{ instrument.getDisplayName }}</span>{% endif %}
+				{% if instrument.getNotes %}
+					<p class="related-dataset-note">{{ instrument.getNotes }}</p>
+				{% endif %}
+      {% endfor %}
+         </dd>
+      {% endif %}
+      
+      {% if (dataset.datasetSize is not null) %}
+       <dt>Dataset Size</dt>
+         <dd>{{ dataset.datasetSize }}</dd>
+      {% endif %}
+    
+    </dl>
+     <dl>
+       {% if (dataset.awards.count > 0) %}
+       <dt>Grant Support</dt>
+       <dd id="grant-support">
+        {% for grant in dataset.awards %}
+          {% if grant.awardUrl is not empty %}
+           <div class="grant-item multiple-item-list">
+            <a href="{{ grant.awardUrl }}" target="_blank">{{ grant.award }}/{{ grant.awardFunder }}</a>
+           </div>
+          {% else %}
+           <div class="grant-item multiple-item-list">
+            {{ grant.award }}/{{ grant.awardFunder }}
+           </div>
+          {% endif %} 
+        {% endfor %}
+       </dd>
+       {% endif %}
+                  
+       {% if (dataset.otherResources.count > 0) %}
+         <dt>Other Resources</dt>
+           <dd id="other-resources">
+           {% for resource in dataset.otherResources %}
+              <div class="other-resource multiple-item-list">
+               <a class="other-resource-link" target="_blank" href="{{ resource.getResourceUrl }}">{{ resource.getResourceName }}</a><p class="other-resource-description">{{ resource.getResourceDescription }}</p>
+              </div>
+           {% endfor %} 
+           </dd>       
+       {% endif %}
+
+       {% if (dataset.relatedDatasets.count > 0) %}
+         {{ render(controller('App\\Controller\\RelatedDatasetController:relatedDatasetAction',{'relatedDatasets':dataset.relatedDatasets, 'format':'html'})) }}
+       {% endif %}
+
+		 <dt>Data Catalog Record Updated</dt>
+		 <dd>{{ dataset.dateUpdated|date("Y-m-d") }}</dd>
+     </dl>
+    </div>
+  </div>
+<div class="row"><div class="col-10 offset-1" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="{{ path('contact') }}" style="padding-left:.25em">Let us know</a>!</div></div>
+</div>
+</div>
+<div class="row" id="suggest-dataset-link">Do you have or know of a dataset that should be added to the catalog? <a href="/submit-dataset">Let us know</a>!</div>
+<div class="row" id="disclaimer"><p>Notice and Disclaimer: Please note that the information in this catalog is provided as a courtesy, as is, and with no representations or warranties of any kind.  When you contact the responsible individual(s) listed in each record, or, where applicable, access a data repository listed, you will be subject to terms and conditions required by the data custodian/data repository.  The University of Pittsburgh does not attempt to judge the scholarly quality of the data referenced and relies on the judgment and research expertise of those who created and/or deposited it.</p></div>
+
+
+{% endblock %}

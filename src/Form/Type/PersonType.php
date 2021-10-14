@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * Form builder for Person entry
@@ -43,6 +44,7 @@ class PersonType extends AbstractType {
       'label'    => 'ORCID ID',
     ));
     $builder->add('bio_url');
+    $builder->add('is_institution_author', CheckboxType::class, array('required' => false, 'label' => 'Institution Author'));
     $builder->add('email');
     $builder->add('save', SubmitType::class,array('label'=>'Submit'));
   }

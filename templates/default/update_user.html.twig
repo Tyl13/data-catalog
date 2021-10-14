@@ -10,6 +10,7 @@
 
 {% block page_stylesheets %}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" />
+<link rel="stylesheet" href="/css/institution/admin-styles.css" />
 {% endblock %}
 
 
@@ -47,38 +48,40 @@ col-sm-3
 
 {% block content %}
 <div class="container-fluid">
-<div class="row">
-{% include 'default/_admin-sidebar-menu.html.twig' %}
-<div class="col-7" >
-<div class="page-header">
-<h1>Update User</h1>
-</div>
-{{ form_start(form) }}
-{{ form_row(form.username) }}
-{{ form_row(form.firstName) }}
-{{ form_row(form.lastName) }}
-{{ form_row(form.roles) }}
-<br/>
-<br/>
-{{ form_row(form.apiKey, {'label':'API Key'}) }}
-<div class="form-group" style="margin-top:-1em;">
-<label class="col-sm-3 control-label"></label>
-<div class="col-sm-8 offset-3">
-<p class="api-help-text" style="color:#666666;font-size:.9em;"><a href="#" class="copy-api-key">Click here to copy the API key to your clipboard.</a>
-<br/><br/>
-To generate a new key, make sure the "API User" role is checked above. <a href="#" class="empty-api-key">Click here</a> to erase the old API key, and then hit "Save." A new key will be generated.</p>
+	<div class="row">
+		{% include 'default/_admin-sidebar-menu.html.twig' %}
+		<div class="col-md-7" >
+			<div class="page-header">
+				<h1>Update User</h1>
+			</div>
+			{{ form_start(form) }}
+			{{ form_row(form.username) }}
+			{{ form_row(form.firstName) }}
+			{{ form_row(form.lastName) }}
+			{{ form_row(form.roles) }}
+			<br/>
+			<br/>
+			{{ form_row(form.apiKey, {'label':'API Key'}) }}
+			<div class="form-group" style="margin-top:-1em;">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-8 offset-3">
+					<p class="api-help-text" style="color:#666666;font-size:.9em;"><a href="#" class="copy-api-key">Click here to copy the API key to your clipboard.</a>
+						<br/><br/>
+						To generate a new key, make sure the "API User" role is checked above. <a href="#" class="empty-api-key">Click here</a> to erase the old API key, and then hit "Save." A new key will be generated.
+					</p>
 
-</div>
-</div>
+				</div>
+			</div>
 
-  {{ form_widget(form._token) }}
-<div class="spacer25"></div>
+			{{ form_widget(form._token) }}
+			<div class="spacer25"></div>
 
-  {{ form_widget(form.save) }}
-<div class="spacer50"></div>
-</div>
+			{{ form_widget(form.save) }}
+			<div class="spacer50"></div>
+		</div>
 
-</div>
+	</div>
+
 </div>
 
 {% endblock %}

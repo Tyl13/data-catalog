@@ -2,16 +2,18 @@
 
   {% if widget.vars.prototype is defined %}
     {% set form = widget.vars.prototype %}
-    {% set name = widget.vars.prototype.vars.label %}
+    {% set name = widget.vars.prototype.vars.id %}
   {% else %}
     {% set form = widget %}
-    {% set name = widget.vars.label %}
+    {% set name = widget.vars.id %}
   {% endif %}
 
   <div data-content="add-{{ name }}" class="dynamic-form-element-container">
     <div class="add-{{name}}">
-    {{ form_widget(form) }}
-    {# <a class="btn-remove btn btn-danger" role="button" data-related="add-{{ name }}">{{ remove_text }}</a>#}
+    	{{ form_widget(form) }}
+    	<div class='btn-remove-wrapper'>
+    		<a class="btn-remove btn btn-danger" role="button" data-related="add-{{ name }}">{{ remove_text }}</a>
+    	</div>
     </div>
   </div>
 

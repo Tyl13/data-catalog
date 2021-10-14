@@ -39,6 +39,7 @@ class SecurityController extends Controller {
    * @Route("/login", name="login")
    */
   public function loginAction(Request $request) {
+  
     $authenticationUtils = $this->get('security.authentication_utils');
 
     // get login error if exists
@@ -55,6 +56,13 @@ class SecurityController extends Controller {
       )
     );
   }
-  
+
+  /**
+   * Placeholder function for Symfony
+   *
+   * @Route("/logout", name="logout")
+   */
+  public function logoutAction(Request $request) {
+  }
 
 }

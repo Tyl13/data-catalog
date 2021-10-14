@@ -7,10 +7,14 @@
         {% block page_title %}
         <title>{{ site_name }}</title>
         {% endblock %}
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+				<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/institution/custom.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/institution/hsls-style.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/institution/pitt-branding-style.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/institution/pdc-form-overrides.css') }}" />
 
         {# placeholder blocks for page-specific elements #}
         {% block page_stylesheets %}
@@ -62,42 +66,104 @@
 
     </head>
     <body>
-      <a href="#maincontent" class="skip">Skip to content</a>
-      <div class="page-wrapper">
-      <header id="page-header">
-        <div class="logos-container">
-        {# tell us where your site's logo lives in 'institution/logo.html.twig' #}
-        {% include ['institution/logo.html.twig','logo.html.twig'] ignore missing %}
-        </div>
- 		<nav class="menu-bar">
-          <ul class="menu-links">
-            <li class="menu-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
-            <li class="menu-link {% if app.request.get('_route') == 'how_to_use_catalog' %}active{% endif %}"><a href="{{ path('how_to_use_catalog') }}">How To Use the Catalog</a></li>
-            <li class="menu-link {% if app.request.get('_route') == 'faq' %}active{% endif %}"><a href="{{ path('faq') }}">Frequently Asked Questions</a></li>
-            {% if is_granted('ROLE_USER') %}
-              <li class="menu-link admin-menu-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
-            {% endif %}
-            {% if is_granted('ROLE_USER') %}
-              <li class="menu-link admin-menu-link logout-link"><a href="{{ path('app_logout') }}">Logout</a></li>
-            {% endif %}
-          </ul>
-        </nav>
-      </header> 
-      {% if app.request.get("_route") == 'homepage' %}
-        {# CHECK FOR CUSTOM FRONTPAGE SEARCH BAR TEMPLATE #}
-        {% include ['institution/frontpage_search_bar.html.twig','frontpage_search_bar.html.twig'] ignore missing %}
-      {% else %}
-        {# CHECK FOR CUSTOM INTERIOR PAGE SEARCH BAR TEMPLATE #}
-        {% include ['institution/search_bar.html.twig','search_bar.html.twig'] ignore missing %}
-      {% endif %}
-    <div id="maincontent" class="content-container">
 
-      {% block content %}{% endblock %}
+      <a href="#maincontent" class="skip">Skip to content</a>
+
+			<header id="masthead" class="pittbar navbar-dark" role="banner">
+        <div class="container header-container">
+            <nav>
+
+							<div class="row">
+								<div class="col-sm-12 col-md-8">
+									<div class="pitt-shield">
+										<a href="http://www.pitt.edu" title="University of Pittsburgh"><img src="https://files.hsls.pitt.edu/files/images/pitt_shield_white.png" alt="University of Pittsburgh Shield"></a>
+									</div>
+									<div class="site-identity">
+										<span><a href="https://www.hsls.pitt.edu/">Health Sciences Library System</a></span>
+										<a href="https://datacatalog.hsls.pitt.edu/">Pitt Data Catalog</a>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-4">
+									<div role="navigation" aria-label="primary" id="secondary-links" class="container-fluid">
+										<div class="secondary-links pittbar__links">
+											<ul class="menu secondary">
+												<li class="first leaf"><a href="http://www.pitt.edu" title="">Pitt Home</a></li>
+												<li class="last leaf"><a href="http://find.pitt.edu" title="">Find People</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+										<span class="navbar-toggler-icon"></span>
+								</button>
+
+								<div id="main-nav" class="collapse navbar-toggleable-md navbar-collapse justify-content-end">
+									<ul id="menu-my-new-menu" class="navbar-nav primary-nav">
+
+										<li class="navbar-nav menu-item primary-wedged primary-wedged-first"><a class="nav-link" href="https://find.pitt.edu/">Find People</a></li>
+										<li class="navbar-nav menu-item primary-wedged"><a class="nav-link" href="https://www.pitt.edu/">Pitt Home</a></li>
+
+										<li class="home-nav-link {% if app.request.get('_route') == 'default_search_results'%}active{% endif %} "><a href="/">Home</a></li>
+										<li class="about-nav-link"><a href="{{ url('user_search_results') }}?page=1">Browse</a></li>
+										<li class="about-nav-link {% if app.request.get('_route') == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
+										<li class="contact-page-link {% if app.request.get('_route') == 'contact' %}active{% endif %}"><a href="{{ path('contact') }}">Contact</a></li>
+										{% if is_granted('ROLE_USER') %}
+											<li class="privileged-nav-link admin-page-link {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}active{% endif %}"><a href="{{ path('admin_panel') }}">Admin</a></li>
+										{% endif %}
+							</div>
+            </nav>
+        </div>
+			</header>
+
+
+			
+			<div style="width: 100%;" class="dc-search-header">
+				<div class="container">
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 flexcol vertmidcol col-desc-fr dc-search">
+							<label for="keyword-search-input"><a href="{{ url('user_search_results') }}?page=1" style="color: white;" >Find datasets from University of Pittsburgh Researchers</a></label>
+						</div>
+						<div class="col-xs-12 col-sm-4 flexcol vertmidcol dc-search">
+							<form id="keyword-search-form" class="input-group">
+									<input type="text" class="form-control" id="keyword-search-input">
+									<span class="input-group-btn">
+										<button id="keyword-search-submit" class="btn btn-primary" type="submit">Go!</button>
+									</span>
+							</form>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 flexcol vertmidcol dc-add">
+								<a href="{{ url('submitdataset')}}" class="link-as-button add-link">Include your dataset</a> 
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			{% block content %}{% endblock %}
+
+      </div>
+    </div>
+		<footer class="conatiner-fluid footer" role="contentinfo">
+
+					{# Use the file 'institution/footer.html.twig' for your institution-specific footer content #}
+					{% include ['institution/footer.html.twig','footer.html.twig'] ignore missing %}
+
+
+					<div style="text-align: center;">
+						{% if is_granted('ROLE_USER') %}
+								<a href="{{ path('logout') }}">Admin Logout</a>
+						{% else %}
+							<a href="{{ path('login') }}">Admin Login</a>
+						{% endif %}
+					</div>
+
+      </footer>
 
       {% block javascripts %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="{{ asset('js/respond.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/scripts.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/searching.js') }}" type="text/javascript"></script>
@@ -105,12 +171,7 @@
       {# placeholder block for page-specific scripts #}
       {% block page_scripts %}
       {% endblock %}
-      </div>
-      <div class="push"></div>
-    </div>
-
-        {# Use the file 'institution/footer.html.twig' for your institution-specific footer content #}
-        {% include ['institution/footer.html.twig','footer.html.twig'] ignore missing %}
 
   </body>
+
 </html>

@@ -1,6 +1,6 @@
       {# ADMIN NAV SIDEBAR #}
       {% if is_granted('ROLE_USER') and adminPage is defined and adminPage==true %}
-        <div class="admin-nav-sidebar col-3">
+        <div class="admin-nav-sidebar col-md-3">
         <ul class="nav flex-column nav-pills">
         {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item {% if app.request.get('_route') == 'approval_queue' %}active{% endif %}" role="presentation">
@@ -31,6 +31,10 @@
          <li class="nav-item {% if 'remove/Dataset' in app.request.requestUri %}active{% endif %}" role="presentation">
           <a class="nav-link" href="{{ path('remove_entity', {'entityName':'Dataset'}) }}">Remove a Dataset</a>
          </li>
+				 <div class="spacer25"></div>
+         <li class="nav-item {% if 'remove/Dataset' in app.request.requestUri %}active{% endif %}" role="presentation">
+          <a class="nav-link" href="https://drive.google.com/file/d/1eW6E2o5T6qMcmsvbD9T_m_FTh99LJ-kn/view" target="_blank">Data Dictionary</a>
+				 </li>
         {% endif %}
         </ul>
         </div>

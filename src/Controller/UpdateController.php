@@ -11,7 +11,7 @@ use App\Entity\Dataset;
 use App\Form\Type\DatasetAsUserType;
 use App\Form\Type\DatasetAsAdminType;
 use App\Form\Type\UserType;
-use App\Utils\Slugger;
+use App\Utils\Slugger;	
 
 
 /**
@@ -81,7 +81,8 @@ class UpdateController extends Controller {
       );
     }
     if ($userIsAdmin) {
-      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity);
+    	
+      $form = $this->createForm(DatasetAsAdminType::class, $thisEntity, ['datasetUid'=>$thisEntity->getId()]);
     } else {
       $form = $this->createForm(DatasetAsUserType::class, new Dataset($userIsAdmin, $uid), $thisEntity[0]);
     }
@@ -205,6 +206,23 @@ class UpdateController extends Controller {
    */
   public function updateEntityAction($entityName, $slug, Request $request) {
 
+		//
+		// Joel Marchewka, 20210615
+		
+		$display_name_exception_map = [
+			'Award' => 'Grant',
+			'Person' => 'Author',
+			
+		];
+		
+		//
+
+		if (!empty($display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))])) {
+			$entityTypeDisplayName=$display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))];
+		} else {
+    	$entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
+		}
+		
     $updateEntity   = 'App\Entity\\'.$entityName;
     $entityFormType = 'App\Form\Type\\' . $entityName . "Type";
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));

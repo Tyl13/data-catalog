@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 /**
  * Form builder for Contact Us form
@@ -31,7 +32,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class ContactFormEmailType extends AbstractType {
 
-  protected $options;
+	protected $options;
   protected $affiliationOptions;
 
   /**
@@ -49,45 +50,43 @@ class ContactFormEmailType extends AbstractType {
    * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('employee_id', TextType::class, array(
-      'label'=> 'Employee ID',
-      'label_attr'=>array('class'=>'no-asterisk'),
-    ));
     $builder->add('full_name', TextType::class, array(
-      'label_attr'=>array('class'=>'no-asterisk')));
+      'required' => true,
+      'label_attr'=>array('class'=>'asterisk')));
     $builder->add('email_address', EmailType::class, array(
-      'label_attr'=>array('class'=>'no-asterisk')));
-    $builder->add('affiliation', ChoiceType::class, array(
-      'label'=>'Institutional Affiliation',
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' => $options['affiliationOptions'],
-    ));
+      'label_attr'=>array('class'=>'asterisk')));
+    $builder->add('school_center', TextType::class, array(
+      'required' => false,
+      'label'=> 'School/Center',
+	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('department', TextType::class, array(
+      'required' => false,
+      'label'=> 'Department',
+	  'label_attr'=>array('class'=>'no-asterisk')));
        
     $builder->add('reason', ChoiceType::class, array(
       'expanded'=>true,
+      'required' => true,
       'label_attr'=>array('class'=>'no-asterisk'),
       'choices' =>array(
-        'Volunteer as a local expert' => 'Volunteer as a local expert',
-        'Suggest a new dataset' => 'Suggest a new dataset',
-        'Request uploading of dataset' => 'Request uploading of your dataset(s)',
-        'General inquiry'    => 'General inquiry or comments',
+        'General inquiry'    => 'General question or comments',
+        'Technical problem' => 'Technical problem',
       ),
       'multiple'=>false)
     );
     $builder->add('message_body', TextareaType::class, array(
+      'required' => false,
       'attr' => array('rows'=>'5'),
       'label_attr'=>array('class'=>'no-asterisk'),
       'label'=>'Please provide some details about your question/comment',
     ));
-    $builder->add('checker', TextType::class, array(
-      'required'=>false,
-      'attr'=>array('class'=>'checker'),
-      'label_attr'=>array('class'=>'no-asterisk checker')));
+
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
+    	'label' => false,
+    ));
+
     $builder->add('save',SubmitType::class,array('label'=>'Send'));
   }
-
-
-
 
   /**
    * Set defaults
@@ -96,8 +95,8 @@ class ContactFormEmailType extends AbstractType {
    */
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setDefaults(array(
-        'data_class' => 'App\Entity\ContactFormEmail',
-        'affiliationOptions' => null,
+      'data_class' => 'App\Entity\ContactFormEmail',
+      'affiliationOptions' => null,
     ));
   }
 
@@ -107,4 +106,3 @@ class ContactFormEmailType extends AbstractType {
   }
 
 }
-

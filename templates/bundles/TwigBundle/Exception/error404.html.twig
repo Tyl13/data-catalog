@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Page not found</h1>
+
+				<div class="spacer50"></div>
+				<p>
+						Oops! If you think something should be here, <a href="{{ path('contact') }}">let us know</a>.<br/><br/>
+						Otherwise, you can <a href="{{ path('homepage') }}">return to the homepage</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

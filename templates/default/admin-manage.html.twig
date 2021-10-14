@@ -4,11 +4,16 @@
  <title>Data Catalog - Manage Related Entities</title>
 {% endblock %}
 
+{% block page_stylesheets %}
+<link rel="stylesheet" href="/css/institution/admin-styles.css" />
+{% endblock %}
+
+
 {% block content %}
 <div class="container-fluid">
 <div class="row">
 {% include 'default/_admin-sidebar-menu.html.twig' %}
-<div class="col-7">
+<div class="col-md-7">
  <div class="page-header">
   <h1>Manage Related Entities</h1>
   </div>
@@ -19,10 +24,10 @@
 
   <div class="spacer25"></div>
  <div class="list-group col-xs-5">
-  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Person'}) }}">Local Experts/Authors</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Person'}) }}">Authors</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Publisher'}) }}">Publishers</a>
-  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Publication'}) }}" >Cited Publications</a>
-  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Award'}) }}">Awards</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Publication'}) }}" >Publications</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Award'}) }}">Grants</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'Project'}) }}">Projects</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'DataType'}) }}">Data Types</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'DataCollectionInstrument'}) }}">Data Collection Instruments</a>
@@ -39,6 +44,7 @@
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'StudyType'}) }}">Study Type</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'RelatedEquipment'}) }}">Related Equipment</a>
   <a class="list-group-item" href="{{ path('update_entity', {'entityName':'RelatedSoftware'}) }}">Related Software</a>
+  <a class="list-group-item" href="{{ path('update_entity', {'entityName':'ResourceType'}) }}">Resource Types</a>
 </div> 
 
  </div>

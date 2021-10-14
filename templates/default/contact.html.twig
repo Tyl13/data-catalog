@@ -24,18 +24,22 @@ col-sm-5
 
 
 {% block content %}
-<div class="container-fluid">
+</div></div>
+<div style="background-color: #ffaf1a;">
+<div class="container">
 <div class="row">
-<div class="col-sm-6 offset-sm-2" >
+	<div class="col-sm-12" style="background-color: white; padding-bottom: 17em;">
 <div class="page-header">
 <h1>Contact Us</h1>
 </div>
 
+<p><strong>Note:</strong> To request inclusion of your datasets, please use the <a href="/submit-dataset">Dataset Inclusion Form</a>.</p>
+<p>If you are interested in other services from the HSLS Data Services team, including customized trainings and consultations on data management and data sharing, visit <a href="https://hsls.pitt.edu/data-services">our library webpage</a>.
+
 {{ form(form) }}
 
-</div>
-</div>
-</div>
 
+</div>
+</div>
+</div>
 {% endblock %}
-

@@ -158,6 +158,19 @@ class DatasetType extends AbstractType {
       'by_reference'=>false,
       'label'     => 'Dataset Format',
     ));
+    $builder->add('resource_types', 'entity', array(
+      'class'   => 'AppBundle:ResourceType',
+      'property'=> 'resource_type',
+      'query_builder'=> function(EntityRepository $er) {
+          return $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC');
+      },
+      'required' => false,
+      'attr'    => array('id'=>'dataset_subject_population_ages','style'=>'width:100%'),
+      'multiple' => true,
+      'by_reference'=>false,
+      'label'     => 'Resource Types',
+      'data' => $this->container->get('doctrine.orm.entity_manager')->getReference("AppBundle:ResourceTypes", 4),
+    ));
     $builder->add('dataset_size', 'text', array(
       'required' => false,
       'label'    => 'Dataset Size'));
@@ -239,7 +252,7 @@ class DatasetType extends AbstractType {
       'attr'=>array('style'=>'width:100%'),
       'multiple'=>true,
       'by_reference'=>false,
-      'label'=>'Local Experts',
+      'label'=>'Authors',
     ));
     $builder->add('subject_domains', 'entity', array(
       'class' => 'App:SubjectDomain',

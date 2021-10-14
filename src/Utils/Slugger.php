@@ -15,7 +15,7 @@ class Slugger {
   static public function slugify($text)
   {
     // make 7-character hash
-    $title_hash = substr(md5($text), 0, 7);
+    $title_hash = substr(md5($text.time()), 0, 7);
     // replace non letter or digits by -
     $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
     // trim

@@ -85,28 +85,29 @@ class Person {
    */
   protected $email;
 
-  
+
+  /**
+   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
+   */
+  protected $works_here;
+
+
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    */
   protected $dataset_associations;
 
-
   /**
-   * Get name for display
-   *
-   * @return string
+   * @ORM\Column(type="boolean",length=128)
    */
-  public function getDisplayName() {
-    return $this->full_name;
-  }
+  protected $is_institution_author = false;
 
-    /**
-     * Constructor
-     */
+	/**
+	 * Constructor
+	 */
     public function __construct()
     {
-      $this->datasetAssociations = new ArrayCollection();
+      $this->dataset_associations = new ArrayCollection();
     }
 
     /**
@@ -131,6 +132,15 @@ class Person {
 
         return $this;
     }
+
+		/**
+		 * Get name for display
+		 *
+		 * @return string
+		 */
+		public function getDisplayName() {
+			return $this->full_name;
+		}
 
     /**
      * Get full_name
@@ -258,6 +268,27 @@ class Person {
         return $this->email;
     }
 
+   /**
+     * Set is institution author
+     *
+     * @param string $institution
+     * @return Person
+     */
+    public function setIsInstitutionAuthor($institution)
+    {
+        $this->is_institution_author = $institution;
+        return $this;
+    }
+
+    /**
+     * Get is institution author
+     *
+     * @return string 
+     */
+    public function getIsInstitutionAuthor()
+    {
+        return $this->is_institution_author;
+    }
 
     /**
      * Set slug
@@ -305,23 +336,49 @@ class Person {
         return $this->orcid_id;
     }
 
+
+    /**
+     * Set works_here
+     *
+     * @param string $worksHere
+     * @return Person
+     */
+    public function setWorksHere($worksHere)
+    {
+        $this->works_here = $worksHere;
+
+        return $this;
+    }
+
+
+    /**
+     * Get works_here
+     *
+     * @return string 
+     */
+    public function getWorksHere()
+    {
+        return $this->works_here;
+    }
+
+
     public function getDatasetAssociations()
     {
-      return $this->datasetAssociations->toArray();
+      return $this->dataset_associations->toArray();
     }
 
     public function addDatasetAssociation(PersonAssociation $assoc) 
     {
-      if (!$this->datasetAssociations->contains($assoc)) {
-        $this->datasetAssociations->add($assoc);
+      if (!$this->dataset_associations->contains($assoc)) {
+        $this->dataset_associations->add($assoc);
       }
       return $this;
     }
 
     public function removeDatasetAssociation(PersonAssociation $assoc)
     {
-      if ($this->datasetAssociations->contains($assoc)) {
-        $this->datasetAssociations->removeElement($assoc);
+      if ($this->dataset_associations->contains($assoc)) {
+        $this->dataset_associations->removeElement($assoc);
       }
 
       return $this;
@@ -333,7 +390,7 @@ class Person {
         function ($association) {
           return $association->getDataset();
         },
-        $this->datasetAssociations->toArray()
+        $this->dataset_associations->toArray()
       );
     }
 
@@ -349,7 +406,8 @@ class Person {
         'first_name'=>$this->first_name,
         'orcid_id'=>$this->orcid_id,
         'bio_url'=>$this->bio_url,
-        'email'=>$this->email
+        'email'=>$this->email,
+        'works_here'=>$this->works_here
       );
     }
 }

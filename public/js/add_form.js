@@ -160,7 +160,7 @@ jQuery(function($) {
     // Append the form template to the parent element
     $(form).hide().appendTo(collectionHolder).fadeIn(300);
 
-    collectionHolder.children('div[data-content]').last().append(removeItemLink);
+    //collectionHolder.children('div[data-content]').last().append(removeItemLink);
 
     collectionHolder.find('div:empty').remove();
     // active Select2.js on any new child <select>s

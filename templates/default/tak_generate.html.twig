@@ -1,3 +1,4 @@
+
 <script>
  
 function copyToClipboard() {
@@ -19,14 +20,14 @@ function copyToClipboard() {
 
 </script>
 <div class="modal-header">
+  <h4 class="modal-title" id="add_entity_modal_title">New Temporary Access Key</h4>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <h4 class="modal-title" id="add_entity_modal_title">New Temporary Access Key</h4>
 </div>
 <div class="modal-body">
 
-<a id="generated-tak" href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{ uuid }}">Preview link for {{ dataset_title }}</a>&nbsp;:&nbsp;<a style="cursor: pointer;" onclick="copyToClipboard();">Copy to clipboard</a>
+<a id="generated-tak" href="{{ url('homepage') }}dataset/{{ dataset_uid }}?tak={{ uuid }}">Preview link for {{ dataset_title }}</a>&nbsp;:&nbsp;<a style="cursor: pointer;" onclick="copyToClipboard();">Copy to clipboard <i class="icon-copy"></i></a>
 </div>
 
 <div class="modal-footer">

@@ -1,0 +1,75 @@
+<request verb="ListRecords" metadataPrefix="oai_dc">{{ base_url }}/oai</request>
+<ListRecords>
+
+{% for result in results %}
+{% if result.published %}
+<record>
+<header>
+<identifier>oai:{{ base_identifier }}:{{ result.getId() }}</identifier>
+<datestamp>{{ result.getDateUpdated()|date('Y-m-d') }}</datestamp>
+
+{% set showsetspc = 0 %}
+{% for url in result.getDataLocations() %}
+{% if 'd-scholarship.pitt.edu' in url.getDataAccessUrl() %}
+{% set showsetspc = 1 %}
+{% endif %}
+{% endfor %}
+{% if showsetspc == 1 %}
+<setSpec>DNI-Primo</setSpec>
+{% else %}
+<setSpec>PrimoIngest</setSpec>
+{% endif %}
+
+</header>
+
+<metadata>
+<oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+<dc:title>{{ result.getTitle() }}</dc:title>
+
+{% for author in result.getAuthors() %}
+    <dc:contributor>{{ author.getDisplayName() }}</dc:contributor>
+{% endfor %}
+
+<dc:identifier>{{ base_url }}/dataset/{{ result.getId() }}</dc:identifier>
+
+
+{% if result.getSubjectDomains()|length > 0 %}
+{% for subjectKeyword in result.getSubjectKeywords() %}
+<dc:subject>
+{{ subjectKeyword.getDisplayName() }}
+</dc:subject>
+{% endfor %}
+{% endif %}
+
+{% if result.getSubjectKeywords()|length > 0 %}
+{% for subjectKeyword in result.getSubjectKeywords() %}
+<dc:subject>
+{{ subjectKeyword.getDisplayName() }}
+</dc:subject>
+{% endfor %}
+{% endif %}
+
+<dc:description>{{ result.getDescription() }}</dc:description>
+
+<dc:language>eng</dc:language>
+
+{% for studyType in result.getStudyTypes() %}
+    <dc:type>{{ studyType.getStudyType() }}</dc:type>
+{% endfor %}
+
+{% for datasetFormat in result.getDatasetFormats() %}
+    <dc:format>{{ datasetFormat.getDisplayName() }}</dc:format>
+{% endfor %}
+
+{% if result.getDatasetSize() %}
+    <dc:format>{{ result.getDatasetSize() }}</dc:format>
+{% endif %}
+
+</oai_dc:dc>
+</metadata>
+
+</record>
+{% endif %}
+{% endfor %}
+
+</ListRecords>
