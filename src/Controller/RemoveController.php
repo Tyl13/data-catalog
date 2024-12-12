@@ -56,12 +56,14 @@ class RemoveController extends AbstractController {
       $allEntities = $em->getRepository(\App\Entity\Dataset::class)->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_remove.html.twig', ['entities'    => $allEntities, 'entityName'  => 'Dataset', 'adminPage'   => true, 'displayName' => 'Dataset']);
     }
+
     $thisEntity = $em->getRepository(\App\Entity\Dataset::class)->findOneBy(['dataset_uid'=>$uid]);
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No dataset with UID ' . $uid . ' was found.'
       );
     }
+
     if ($userIsAdmin) {
       $form = $this->createForm(DatasetAsAdminType::class, $thisEntity);
       $form->handleRequest($request);
@@ -70,9 +72,10 @@ class RemoveController extends AbstractController {
         $em->flush();
         return $this->render('default/remove_success.html.twig', ['entityName' => 'Dataset', 'adminPage'  => true]);
       }
-   
+
       return $this->render('default/remove.html.twig', ['form'          => $form->createView(), 'displayName'   => 'Dataset', 'adminPage'     => true, 'thisEntityName'=> $thisEntity->getDisplayName(), 'entityName'    => 'Dataset']);
     }
+
     return null;
   }
 
@@ -106,12 +109,13 @@ class RemoveController extends AbstractController {
     }
 
     $thisEntity = $em->getRepository($removeEntity)->findOneBySlug($slug);
-    
+
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No entity of type ' . $entityName . ' was found matching this slug: ' . $slug
       );
     }
+
     if ($entityName == 'Dataset') {
       $datasetUid = $thisEntity->getDatasetUid();
       $form = $this->createForm(new DatasetAsAdminType($userIsAdmin, $datasetUid), $thisEntity);
@@ -119,13 +123,14 @@ class RemoveController extends AbstractController {
     else {
       $form = $this->createForm($entityFormType, $thisEntity);
     }
+
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid() && $userIsAdmin) {
       $em->remove($thisEntity);
       $em->flush();
       return $this->render('default/remove_success.html.twig', ['entityName'=>$entityTypeDisplayName, 'adminPage'=>true]);
     }
- 
+
     return $this->render('default/remove.html.twig', ['form'    => $form->createView(), 'displayName'=>$entityTypeDisplayName, 'adminPage'=>true, 'thisEntityName'=>$thisEntity->getDisplayName(), 'entityName' =>$entityName]);
   }
 

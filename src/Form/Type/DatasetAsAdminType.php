@@ -43,7 +43,9 @@ use Doctrine\ORM\EntityManager;
 class DatasetAsAdminType extends AbstractType {
 
   protected $years;
+
   protected $yearsIncludingPresent;
+
   protected $options;
 
   public function __construct(array $options = []) {
@@ -57,7 +59,7 @@ class DatasetAsAdminType extends AbstractType {
 
     $this->options = $resolver->resolve($options);
   }
-  
+
   /**
    * Build the form
    *
@@ -120,14 +122,16 @@ class DatasetAsAdminType extends AbstractType {
       if ($subject_of_study->getSpecies()) {
       	$sos.=", ".$subject_of_study->getSpecies();
       }
+
       if ($subject_of_study->getTissueCellLine()) {
       	$sos.=", ".$subject_of_study->getTissueCellLine();
       }
+
       return $sos;
   	}, 'multiple' => true, 'attr'=>['style'=>'width:100%'], 'by_reference'=>false, 'label'     => 'Subject of Study']);
-    
+
     $builder->add('subject_keywords', EntityType::class, ['class'   => 'App:SubjectKeyword', 'choice_label'=> 'keyword', 'required' => false, 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.keyword','ASC'), 'multiple' => true, 'attr'=>['style'=>'width:100%'], 'by_reference'=>false, 'label'     => 'Subject Keywords']);
-     
+
     $builder->add('erd_url', TextType::class, ['required' => false, 'label'    => 'ERD URL']);
     $builder->add('library_catalog_url', TextType::class, ['required' => false, 'label'    => 'Library Catalog URL']);
     $builder->add('licensing_details',  TextareaType::class, ['required' => false, 'label'    => 'Licensing Details']);

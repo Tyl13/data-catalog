@@ -45,6 +45,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     if (null === $array) {
       return "";
     }
+
     /*if (!($array instanceof PersistentCollection)) {
       return new ArrayCollection();
     }*/
@@ -53,6 +54,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     foreach ($array as $subjectKeyword) {
       $options[] = $subjectKeyword->getKeyword();
     }
+
     return new ArrayCollection($options);
     //return $options;
     /*for ($i=1; $i<=count($subjectKeyword); $i++) {
@@ -74,6 +76,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     if (!$array) {
       return null;
     }
+
     $keywords = [];
     foreach ($array as $key=>$value) {
       $keyword = $this->em

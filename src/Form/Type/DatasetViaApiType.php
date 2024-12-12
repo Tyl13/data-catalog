@@ -36,6 +36,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DatasetViaApiType extends AbstractType {
 
   protected $years;
+
   protected $yearsIncludingPresent;
 
   public function __construct(protected $userIsAdmin = false, protected $datasetUid = 0) {
@@ -44,7 +45,7 @@ class DatasetViaApiType extends AbstractType {
     array_unshift($yearList, "Present");
     $this->yearsIncludingPresent = array_combine($yearList, $yearList);
   }
-  
+
   /**
    * set userIsAdmin
    *

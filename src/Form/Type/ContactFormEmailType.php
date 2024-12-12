@@ -33,6 +33,7 @@ use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 class ContactFormEmailType extends AbstractType {
 
 	protected $options;
+
   protected $affiliationOptions;
 
   /**
@@ -52,7 +53,7 @@ class ContactFormEmailType extends AbstractType {
     $builder->add('email_address', EmailType::class, ['label_attr'=>['class'=>'asterisk']]);
     $builder->add('school_center', TextType::class, ['required' => false, 'label'=> 'School/Center', 'label_attr'=>['class'=>'no-asterisk']]);
     $builder->add('department', TextType::class, ['required' => false, 'label'=> 'Department', 'label_attr'=>['class'=>'no-asterisk']]);
-       
+
     $builder->add('reason', ChoiceType::class, ['expanded'=>true, 'required' => true, 'label_attr'=>['class'=>'no-asterisk'], 'choices' =>['General inquiry'    => 'General question or comments', 'Technical problem' => 'Technical problem'], 'multiple'=>false]
     );
     $builder->add('message_body', TextareaType::class, ['required' => false, 'attr' => ['rows'=>'5'], 'label_attr'=>['class'=>'no-asterisk'], 'label'=>'Please provide some details about your question/comment']);

@@ -373,6 +373,7 @@ class Person {
       if (!$this->dataset_associations->contains($assoc)) {
         $this->dataset_associations->add($assoc);
       }
+
       return $this;
     }
 

@@ -20,6 +20,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
     public function __construct()
     {
     }
+
     /**
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning false will cause this authenticator
@@ -29,6 +30,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
     {
         return $request->headers->has('X-AUTH-TOKEN');
     }
+
     /**
      * Called on every request. Return whatever credentials you want to
      * be passed to getUser(). Returning null will cause this authenticator

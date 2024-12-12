@@ -32,11 +32,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class TempAccessKey {
   public $full_name;
+
   /**
    * @var \Doctrine\Common\Collections\ArrayCollection
    */
   public $datasetAssociation;
+
   public $container;
+
   /**
    * @ORM\Column(type="integer",name="tak_id")
    * @ORM\Id
@@ -58,7 +61,7 @@ class TempAccessKey {
    * @ORM\Column(type="datetime",nullable=false)
    */
   protected \DateTimeInterface $first_access;
-  
+
   /**
    * @ORM\ManyToOne(targetEntity="Dataset")
    * @ORM\JoinColumn(name="dataset_association",referencedColumnName="dataset_uid", nullable=FALSE)
@@ -187,13 +190,14 @@ class TempAccessKey {
      * @return boolean
      */
 		public function isValid() {
-		
+
 			$tak_ttl="PT72H";
 			if ($this->container->hasParameter('tak_ttl')) {
 				$tak_ttl=$this->container->getParameter('tak_ttl');
 			}
+
             return new \DateTime() < $tak->getFirstAccess()->add(new \DateInterval($tak_ttl));
-			
+
 		}			
 
 

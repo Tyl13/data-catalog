@@ -100,21 +100,22 @@ class AddController extends AbstractController {
 
     if ($form->isSubmitted() && $form->isValid()) {
       $dataset = $form->getData();
-      
+
       $addedEntityName = $dataset->getTitle();
       $slug = Slugger::slugify($addedEntityName);
       $dataset->setSlug($slug);
 
       // set Archived field so it doesn't get entered as NULL
       $dataset->setArchived(false);
-      
+
       $em->persist($dataset);
       foreach ($dataset->getAuthorships() as $authorship) {
         $authorship->setDataset($dataset);
         $em->persist($authorship);
       }
+
       $em->flush();
-     
+
       return $this->render('default/add_success.html.twig', ['adminPage'=>true, 'entityName'=>'Dataset', 'displayName'=>'Dataset', 'addedEntityName'=>$addedEntityName, 'userIsAdmin'=>$userIsAdmin, 'uid'=>$datasetUid]);
     } else {
 
@@ -149,10 +150,10 @@ class AddController extends AbstractController {
     }
 
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
-    
+
     //make user-friendly name for display
     $entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));
-    
+
     //prefix with namespaces so it can be called dynamically
     if ($entityName == 'User') {
       $newEntity = 'App\Entity\Security\\' . $entityName;
@@ -160,8 +161,9 @@ class AddController extends AbstractController {
       $newEntity = \App\Entity\Person::class;
     } else {
       $newEntity = 'App\Entity\\' . $entityName;
-      
+
     }
+
     $newEntityFormType = 'App\Form\Type\\' . $entityName . "Type";
 
     $em = $this->getDoctrine()->getManager();
@@ -185,18 +187,19 @@ class AddController extends AbstractController {
           }
         }
       }
-      
+
       $em->persist($entity);
       $em->flush();
-      
+
       //
       // Added, 6/28/2017, Joel Marchewka
       //
       // Retrieves the ID of the entity once it is persisted and adds it to render bundle for the twig
       $addedId=$entity->getId();
-      
+
       return $this->render('default/'.$successTemplate, ['displayName'    => $entityTypeDisplayName, 'adminPage'=>true, 'newSlug'=>$slug, 'userIsAdmin'=>$userIsAdmin, 'entityName'=>$entityName, 'addedEntityName'=> $addedEntityName, 'addedId'=> $addedId]);
     }
+
     return $this->render('default/'.$addTemplate, ['form' => $form->createView(), 'userIsAdmin'=>$userIsAdmin, 'displayName' => $entityTypeDisplayName, 'adminPage'=>true, 'entityName' => $entityName]);
       
   } 

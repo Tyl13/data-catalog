@@ -54,30 +54,33 @@ class UpdateController extends AbstractController {
    * @Route("/update/Dataset/{uid}", defaults={"uid"=null}, name="update_dataset")
    */
   public function UpdateDataset($uid, Request $request) {
-  
+
 		$tak_ttl="PT72H";
 		if ($this->container->hasParameter('tak_ttl')) {
 			$tak_ttl=$this->container->getParameter('tak_ttl');
 		}
-  
+
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($uid == null) {
       $allEntities = $em->getRepository(\App\Entity\Dataset::class)->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_update.html.twig', ['entities'    => $allEntities, 'entityName'  => 'Dataset', 'adminPage'   => true, 'userIsAdmin' => $userIsAdmin, 'displayName' => 'Dataset']);
     }
+
     $thisEntity = $em->getRepository(\App\Entity\Dataset::class)->findOneBy(['dataset_uid'=>$uid]);
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No dataset with UID ' . $uid . ' was found.'
       );
     }
+
     if ($userIsAdmin) {
-    	
+
       $form = $this->createForm(DatasetAsAdminType::class, $thisEntity, ['datasetUid'=>$thisEntity->getId()]);
     } else {
       $form = $this->createForm(DatasetAsUserType::class, new Dataset($userIsAdmin, $uid), $thisEntity[0]);
     }
+
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
       $addedEntityName = $thisEntity->getDisplayName();
@@ -91,10 +94,12 @@ class UpdateController extends AbstractController {
           $oldAuthorships->removeElement($oldAuthor);
         }
       }
+
       foreach ($thisEntity->getAuthorships() as $authorship) {
         $authorship->setDataset($thisEntity);
         $em->persist($authorship);
       }
+
       $thisEntity->setDateUpdated(new \DateTime("now"));
       $em->flush();
       return $this->render('default/update_success.html.twig', ['adminPage'       => true, 'displayName'     => 'Dataset', 'entityName'      => 'Dataset', 'addedEntityName' => $addedEntityName, 'uid'             => $uid, 'newSlug'         => $newSlug]);
@@ -124,12 +129,14 @@ class UpdateController extends AbstractController {
       $allEntities = $em->getRepository('App\Entity\Security\User')->findBy([], ['slug'=>'ASC']);
       return $this->render('default/list_of_entities_to_update.html.twig', ['entities'   => $allEntities, 'entityName' => 'User', 'adminPage'  => true, 'userIsAdmin'=>$userIsAdmin, 'displayName'=>'User']);
     }
+
     $thisEntity = $em->getRepository('App\Entity\Security\User')->findOneBySlug($user);
     if (!$thisEntity) {
       throw $this->createNotFoundException(
-        'No user \'' . $user . '\' was found'
+        "No user '" . $user . "' was found"
       );
     }
+
     $form = $this->createForm(UserType::class, $thisEntity);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
@@ -144,6 +151,7 @@ class UpdateController extends AbstractController {
           }
         }
       }
+
       $em->flush();
       return $this->render('default/update_success.html.twig', ['adminPage'       => true, 'displayName'     => 'User', 'entityName'      => 'User', 'addedEntityName' => $addedUser, 'newSlug'         => $newSlug]);
     } else {
@@ -199,6 +207,7 @@ class UpdateController extends AbstractController {
       } else {
         $allEntities = $em->getRepository($updateEntity)->findBy([], ['slug'=>'ASC']);
       }
+
       return $this->render('default/list_of_entities_to_update.html.twig', ['entities'    => $allEntities, 'entityName'  => $entityName, 'adminPage'   => true, 'userIsAdmin' => $userIsAdmin, 'displayName' => $entityTypeDisplayName]);
     }
 
@@ -218,6 +227,7 @@ class UpdateController extends AbstractController {
       if (method_exists($thisEntity, 'setDateUpdated')) {
         $thisEntity->setDateUpdated(new \DateTime("now"));
       }
+
       $em->flush();
       return $this->render('default/update_success.html.twig', ['adminPage'=>true, 'displayName'=>$entityTypeDisplayName, 'entityName' =>$entityName, 'addedEntityName' => $addedEntityName, 'newSlug'    => $newSlug]);
 

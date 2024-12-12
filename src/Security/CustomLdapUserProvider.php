@@ -14,6 +14,7 @@ use App\Entity\Security\UserRepositoryInterface;
 class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAwareInterface
 {
     private $container;
+
     /**
      * {@inheritdoc}
      */
@@ -45,11 +46,11 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
     {
 
         $user = parent::loadUser($identifier, $entry);
-        
+
         // Fetch the user's actual roles from our database
         $userRepository = $this->container->get('doctrine.orm.entity_manager')->getRepository('App\Entity\Security\User');        
         $databaseRoles = $userRepository->getDatabaseRoles($identifier);
-        
+
         return new LdapUser($entry, $identifier, $user->getPassword(), $databaseRoles);
     }
 

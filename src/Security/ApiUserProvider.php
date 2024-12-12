@@ -10,6 +10,7 @@ use App\Entity\Security\User;
 class ApiUserProvider implements UserProviderInterface {
 
     protected $user;
+
     public function __construct (UserInterface $user) {
         $this->user = $user;
         var_dump("using API provider");
@@ -27,6 +28,7 @@ class ApiUserProvider implements UserProviderInterface {
         if(empty($user)){
             throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException('Could not find user. Sorry!');
         }
+
         $this->user = $user;
         return $user;
     }
@@ -51,7 +53,7 @@ class ApiUserProvider implements UserProviderInterface {
      *
      * @return Boolean
      */
-    function supportsClass($class) {
+    public function supportsClass($class) {
         return $class === 'App\Entity\Security\User';
     }
 }

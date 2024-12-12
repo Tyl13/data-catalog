@@ -96,18 +96,20 @@ class APIController extends AbstractController
         foreach ($datasets as $dataset) {
           $content[] = $dataset->serializeForSolr();
         }
+
         break;
       case "complete":
         $content = [];
         foreach ($datasets as $dataset) {
           $content[] = $dataset->serializeComplete();
         }
+
         break;
       default:
         // default will use the entity's jsonSerialize() method
         $content = $datasets;
     }
-    
+
     if ($_format == "json") {
       $response = new Response();
       $response->setContent(json_encode($content));
@@ -115,6 +117,7 @@ class APIController extends AbstractController
 
       return $response;
     }
+
     return null;
 
 
@@ -157,6 +160,7 @@ class APIController extends AbstractController
           $authorship->setDataset($dataset);
           $em->persist($authorship);
         }
+
         $em->flush();
 
         return new Response('Dataset Successfully Added', \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
@@ -265,6 +269,7 @@ class APIController extends AbstractController
                      ->setParameter('slug', $slug)
                      ->getQuery()->getResult();
     }
+
     $counter = count($entities);
     for ($i = 0; $i < $counter; $i++) {
       $entities[$i] = $entities[$i]->getAllProperties();
@@ -277,6 +282,7 @@ class APIController extends AbstractController
 
       return $response;
     }
+
     return null;
 
 

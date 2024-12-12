@@ -49,10 +49,12 @@ class AccessRestrictionToStringTransformer implements DataTransformerInterface {
     if (null === $accessRestriction) {
       return "";
     }
+
     $options = [];
     foreach ($accessRestriction as $restriction) {
       $options[] = $restriction->getRestriction();
     }
+
     return implode(",", $options);
   }
 

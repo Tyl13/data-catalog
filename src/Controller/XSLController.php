@@ -30,6 +30,7 @@ class XSLController extends AbstractController
 
         $response = new Response();
         $response->setContent($xml);
+
         $response->headers->set('Content-Type', 'text/xml');
         return $response;
     }

@@ -29,9 +29,13 @@ class SolrSearchr {
 
   // Request-level defaults are set here
   protected $solrSort = "dataset_title_str+asc";
+
   protected $solrResultsPP = 10;
+
   protected $solrPageNum = 1;
+
   protected $solrKeyword = "*";
+
   protected $solrFacetQuery;
 
   // Will become a SearchState object representing current user query
@@ -81,7 +85,7 @@ class SolrSearchr {
     if (!$resp = curl_exec($ch)) {
       trigger_error(curl_error($ch));
     }
-    
+
     curl_close($ch);
     return $resp;
 
@@ -131,7 +135,7 @@ class SolrSearchr {
    * @return string The Keyword portion of the URL
    */
   protected function makeKeywordQuery() {
-    
+
     $base_query = "q=";
     $keyword_query_string = trim($this->solrKeyword);
     // the default state:
@@ -147,6 +151,7 @@ class SolrSearchr {
           // if the original query is quoted, just use it again for the field search
           $quoted_keyword_query_string = $keyword_query_string;
         }
+
         // search all fields, and then search the title field separately to improve relevancy
         $final_query_string = $keyword_query_string . " OR dataset_title:" . $quoted_keyword_query_string;
       } else {
@@ -198,6 +203,7 @@ class SolrSearchr {
         } else {
           $this_facet_string = "&fq=" . urlencode($this->solrFacetQuery[$i]);
         }
+
         $facet_query_string .= $this_facet_string;
       }
     }
@@ -230,7 +236,7 @@ class SolrSearchr {
     }
 
     return $parts[0] . ":" . "[" . $start . " TO " . $end . "]";
-    
+
   }
 
 

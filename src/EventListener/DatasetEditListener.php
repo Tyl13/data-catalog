@@ -82,6 +82,7 @@ class DatasetEditListener
                 // if we're setting the 'archived' value on initial dataset entry
                 $edit->setEditType("created");
             }
+
         // if 'archived' isn't being set in this call, we're almost certainly updating an existing entry
         } elseif ($entityAlreadyExists) {
             $edit->setEditType("updated");
@@ -106,7 +107,7 @@ class DatasetEditListener
 
     public function getUser()
     {
-        if (null === $token = $this->tokenStorage->getToken()) {
+        if (!$token = $this->tokenStorage->getToken() instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
             return null;
         }
 

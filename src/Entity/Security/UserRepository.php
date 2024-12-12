@@ -50,11 +50,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 ->getQuery();
       try {
         $userData = $q->getSingleResult();
-      } catch (NoResultException $e) {
+      } catch (NoResultException $noResultException) {
         $message = sprintf(
           'Unable to find database user "%s"', $username
         );
-        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $noResultException);
       }
 
       return $userData;
@@ -70,11 +70,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 ->getQuery();
       try {
         $userData = $q->getSingleResult();
-      } catch (NoResultException $e) {
+      } catch (NoResultException $noResultException) {
         $message = sprintf(
           'Unable to find database user "%s"', $username
         );
-        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $noResultException);
       }
 
       return $userData->getRoles();
@@ -90,11 +90,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 ->getQuery();
       try {
         $userData = $q->getSingleResult();
-      } catch (NoResultException $e) {
+      } catch (NoResultException $noResultException) {
         $message = sprintf(
           'Unable to find user with API key: "%s"', $username
         );
-        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $noResultException);
       }
 
       return $userData;

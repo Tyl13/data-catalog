@@ -31,6 +31,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Project {
   public $datasets_dataset_uid;
+
   /**
    * @ORM\Column(type="integer",name="project_id")
    * @ORM\Id

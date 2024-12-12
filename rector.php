@@ -12,8 +12,8 @@ return RectorConfig::configure()
         __DIR__ . '/src',
     ])
     // uncomment to reach your current PHP version
-    // ->withPhpSets()
-    ->withPreparedSets(doctrineCodeQuality: true)
+    ->withPhpSets()
+    ->withPreparedSets(deadCode: true, codeQuality: true, codingStyle: true, symfonyCodeQuality: true)
     ->withSets([
         SymfonySetList::SYMFONY_54,
         SymfonySetList::SYMFONY_CODE_QUALITY,

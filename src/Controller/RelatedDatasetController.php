@@ -66,10 +66,11 @@ class RelatedDatasetController extends AbstractController
         if ($notes) {
           $section['relationshipNotes'] = $notes;
         }
+
         $datasetsForDisplay[] = $section;
       }
     }
-    
+
     if ($datasetsForDisplay !== []) {
       if ($format == 'html') {
 	      return $this->render('default/related_dataset_links.html.twig',
@@ -84,6 +85,7 @@ class RelatedDatasetController extends AbstractController
       // return empty response so the "Related Datasets" field will not appear
       return new Response();
     }
+
     return null; 
   }
 

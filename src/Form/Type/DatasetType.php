@@ -32,9 +32,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DatasetType extends AbstractType {
 
   public $container;
+
   protected $years;
+
   protected $yearsIncludingPresent;
-  
+
   /**
    * Build the form
    *
@@ -48,6 +50,7 @@ class DatasetType extends AbstractType {
     if ($this->userIsAdmin) {
       $builder->add('origin','choice',['required'=> true, 'label'   => 'Origin', 'choices' => ['Internal'=>'Internal', 'External'=>'External'], 'expanded'=>true]);
     }
+
     $builder->add('description', 'textarea', ['required' => true, 'attr'=>['rows'=>'7', 'placeholder'=>'Please provide a brief description of the dataset'], 'label'    => 'Description']);
     if ($this->userIsAdmin) {
       $builder->add('published', 'choice', ['required' => true, 'expanded' => true, 'label'    => 'Published to Data Catalog?', 'choice_list'=> new ChoiceList([true, false], ['Yes', 'Not yet'])]);
@@ -59,16 +62,19 @@ class DatasetType extends AbstractType {
       $builder->add('publishers', 'entity', ['class'   => 'App:Publisher', 'property'=> 'publisher_name', 'required' => false, 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.publisher_name','ASC'), 'attr'=>['style'=>'width:100%'], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Publishers']);
       $builder->add('access_restrictions', 'entity', ['class'    => 'App:AccessRestriction', 'property' => 'restriction', 'attr'=>['style'=>'width:100%'], 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.restriction','ASC'), 'required' => false, 'by_reference'=>false, 'multiple' => true, 'label'     => 'Access Restrictions']);
     }
+
     $builder->add('access_instructions', 'textarea', ['attr'=>['rows'=>'7', 'placeholder'=>'Provide any information on restrictions or conditions for gaining access to data'], 'label'    => 'Access Instructions']);
-  
+
     //accession information
     $builder->add('data_locations', 'collection', ['type'      => new DataLocationType(), 'required' => false, 'by_reference'=>false, 'label'     => 'Data Location', 'prototype' => true, 'allow_delete' => true, 'allow_add' => true]);
     if ($this->userIsAdmin) {
         $builder->add('pubmed_search', 'text', ['required' => false, 'label'    => 'PubMed Search URL']);
     }
+
     if ($this->userIsAdmin) {
       $builder->add('date_archived', 'date', ['years'  => $this->years, 'required' => false, 'label'    => 'Date Archived']);
     }
+
     $builder->add('other_resources', 'collection', ['type'      => new OtherResourceType(), 'required' => false, 'by_reference'=>false, 'label'     => 'Other Resources', 'prototype' => true, 'allow_delete' => true, 'allow_add' => true]);
 
     //technical details
@@ -84,6 +90,7 @@ class DatasetType extends AbstractType {
     if ($this->userIsAdmin) {
       $builder->add('related_datasets', 'collection', ['type'      => new DatasetRelationshipType(), 'required' => false, 'by_reference'=>false, 'prototype' => true, 'label'     => 'Related Datasets', 'allow_delete' => true, 'allow_add' => true]);
      }
+
     //content information
     $builder->add('authorships', 'collection', ['class' => 'App:PersonAssociation', 'prototype' => true, 'required'=>false, 'by_reference'=>false, 'label'=>'Authors', 'allow_delete'=>true, 'allow_add'=>true]);
     $builder->add('corresponding_authors', 'entity', ['class' => 'App:Person', 'property'=>'full_name', 'required'=>false, 'attr'=>['style'=>'width:100%'], 'multiple'=>true, 'by_reference'=>false, 'label'=>'Corresponding Authors']);
@@ -109,7 +116,7 @@ class DatasetType extends AbstractType {
 
 
     $builder->add('save',SubmitType::class,["label"=>"Submit", 'attr'=>['class'=>'spacer']]);
-     
+
 
   }
 

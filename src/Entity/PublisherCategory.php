@@ -148,6 +148,7 @@ class PublisherCategory {
     {
         return $this->slug;
     }
+
     public function __construct()
     {
         $this->publishers = new \Doctrine\Common\Collections\ArrayCollection();

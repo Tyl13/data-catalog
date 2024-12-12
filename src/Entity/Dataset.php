@@ -135,7 +135,7 @@ class Dataset implements JsonSerializable {
   protected ?string $pubmed_search = null;
 
 
-  
+
   /**
    * @ORM\Column(type="date", nullable=true)
    */
@@ -153,7 +153,7 @@ class Dataset implements JsonSerializable {
    */
   protected ?\DateTimeInterface $date_archived = null;
 
-  
+
   /**
    * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
    */
@@ -296,7 +296,7 @@ class Dataset implements JsonSerializable {
    */
   protected \Doctrine\Common\Collections\Collection $data_types;
 
-  
+
   /**
    * @ORM\ManyToMany(targetEntity="SubjectGeographicArea", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_geographic_areas",
@@ -307,8 +307,8 @@ class Dataset implements JsonSerializable {
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicArea>
    */
   protected \Doctrine\Common\Collections\Collection $subject_geographic_areas;
-  
-  
+
+
   /**
    * @ORM\ManyToMany(targetEntity="SubjectGeographicAreaDetail", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_geographic_area_details",
@@ -319,8 +319,8 @@ class Dataset implements JsonSerializable {
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicAreaDetail>
    */
   protected \Doctrine\Common\Collections\Collection $subject_geographic_area_details;
-  
-  
+
+
   /**
    * @ORM\ManyToMany(targetEntity="SubjectDomain", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_subject_domains",
@@ -331,8 +331,8 @@ class Dataset implements JsonSerializable {
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectDomain>
    */
   protected \Doctrine\Common\Collections\Collection $subject_domains;
-  
-  
+
+
   /**
    * @ORM\ManyToMany(targetEntity="Publication", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_publications",
@@ -1434,6 +1434,7 @@ class Dataset implements JsonSerializable {
     {
         return $this->subject_geographic_areas;
     }
+
     /**
      * Add subject_geographic_area_details
      *
@@ -1796,39 +1797,82 @@ class Dataset implements JsonSerializable {
      * @return array
      */
     public function jsonSerialize() {
-      $formats = $awards = $projects = $restrictions = $stds = $genders = $sexes = $ages = [];
-      $equipment = $software = $subject_of_study = $others = [];
-      $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
-      $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
-
+      $formats = [];
+      $awards = [];
+      $projects = [];
+      $restrictions = [];
+      $stds = [];
+      $genders = [];
+      $sexes = [];
+      $ages = [];
+      $equipment = [];
+      $software = [];
+      $subject_of_study = [];
+      $others = [];
+      $locs = [];
+      $rel = [];
+      $areas = [];
+      $area_details = [];
+      $domains = [];
+      $publications = [];
+      $keywords = [];
+      $publishers = [];
+      $authors = [];
+      $data_type_array = [];
+      $types_of_study = [];
+      $experts = [];
       // these related entities can be added on the fly so we use getAllProperties
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
+
       foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
+
       foreach ($this->other_resources as $other) { $others[]=$other->getAllProperties(); }
+
       foreach ($this->related_datasets as $rel) { $rels[]=$rel->getAllProperties(); }
+
       foreach ($this->authorships as $authorship) { $authors[]=$authorship->getAllProperties(); }
 
       // these related entities will already exist in the catalog so we reference them w/ their displayName
       foreach ($this->subject_keywords as $kwd) { $keywords[]=$kwd->getDisplayName(); }
+
       foreach ($this->publishers as $pubber) { $publishers[]=$pubber->getDisplayName(); }
+
       foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
+
       foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
+
       foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
+
       foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
+
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+
       foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
+
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
+
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName(); }
+
       foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
+
       foreach ($this->projects as $project) { $projects[]=$project->getDisplayName(); }
+
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
+
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getDisplayName(); }
+
       foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
+
       foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
+
       foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
+
       foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getDisplayName(); }
+
       foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getDisplayName(); }
+
       foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
+
       foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getDisplayName(); }
 
       return [
@@ -1881,47 +1925,98 @@ class Dataset implements JsonSerializable {
      * @return array
      */
      public function serializeForSolr() {
-        
-       $formats = $projects = $awards = $restrictions = $stds = $genders = $sexes = $ages = $equipment = $software = $subject_of_study = $subject_of_study_only = $resource_types = [];
-       $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
-       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = $data_locations = $akas = $related_datasets = [];
-       $other_resource_names = $other_resource_descriptions = $related_pubs = $data_location_contents = [];
-       $accession_numbers = $access_instructions = [];
+
+       $formats = [];
+       $projects = [];
+       $awards = [];
+       $restrictions = [];
+       $stds = [];
+       $genders = [];
+       $sexes = [];
+       $ages = [];
+       $equipment = [];
+       $software = [];
+       $subject_of_study = [];
+       $subject_of_study_only = [];
+       $resource_types = [];
+       $areas = [];
+       $area_details = [];
+       $domains = [];
+       $publications = [];
+       $keywords = [];
+       $publishers = [];
+       $authors = [];
+       $data_type_array = [];
+       $types_of_study = [];
+       $corresponding_authors = [];
+       $experts = [];
+       $data_locations = [];
+       $akas = [];
+       $other_resource_names = [];
+       $other_resource_descriptions = [];
+       $data_location_contents = [];
+       $accession_numbers = [];
        foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+
        foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
+
        foreach ($this->awards as $award) { $awards[]=$award->getDisplayName(); }
+
        foreach ($this->projects as $project) { $projects[]=$project->getDisplayName(); }
+
        foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
+
        foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getDisplayName().' '.$std->getNotes(); }
+
        foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
+
        foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
+
        foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
+
        foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getDisplayName(); }
+
        foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getDisplayName(); }
+
        foreach ($this->subject_domains as $domain) { $domains[]=$domain->getDisplayName(); }
+
        foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
+
        foreach ($this->subject_keywords as $kwd) { $keywords[]=$kwd->getDisplayName(); }
+
        foreach ($this->publishers as $pubber) { $publishers[]=$pubber->getDisplayName(); }
+
        foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
+
        foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
+
        foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
+
        foreach ($this->authorships as $authorship) { $authors[]=$authorship->getPerson()->getDisplayName(); }
+
        foreach ($this->corresponding_authors as $corresponding_author) { $corresponding_authors[]=$corresponding_author->getDisplayName(); }
+
        foreach ($this->local_experts as $expert) { $experts[]=$expert->getDisplayName(); }
+
        foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getSubjectOfStudy()." ".$subject->getSpecies()." ".$subject->getTissueCellLine(); $subject_of_study_only = $subject->getDisplayName(); }
+
        foreach ($this->related_software as $sw) { $software[]=$sw->getDisplayName(); }
+
        foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getDisplayName(); }
 
        foreach ($this->other_resources as $resource) { 
          $other_resource_names[]=$resource->getDisplayName(); 
          $other_resource_descriptions[]=$resource->getResourceDescription(); 
        }
+
        foreach ($this->data_locations as $loc) { 
          $data_locations[]=$loc->getDataAccessUrl(); 
          $data_location_contents[]=$loc->getLocationContent(); 
          $accession_numbers[]=$loc->getAccessionNumber(); 
        }
+
        foreach ($this->publications as $pub) { $publications[]=$pub->getDisplayName(); }
+
        return ['id'                    => $this->dataset_uid, 'dataset_title'         => $this->title, 'dataset_alt_title'     => $akas, 'origin'                => $this->origin, 'description'           => $this->description, 'dataset_end_date'      => $this->subject_end_date, 'dataset_start_date'    => $this->subject_start_date, 'local_experts'         => $experts, 'authors'               => $authors, 'corresponding_authors' => $corresponding_authors, 'date_added'            => $this->date_added, 'date_updated'          => $this->date_updated, 'dataset_formats'       => $formats, 'resource_types'        => $resource_types, 'data_types'            => $data_type_array, 'study_types'           => $types_of_study, 'collection_standards'  => $stds, 'awards'                => $awards, 'projects'              => $projects, 'access_restrictions'   => $restrictions, 'subject_population_ages'=>$ages, 'subject_geographic_area'=>$areas, 'subject_geographic_area_details'=>$area_details, 'subject_domain'        => $domains, 'subject_keywords'      => $keywords, 'subject_genders'       => $genders, 'subject_sexes'         => $sexes, 'publishers'            => $publishers, 'subject_of_study'      => $subject_of_study, 'subject_of_study_only' => $subject_of_study_only, 'related_software'      => $software, 'related_equipment'     => $equipment, 'other_resource_names'       => $other_resource_names, 'other_resource_descriptions'=> $other_resource_descriptions, 'data_locations'             => $data_locations, 'data_location_contents'     => $data_location_contents, 'accession_numbers'          => $accession_numbers, 'publications'               => $publications, 'access_instructions'        => $this->access_instructions];
      }
 
@@ -1934,36 +2029,81 @@ class Dataset implements JsonSerializable {
      * @return array
      */
     public function serializeComplete() {
-      $formats = $projects = $awards = $restrictions = $stds = $genders = $sexes = $ages = $resource_types = [];
-      $equipment = $software = $subject_of_study = $others = [];
-      $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
-      $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
-
+      $formats = [];
+      $projects = [];
+      $awards = [];
+      $restrictions = [];
+      $stds = [];
+      $genders = [];
+      $sexes = [];
+      $ages = [];
+      $resource_types = [];
+      $equipment = [];
+      $software = [];
+      $subject_of_study = [];
+      $others = [];
+      $locs = [];
+      $rel = [];
+      $areas = [];
+      $area_details = [];
+      $domains = [];
+      $publications = [];
+      $keywords = [];
+      $publishers = [];
+      $authors = [];
+      $data_type_array = [];
+      $types_of_study = [];
+      $experts = [];
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
+
       foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
+
       foreach ($this->other_resources as $other) { $others[]=$other->getAllProperties(); }
+
       foreach ($this->related_datasets as $rel) { $rels[]=$rel->getAllProperties(); }
+
       foreach ($this->authorships as $authorship) { $authors[]=$authorship->getAllProperties(); }
+
       foreach ($this->subject_keywords as $kwd) { $keywords[]=$kwd->getAllProperties(); }
+
       foreach ($this->publishers as $pubber) { $publishers[]=$pubber->getAllProperties(); }
+
       foreach ($this->publications as $pub) { $publications[]=$pub->getAllProperties(); }
+
       foreach ($this->access_restrictions as $restriction) { $restrictions[]=$restriction->getDisplayName(); }
+
       foreach ($this->related_equipment as $equip) { $equipment[]=$equip->getAllProperties(); }
+
       foreach ($this->related_software as $sw) { $software[]=$sw->getAllProperties(); }
+
       foreach ($this->dataset_formats as $format) { $formats[]=$format->getDisplayName(); }
+
       foreach ($this->resource_types as $resource_type) { $resource_types[]=$resource_type->getDisplayName(); }
+
       foreach ($this->data_types as $data_type) { $data_type_array[]=$data_type->getDisplayName(); }
+
       foreach ($this->data_collection_instruments as $std) { $stds[]=$std->getAllProperties(); }
+
       foreach ($this->awards as $award) { $awards[]=$award->getAllProperties(); }
+
       foreach ($this->projects as $project) { $projects[]=$project->getAllProperties(); }
+
       foreach ($this->local_experts as $expert) { $experts[]=$expert->getAllProperties(); }
+
       foreach ($this->subject_domains as $domain) { $domains[]=$domain->getAllProperties(); }
+
       foreach ($this->subject_genders as $gender) { $genders[]=$gender->getDisplayName(); }
+
       foreach ($this->subject_sexes as $sex) { $sexes[]=$sex->getDisplayName(); }
+
       foreach ($this->subject_population_ages as $age) { $ages[]=$age->getDisplayName(); }
+
       foreach ($this->subject_geographic_areas as $area) { $areas[]=$area->getAllProperties(); }
+
       foreach ($this->subject_geographic_area_details as $detail) { $area_details[]=$detail->getAllProperties(); }
+
       foreach ($this->study_types as $study_type) { $types_of_study[]=$study_type->getDisplayName(); }
+
       foreach ($this->subject_of_study as $subject) { $subject_of_study[]=$subject->getAllProperties(); }
 
       return [
@@ -2032,6 +2172,7 @@ class Dataset implements JsonSerializable {
       if ($this->authorships->contains($authorship)) {
         $this->authorships->removeElement($authorship);
       }
+
       return $this;
     }
 
@@ -2043,6 +2184,7 @@ class Dataset implements JsonSerializable {
     {
       $this->getAuthorships()->clear();
     }
+
     /**
      * 
      * Get authorships

@@ -54,6 +54,7 @@ class SearchResults {
     else {
       throw new \RuntimeException('Solr server is reachable, but returns unexpected response. Check the full URL that is being requested');
     }
+
     //$this->dateFacets   = (array) $this->solrResponse->facet_counts->facet_ranges->dataset_years->counts;
     //array_unshift($this->dateFacets, array('before',$this->solrResponse->facet_counts->facet_ranges->dataset_years->before));
     //$this->facets['dataset_years'] = $this->dateFacets;
@@ -80,15 +81,16 @@ class SearchResults {
     $translatedFacets = [];
     $rawFacets = (array) $rawFacets;
     foreach ($rawFacets as $key=>$value) {
-      $newFacetName = array_search($key, $this->facetMappings);
+      $newFacetName = array_search($key, $this->facetMappings, true);
       foreach ($value as $facetItem) {
         $translatedFacets[$newFacetName][] = ['facetItem' => $facetItem[0], 'facetCount'=> $facetItem[1]];
       }
     }
+
     /*
 
     $timeframes = $translatedFacets['Timeframe'];
-    
+
     $begin  = substr($timeframes[1]['facetItem'], 0, 4);
     $second = substr($timeframes[2]['facetItem'], 0, 4);
     $third  = substr($timeframes[3]['facetItem'], 0, 4);

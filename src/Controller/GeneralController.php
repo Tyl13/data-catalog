@@ -79,11 +79,12 @@ class GeneralController extends AbstractController
    * @Route("/search", name="user_search_results")
    */
   public function search(Request $request) {
-    
+
     $currentSearch = new SearchState($request);
 
     $solr = $this->get('SolrSearchr');
     $solr->setUserSearch($currentSearch);
+
     $resultsFromSolr = $solr->fetchFromSolr();
 
     $results = new SearchResults($resultsFromSolr);
@@ -317,11 +318,12 @@ class GeneralController extends AbstractController
 						$view_access=true;
 						
 					} else {
-					
+
 						$tak_ttl="PT72H";
 						if ($this->container->hasParameter('tak_ttl')) {
 							$tak_ttl=$this->container->getParameter('tak_ttl');
-						}					
+						}
+
 						if (new \DateTime()<$tak->getFirstAccess()->modify($tak_ttl)) {
 							$view_access=true;
 						} else {

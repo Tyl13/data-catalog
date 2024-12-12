@@ -63,6 +63,7 @@ class DatasetRepository extends EntityRepository
       if (!is_numeric($newId)) {
         $newId = 1;
       }
+
       return $newId;
 
     }

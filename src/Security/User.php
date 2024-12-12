@@ -35,6 +35,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @var int
    */
   public $id;
+
   /**
    * @ORM\Column(type="integer", name="user_id")
    * @ORM\Id
@@ -96,7 +97,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     return $this;
   }
-    
+
   /**
    * Get name for display
    *
@@ -173,6 +174,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         if ($this->password !== $user->getPassword()) {
             return false;
         }
+
         return $this->username === $user->getUsername();
     }
 

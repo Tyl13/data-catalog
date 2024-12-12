@@ -33,6 +33,7 @@ use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 class SubmitDatasetFormEmailType extends AbstractType {
 
 	protected $options;
+
   protected $affiliationOptions;
 
   /**

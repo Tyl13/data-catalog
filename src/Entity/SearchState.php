@@ -25,9 +25,13 @@ namespace App\Entity;
 class SearchState {
 
   public $facets;
+
   public $resultsPP;
+
   public $keyword;
+
   public $sort;
+
   public $page;
 
  /**
@@ -42,7 +46,7 @@ class SearchState {
     $this->resultsPP = $request->query->get('results') ?: '10';
     $this->page = $request->query->get('page') ?: '0';
     $this->sort = $request->query->get('sort');
-    
+
     if ($this->keyword && !$this->sort) {
       // if a keyword was entered, but sort wasn't specified
       $this->sort = 'relevance';
