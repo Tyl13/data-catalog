@@ -32,18 +32,18 @@ class DataLocationURL {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=1028)
    */
-  protected $data_access_url;
+  protected ?string $data_access_url = null;
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="data_location_urls")
    * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
    */
-  protected $datasets_dataset_uid;
+  protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 
     /**

@@ -36,33 +36,34 @@ class SubjectOfStudy {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $subject_of_study;
+  protected ?string $subject_of_study = null;
 
   /**
    * @ORM\Column(type="string",length=255, nullable=true)
    */
-  protected $species;
+  protected ?string $species = null;
 
   /**
    * @ORM\Column(type="string",length=255, nullable=true)
    */
-  protected $tissue_cell_line;
+  protected ?string $tissue_cell_line = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_of_study")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
    * get name for display

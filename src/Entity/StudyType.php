@@ -36,23 +36,24 @@ class StudyType {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $study_type;
+  protected ?string $study_type = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="study_types")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
    * get name for display

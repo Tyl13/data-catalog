@@ -32,34 +32,34 @@ class PersonAssociation {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $person_association_id;
+  protected ?int $person_association_id = null;
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $role;
+  protected ?string $role = null;
 
   /**
    * @ORM\Column(type="boolean",length=128)
    */
-  protected $is_corresponding_author = false;
+  protected ?bool $is_corresponding_author = false;
 
   /**
    * @ORM\Column(type="integer", nullable=true)
    */
-  protected $display_order;
+  protected ?int $display_order = null;
 
   /**
    * @ORM\ManyToOne(targetEntity="Person", inversedBy="dataset_associations")
    * @ORM\JoinColumn(name="person_id",referencedColumnName="person_id", nullable=FALSE)
    */
-  protected $person;
+  protected ?\App\Entity\Person $person = null;
   
   /**
    * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="authorships")
    * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid", nullable=FALSE)
    */
-  protected $dataset;
+  protected ?\App\Entity\Dataset $dataset = null;
 
 
     /**

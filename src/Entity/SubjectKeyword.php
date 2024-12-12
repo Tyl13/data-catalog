@@ -36,29 +36,30 @@ class SubjectKeyword {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $keyword;
+  protected ?string $keyword = null;
 
   /**
    * @ORM\Column(type="string",length=256, nullable=true)
    */
 
-  protected $mesh_code;
+  protected ?string $mesh_code = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
 
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_keywords")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
    * get name for display

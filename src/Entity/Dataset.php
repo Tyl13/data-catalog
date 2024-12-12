@@ -38,138 +38,138 @@ class Dataset implements JsonSerializable {
    * @ORM\Column(type="integer", unique=true)
    */
   #[Assert\NotBlank]
-  protected $dataset_uid;
+  protected ?int $dataset_uid = null;
 
   /**
    * @ORM\Column(type="string",length=16, options={"default"="Internal"})
    */
-  protected $origin;
+  protected ?string $origin = null;
 
   /**
    * @ORM\Column(type="string", length=255, unique=true)
    */
   #[Assert\NotBlank]
-  protected $title;
+  protected ?string $title = null;
 
   /**
    * @ORM\Column(type="boolean", options={"default"=false})
    */
-  protected $published;
+  protected ?bool $published = null;
 
   /**
    * @ORM\Column(type="string", length=512, nullable=true)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\Column(type="text", length=3000)
    */
   #[Assert\NotBlank]
-  protected $description;
+  protected ?string $description = null;
 
 
   /**
    * @ORM\Column(type="string", length=16, nullable=true)
    */
-  protected $subject_start_date;
+  protected ?string $subject_start_date = null;
 
 
   /**
    * @ORM\Column(type="string", length=16, nullable=true)
    */
-  protected $subject_end_date;
+  protected ?string $subject_end_date = null;
 
 
   /**
    * @ORM\Column(type="string", length=128, nullable=true)
    */
-  protected $dataset_size;
+  protected ?string $dataset_size = null;
 
 
   /**
    * @ORM\Column(type="string", length=256, nullable=true)
    */
-  protected $subscriber;
+  protected ?string $subscriber = null;
 
 
   /**
    * @ORM\Column(type="text", length=3000, nullable=true)
    */
-  protected $access_instructions;
+  protected ?string $access_instructions = null;
 
 
   /**
    * @ORM\Column(type="text", length=3000, nullable=true)
    */
-  protected $licensing_details;
+  protected ?string $licensing_details = null;
 
 
   /**
    * @ORM\Column(type="date", nullable=true)
    */
-  protected $license_expiration_date;
+  protected ?\DateTimeInterface $license_expiration_date = null;
 
 
   /**
    * @ORM\Column(type="text", length=1028, nullable=true)
    */
-  protected $erd_url;
+  protected ?string $erd_url = null;
 
 
   /**
    * @ORM\Column(type="text", length=1028, nullable=true)
    */
-  protected $library_catalog_url;
+  protected ?string $library_catalog_url = null;
 
 
   /**
    * @ORM\Column(type="string", length=256, nullable=true)
    */
-  protected $funder_category;
+  protected ?string $funder_category = null;
 
 
   /**
    * @ORM\Column(type="text", length=1028, nullable=true)
    */
-  protected $pubmed_search;
+  protected ?string $pubmed_search = null;
 
 
   
   /**
    * @ORM\Column(type="date", nullable=true)
    */
-  protected $date_added;
+  protected ?\DateTimeInterface $date_added = null;
 
 
   /**
    * @ORM\Column(type="date", nullable=true)
    */
-  protected $date_updated;
+  protected ?\DateTimeInterface $date_updated = null;
 
 
   /**
    * @ORM\Column(type="date", nullable=true)
    */
-  protected $date_archived;
+  protected ?\DateTimeInterface $date_archived = null;
 
   
   /**
    * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
    */
-  protected $archived;
+  protected ?bool $archived = null;
 
 
   /**
    * @ORM\Column(type="string", length=500, nullable=true)
    */
-  protected $archival_notes;
+  protected ?string $archival_notes = null;
 
 
   /**
    * @ORM\Column(type="text", length=3000, nullable=true)
    */
-  protected $data_location_description;
+  protected ?string $data_location_description = null;
 
 
   /**
@@ -180,23 +180,22 @@ class Dataset implements JsonSerializable {
    *
    * @ORM\Column(type="text", length=500, nullable=true)
    */
-  protected $last_edit_notes;
+  protected ?string $last_edit_notes = null;
 
   //
   //
   // BEGIN ASSOCIATED ENTITIES
   //
   //
-
-
   /**
    * @ORM\ManyToMany(targetEntity="DatasetFormat", cascade={"persist"}, inversedBy="datasets")
    * @ORM\JoinTable(name="datasets_dataset_formats",
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="data_format_id",referencedColumnName="data_format_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetFormat>
    */
-  protected $dataset_formats;
+  protected \Doctrine\Common\Collections\Collection $dataset_formats;
 
   /**
    * @ORM\ManyToMany(targetEntity="ResourceType", cascade={"persist"}, inversedBy="datasets")
@@ -204,8 +203,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="resource_type_id",referencedColumnName="resource_type_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ResourceType>
    */
-  protected $resource_types;
+  protected \Doctrine\Common\Collections\Collection $resource_types;
 
 
   /**
@@ -214,8 +214,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="award_id",referencedColumnName="award_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Award>
    */
-  protected $awards;
+  protected \Doctrine\Common\Collections\Collection $awards;
 
 
   /**
@@ -225,8 +226,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="project_id",referencedColumnName="project_id")}
    *                )
    * @ORM\OrderBy({"project_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Project>
    */
-  protected $projects;
+  protected \Doctrine\Common\Collections\Collection $projects;
 
 
   /**
@@ -235,8 +237,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="restriction_id",referencedColumnName="restriction_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AccessRestriction>
    */
-  protected $access_restrictions;
+  protected \Doctrine\Common\Collections\Collection $access_restrictions;
 
 
   /**
@@ -245,8 +248,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="standard_id",referencedColumnName="standard_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataCollectionInstrument>
    */
-  protected $data_collection_instruments;
+  protected \Doctrine\Common\Collections\Collection $data_collection_instruments;
 
 
   /**
@@ -255,8 +259,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="gender_id",referencedColumnName="gender_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGender>
    */
-  protected $subject_genders;
+  protected \Doctrine\Common\Collections\Collection $subject_genders;
 
 
   /**
@@ -265,8 +270,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="sex_id",referencedColumnName="sex_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectSex>
    */
-  protected $subject_sexes;
+  protected \Doctrine\Common\Collections\Collection $subject_sexes;
 
 
   /**
@@ -275,8 +281,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="pop_age_id",referencedColumnName="pop_age_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectPopulationAge>
    */
-  protected $subject_population_ages;
+  protected \Doctrine\Common\Collections\Collection $subject_population_ages;
 
 
   /**
@@ -285,8 +292,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="data_type_id",referencedColumnName="data_type_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataType>
    */
-  protected $data_types;
+  protected \Doctrine\Common\Collections\Collection $data_types;
 
   
   /**
@@ -296,8 +304,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="area_id",referencedColumnName="area_id")}
    *                )
    * @ORM\OrderBy({"geographic_area_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicArea>
    */
-  protected $subject_geographic_areas;
+  protected \Doctrine\Common\Collections\Collection $subject_geographic_areas;
   
   
   /**
@@ -307,8 +316,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="area_detail_id",referencedColumnName="area_detail_id")}
    *                )
    * @ORM\OrderBy({"geographic_area_detail_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicAreaDetail>
    */
-  protected $subject_geographic_area_details;
+  protected \Doctrine\Common\Collections\Collection $subject_geographic_area_details;
   
   
   /**
@@ -318,8 +328,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="subject_domain_id",referencedColumnName="subject_domain_id")}
    *                )
    * @ORM\OrderBy({"subject_domain"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectDomain>
    */
-  protected $subject_domains;
+  protected \Doctrine\Common\Collections\Collection $subject_domains;
   
   
   /**
@@ -328,8 +339,9 @@ class Dataset implements JsonSerializable {
    *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
    *                inverseJoinColumns={@ORM\JoinColumn(name="publication_id",referencedColumnName="publication_id")}
    *                )
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publication>
    */
-  protected $publications;
+  protected \Doctrine\Common\Collections\Collection $publications;
 
 
   /**
@@ -339,8 +351,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="keyword_id",referencedColumnName="keyword_id")}
    *                )
    * @ORM\OrderBy({"keyword"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectKeyword>
    */
-  protected $subject_keywords;
+  protected \Doctrine\Common\Collections\Collection $subject_keywords;
 
 
   /**
@@ -350,8 +363,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="study_type_id",referencedColumnName="study_type_id")}
    *                )
    * @ORM\OrderBy({"study_type"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StudyType>
    */
-  protected $study_types;
+  protected \Doctrine\Common\Collections\Collection $study_types;
 
 
   /**
@@ -361,8 +375,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_id",referencedColumnName="publisher_id")}
    *                )
    * @ORM\OrderBy({"publisher_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publisher>
    */
-  protected $publishers;
+  protected \Doctrine\Common\Collections\Collection $publishers;
 
 
   /**
@@ -372,8 +387,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
    *                )
    * @ORM\OrderBy({"full_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Person>
    */
-  protected $corresponding_authors;
+  protected \Doctrine\Common\Collections\Collection $corresponding_authors;
 
 
   /**
@@ -383,8 +399,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
    *                )
    * @ORM\OrderBy({"full_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Person>
    */
-  protected $local_experts;
+  protected \Doctrine\Common\Collections\Collection $local_experts;
 
 
   /**
@@ -394,8 +411,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="related_software_id",referencedColumnName="related_software_id")}
    *                )
    * @ORM\OrderBy({"software_name"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\RelatedSoftware>
    */
-  protected $related_software;
+  protected \Doctrine\Common\Collections\Collection $related_software;
 
 
   /**
@@ -405,8 +423,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="related_equipment_id",referencedColumnName="related_equipment_id")}
    *                )
    * @ORM\OrderBy({"related_equipment"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\RelatedEquipment>
    */
-  protected $related_equipment;
+  protected \Doctrine\Common\Collections\Collection $related_equipment;
 
 
   /**
@@ -416,8 +435,9 @@ class Dataset implements JsonSerializable {
    *                inverseJoinColumns={@ORM\JoinColumn(name="subject_of_study_id",referencedColumnName="subject_of_study_id")}
    *                )
    * @ORM\OrderBy({"subject_of_study"="ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectOfStudy>
    */
-  protected $subject_of_study;
+  protected \Doctrine\Common\Collections\Collection $subject_of_study;
 
 
 
@@ -427,47 +447,52 @@ class Dataset implements JsonSerializable {
   // BEGIN OneToMany RELATIONSHIPS
   //
   //
-
-
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="dataset", orphanRemoval=TRUE)
    * @ORM\OrderBy({"display_order" = "ASC"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonAssociation>
    */
-  protected $authorships;
+  protected \Doctrine\Common\Collections\Collection $authorships;
 
   /**
    * @ORM\OneToMany(targetEntity="DataLocation", mappedBy="datasets_dataset_uid", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataLocation>
    **/
-  protected $data_locations;
+  protected \Doctrine\Common\Collections\Collection $data_locations;
 
 
   /**
    * @ORM\OneToMany(targetEntity="OtherResource", mappedBy="datasets_dataset_uid", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\OtherResource>
    **/
-  protected $other_resources;
+  protected \Doctrine\Common\Collections\Collection $other_resources;
 
 
   /**
    * @ORM\OneToMany(targetEntity="DatasetAlternateTitle", mappedBy="datasets_dataset_uid", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetAlternateTitle>
    **/
-  protected $dataset_alternate_titles;
+  protected \Doctrine\Common\Collections\Collection $dataset_alternate_titles;
 
 
   /**
    * @ORM\OneToMany(targetEntity="DatasetRelationship", mappedBy="parent_dataset_uid", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetRelationship>
    **/
-  protected $related_datasets;
+  protected \Doctrine\Common\Collections\Collection $related_datasets;
 
 
-  /** 
+  /**
    * @ORM\OneToMany(targetEntity="DatasetEdit", mappedBy="parent_dataset_uid", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetEdit>
    **/
-  protected $dataset_edits;
+  protected \Doctrine\Common\Collections\Collection $dataset_edits;
 
-  /** 
+  /**
    * @ORM\OneToMany(targetEntity="TempAccessKey", mappedBy="dataset_association", cascade={"all"})
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TempAccessKey>
    **/
-  protected $temp_access_keys;
+  protected \Doctrine\Common\Collections\Collection $temp_access_keys;
 
 
 
@@ -477,6 +502,9 @@ class Dataset implements JsonSerializable {
    */
   public function __construct()
   {
+    $this->study_types = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->corresponding_authors = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->local_experts = new \Doctrine\Common\Collections\ArrayCollection();
     $this->date_added = new \DateTime("now");
     $this->dataset_formats = new \Doctrine\Common\Collections\ArrayCollection();
     $this->resource_types = new \Doctrine\Common\Collections\ArrayCollection();

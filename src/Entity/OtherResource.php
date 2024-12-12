@@ -33,28 +33,28 @@ class OtherResource {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $resource_name;
+  protected ?string $resource_name = null;
 
   /**
    * @ORM\Column(type="string",length=1028,nullable=true)
    */
-  protected $resource_description;
+  protected ?string $resource_description = null;
 
   /**
    * @ORM\Column(type="string",length=1028)
    */
-  protected $resource_url;
+  protected ?string $resource_url = null;
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="other_resources")
    * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
    */
-  protected $datasets_dataset_uid;
+  protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 
     /**

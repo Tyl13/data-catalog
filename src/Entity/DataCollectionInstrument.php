@@ -40,32 +40,33 @@ class DataCollectionInstrument {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $data_collection_instrument_name;
+  protected ?string $data_collection_instrument_name = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\Column(type="string", length=256)
    */
-  protected $url;
+  protected ?string $url = null;
 
   /**
    * @ORM\Column(type="string", length=1026)
    */
-  protected $notes;
+  protected ?string $notes = null;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="data_collection_instruments")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

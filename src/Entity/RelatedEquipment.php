@@ -36,33 +36,34 @@ class RelatedEquipment {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $related_equipment;
+  protected ?string $related_equipment = null;
 
   /**
    * @ORM\Column(type="string",length=1028, unique=false, nullable=true)
    */
-  protected $equipment_description;
+  protected ?string $equipment_description = null;
 
   /**
    * @ORM\Column(type="string",length=1028, unique=false, nullable=true)
    */
-  protected $equipment_url;
+  protected ?string $equipment_url = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="related_equipment")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
    * get name for display

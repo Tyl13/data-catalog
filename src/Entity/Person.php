@@ -38,69 +38,70 @@ class Person {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $full_name;
+  protected ?string $full_name = null;
 
   /**
    * @ORM\Column(type="string",length=128, unique=true)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
-  protected $last_name;
+  protected ?string $last_name = null;
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
-  protected $first_name;
+  protected ?string $first_name = null;
 
 
   /**
    * @ORM\Column(type="string",length=16, nullable=true, unique=true)
    */
-  protected $kid;
+  protected ?string $kid = null;
 
 
   /**
    * @ORM\Column(type="string",length=128, nullable=true, unique=true)
    */
-  protected $orcid_id;
+  protected ?string $orcid_id = null;
 
 
   /**
    * @ORM\Column(type="string",length=1028, nullable=true)
    */
-  protected $bio_url;
+  protected ?string $bio_url = null;
 
 
   /**
    * @ORM\Column(type="string",length=256, nullable=true)
    */
-  protected $email;
+  protected ?string $email = null;
 
 
   /**
    * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
    */
-  protected $works_here;
+  protected ?bool $works_here = null;
 
 
   /**
    * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonAssociation>
    */
-  protected $dataset_associations;
+  protected \Doctrine\Common\Collections\Collection $dataset_associations;
 
   /**
    * @ORM\Column(type="boolean",length=128)
    */
-  protected $is_institution_author = false;
+  protected ?bool $is_institution_author = false;
 
 	/**
 	 * Constructor

@@ -13,7 +13,6 @@ return RectorConfig::configure()
     ])
     // uncomment to reach your current PHP version
     // ->withPhpSets()
-    ->withPHPSets()
     ->withPreparedSets(doctrineCodeQuality: true)
     ->withSets([
         SymfonySetList::SYMFONY_54,

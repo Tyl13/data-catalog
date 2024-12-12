@@ -33,18 +33,18 @@ class DatasetAlternateTitle {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $alt_title;
+  protected ?string $alt_title = null;
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="dataset_alternate_titles")
    * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
    */
-  protected $datasets_dataset_uid;
+  protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 
   /**

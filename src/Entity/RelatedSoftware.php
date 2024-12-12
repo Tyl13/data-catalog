@@ -35,38 +35,39 @@ class RelatedSoftware {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=128, unique=false)
    */
-  protected $software_name;
+  protected ?string $software_name = null;
 
   /**
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
    */
-  protected $software_description;
+  protected ?string $software_description = null;
 
   /**
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
    */
-  protected $software_version;
+  protected ?string $software_version = null;
 
   /**
    * @ORM\Column(type="string",length=512, unique=false, nullable=true)
    */
-  protected $software_url;
+  protected ?string $software_url = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="related_software")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
    * get name for display

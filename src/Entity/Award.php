@@ -36,39 +36,40 @@ class Award {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $award;
+  protected ?string $award = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\Column(type="string",length=512, nullable=true)
    */
-  protected $award_funder;
+  protected ?string $award_funder = null;
 
 
   /**
    * @ORM\Column(type="string",length=1028, nullable=true)
    */
-  protected $award_url;
+  protected ?string $award_url = null;
     
   /**
    * @ORM\Column(type="string",length=64, nullable=true)
    */
-  protected $funder_type;
+  protected ?string $funder_type = null;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="awards")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

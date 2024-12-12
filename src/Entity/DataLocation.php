@@ -33,35 +33,35 @@ class DataLocation {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $data_location;
+  protected ?string $data_location = null;
 
   /**
    * @ORM\Column(type="string",length=1028,nullable=true)
    */
-  protected $location_content;
+  protected ?string $location_content = null;
 
   /**
    * @ORM\Column(type="string",length=1028)
    */
-  protected $data_access_url;
+  protected ?string $data_access_url = null;
 
 
   /**
    * @ORM\Column(type="string", length=512, nullable=true)
    */
-  protected $accession_number;
+  protected ?string $accession_number = null;
 
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="data_locations")
    * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
    */
-  protected $datasets_dataset_uid;
+  protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 
     /**

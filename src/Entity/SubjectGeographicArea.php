@@ -36,29 +36,30 @@ class SubjectGeographicArea {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $geographic_area_name;
+  protected ?string $geographic_area_name = null;
 
   /**
    * @ORM\Column(type="string",length=256, nullable=true)
    */
-  protected $geographic_area_authority;
+  protected ?string $geographic_area_authority = null;
 
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_geographic_areas")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

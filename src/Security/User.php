@@ -36,42 +36,42 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @ORM\Id
    * @ORM\GeneratedValue()
    */
-  protected $user_id;
+  protected ?int $user_id = null;
 
   /**
    * @ORM\Column(type="string", length=25, unique=true)
    */
-  protected $username;
+  protected ?string $username = null;
 
 
   /**
    * @ORM\Column(type="string", length=25, unique=true, nullable=true)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\Column(type="string",length=64, nullable=true)
    */
-  protected $password;
+  protected ?string $password = null;
 
 
   /**
    * @ORM\Column(type="string", length=50)
    */
-  protected $firstName;
+  protected ?string $firstName = null;
 
 
   /**
    * @ORM\Column(type="string", length=50)
    */
-  protected $lastName;
+  protected ?string $lastName = null;
 
 
   /**
    * @ORM\Column(type="string", length=255, unique=true, nullable=true)
    */
-  protected $apiKey;
+  protected ?string $apiKey = null;
 
 
   /**

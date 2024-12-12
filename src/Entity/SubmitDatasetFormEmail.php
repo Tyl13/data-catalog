@@ -36,7 +36,7 @@ class SubmitDatasetFormEmail {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /** 
    * @Recaptcha\IsTrue
@@ -48,48 +48,48 @@ class SubmitDatasetFormEmail {
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
-  protected $school_center;
+  protected ?string $school_center = null;
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
-  protected $department;
+  protected ?string $department = null;
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
-  protected $full_name;
+  protected ?string $full_name = null;
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $email_address;
+  protected ?string $email_address = null;
 
   /**
    * @ORM\Column(type="string",length=32,nullable=true)
    */
-  protected $phone_number;
+  protected ?string $phone_number = null;
 
   /**
    * @ORM\Column(type="string",length=1024,nullable=true)
    */
-  protected $dataset_url;
+  protected ?string $dataset_url = null;
 
   /**
    * @ORM\Column(type="string",length=8192,nullable=true)
    */
-  protected $details;
+  protected ?string $details = null;
 
   /**
    * @ORM\Column(type="string",length=8192, nullable=true)
    */
-  protected $comments;
+  protected ?string $comments = null;
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
    */
   #[Assert\Blank]
-  protected $checker;
+  protected ?string $checker = null;
 
 
 

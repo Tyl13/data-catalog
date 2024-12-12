@@ -36,28 +36,28 @@ class TempAccessKey {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $uuid;
+  protected ?string $uuid = null;
 
   /**
    * @ORM\Column(type="datetime",length=128,nullable=false)
    */
-  protected $generation;
+  protected \DateTimeInterface $generation;
 
   /**
    * @ORM\Column(type="datetime",nullable=false)
    */
-  protected $first_access;
+  protected \DateTimeInterface $first_access;
   
   /**
    * @ORM\ManyToOne(targetEntity="Dataset")
    * @ORM\JoinColumn(name="dataset_association",referencedColumnName="dataset_uid", nullable=FALSE)
    */
-  protected $dataset_association;
+  protected ?\App\Entity\Dataset $dataset_association = null;
 
   /**
    * Get name for display

@@ -33,28 +33,28 @@ class DatasetRelationship {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=512, nullable=true)
    */
-  protected $relationship_attributes;
+  protected ?string $relationship_attributes = null;
 
   /**
    * @ORM\Column(type="string",length=512, nullable=true)
    */
-  protected $relationship_notes;
+  protected ?string $relationship_notes = null;
 
   /**
    * @ORM\Column(type="integer")
    */
-  protected $related_dataset_uid;
+  protected ?int $related_dataset_uid = null;
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="related_datasets")
    * @ORM\JoinColumn(name="parent_dataset_uid",referencedColumnName="dataset_uid")
    */
-  protected $parent_dataset_uid;
+  protected ?\App\Entity\Dataset $parent_dataset_uid = null;
 
 
     /**

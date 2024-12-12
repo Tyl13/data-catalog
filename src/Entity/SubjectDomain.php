@@ -36,27 +36,28 @@ class SubjectDomain {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $subject_domain;
+  protected ?string $subject_domain = null;
 
   /**
    * @ORM\Column(type="string",length=255, nullable=true)
    */
-  protected $mesh_code;
+  protected ?string $mesh_code = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_domains")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

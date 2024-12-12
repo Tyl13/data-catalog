@@ -35,33 +35,34 @@ class Project {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $project_name;
+  protected ?string $project_name = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\Column(type="string",length=1028,nullable=true)
    */
-  protected $project_description;
+  protected ?string $project_description = null;
 
   /**
    * @ORM\Column(type="string",length=1028)
    */
-  protected $project_url;
+  protected ?string $project_url = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="projects")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

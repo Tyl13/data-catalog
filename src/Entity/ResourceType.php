@@ -35,23 +35,24 @@ class ResourceType {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
 
   /**
    * @ORM\Column(type="string",length=128, unique=true)
    */
-  protected $resource_type;
+  protected ?string $resource_type = null;
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $slug;
+  protected ?string $slug = null;
   
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="resource_types")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {
       $this->datasets = new \Doctrine\Common\Collections\ArrayCollection();

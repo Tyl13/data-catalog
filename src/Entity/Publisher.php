@@ -36,27 +36,28 @@ class Publisher {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=255, unique=true)
    */
-  protected $publisher_name;
+  protected ?string $publisher_name = null;
 
   /**
    * @ORM\Column(type="string",length=512)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
   /**
    * @ORM\Column(type="string",length=1028, nullable=true)
    */
-  protected $publisher_url;
+  protected ?string $publisher_url = null;
 
   /**
    * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="publishers")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    */
-  protected $datasets;
+  protected \Doctrine\Common\Collections\Collection $datasets;
 
 
 

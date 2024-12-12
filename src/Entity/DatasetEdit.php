@@ -34,38 +34,38 @@ class DatasetEdit {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
 
   /**
    * @ORM\Column(type="string",length=128)
    */
-  protected $user;
+  protected ?string $user = null;
 
 
   /**
    * @ORM\Column(type="datetime")
    */
-  protected $timestamp;
+  protected ?\DateTimeInterface $timestamp = null;
 
 
   /**
    * @ORM\Column(type="string", length=64)
    */
-  protected $edit_type;
+  protected ?string $edit_type = null;
 
 
   /**
    * @ORM\Column(type="string", length=500, nullable=true)
    */
-  protected $edit_notes;
+  protected ?string $edit_notes = null;
 
 
   /**
    * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="dataset_edits")
    * @ORM\JoinColumn(name="parent_dataset_uid", referencedColumnName="dataset_uid")
    **/
-  protected $parent_dataset_uid;
+  protected ?\App\Entity\Dataset $parent_dataset_uid = null;
 
 
     /**

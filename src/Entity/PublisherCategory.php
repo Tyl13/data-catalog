@@ -34,23 +34,24 @@ class PublisherCategory {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  protected $id;
+  protected ?int $id = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $publisher_category;
+  protected ?string $publisher_category = null;
 
   /**
    * @ORM\Column(type="string",length=256)
    */
-  protected $slug;
+  protected ?string $slug = null;
 
 
   /**
    * @ORM\ManyToMany(targetEntity="Publisher", mappedBy="publisher_categories")
+   * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publisher>
    */
-  protected $publishers;
+  protected \Doctrine\Common\Collections\Collection $publishers;
 
     /**
      * Add publisher
@@ -149,5 +150,9 @@ class PublisherCategory {
     public function getSlug()
     {
         return $this->slug;
+    }
+    public function __construct()
+    {
+        $this->publishers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }
