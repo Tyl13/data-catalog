@@ -251,11 +251,7 @@ class RelatedSoftware {
      * @return array
      */
     public function getAllProperties() {
-        return array(
-            'software_name'=>$this->software_name,
-            'software_description'=>$this->software_description,
-            'software_url'=>$this->software_url
-        );
+        return ['software_name'=>$this->software_name, 'software_description'=>$this->software_description, 'software_url'=>$this->software_url];
     }
 
 }

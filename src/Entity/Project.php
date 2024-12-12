@@ -241,10 +241,6 @@ class Project {
      * @return array
      */
     public function getAllProperties() {
-      return array(
-        'project_name'=>$this->project_name,
-        'project_description'=>$this->project_description,
-        'project_url'=>$this->project_url
-      );
+      return ['project_name'=>$this->project_name, 'project_description'=>$this->project_description, 'project_url'=>$this->project_url];
     }
 }

@@ -388,9 +388,7 @@ class Person {
     public function getAssociatedDatasets()
     {
       return array_map(
-        function ($association) {
-          return $association->getDataset();
-        },
+        fn($association) => $association->getDataset(),
         $this->dataset_associations->toArray()
       );
     }
@@ -401,14 +399,6 @@ class Person {
      * @return array
      */
     public function getAllProperties() {
-      return array(
-        'full_name'=>$this->full_name,
-        'last_name'=>$this->last_name,
-        'first_name'=>$this->first_name,
-        'orcid_id'=>$this->orcid_id,
-        'bio_url'=>$this->bio_url,
-        'email'=>$this->email,
-        'works_here'=>$this->works_here
-      );
+      return ['full_name'=>$this->full_name, 'last_name'=>$this->last_name, 'first_name'=>$this->first_name, 'orcid_id'=>$this->orcid_id, 'bio_url'=>$this->bio_url, 'email'=>$this->email, 'works_here'=>$this->works_here];
     }
 }

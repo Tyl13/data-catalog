@@ -190,9 +190,6 @@ class SubjectGeographicArea {
      * @return array
      */
     public function getAllProperties() {
-        return array(
-            'geographic_area_name'=>$this->geographic_area_name,
-            'geographic_area_authority'=>$this->geographic_area_authority
-        );
+        return ['geographic_area_name'=>$this->geographic_area_name, 'geographic_area_authority'=>$this->geographic_area_authority];
     }
 }

@@ -198,9 +198,6 @@ class Publisher {
      * @return array
      */
     public function getAllProperties() {
-        return array(
-            'publisher_name'=>$this->publisher_name,
-            'publisher_url'=>$this->publisher_url,
-        );
+        return ['publisher_name'=>$this->publisher_name, 'publisher_url'=>$this->publisher_url];
     }
 }

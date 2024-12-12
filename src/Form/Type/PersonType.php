@@ -38,14 +38,11 @@ class PersonType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('full_name');
     $builder->add('kid');
-    $builder->add('orcid_id', TextType::class, array(
-      'required' => false,
-      'label'    => 'ORCID ID',
-    ));
+    $builder->add('orcid_id', TextType::class, ['required' => false, 'label'    => 'ORCID ID']);
     $builder->add('bio_url');
-    $builder->add('is_institution_author', CheckboxType::class, array('required' => false, 'label' => 'Institution Author'));
+    $builder->add('is_institution_author', CheckboxType::class, ['required' => false, 'label' => 'Institution Author']);
     $builder->add('email');
-    $builder->add('save', SubmitType::class,array('label'=>'Submit'));
+    $builder->add('save', SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -54,9 +51,7 @@ class PersonType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\Person'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\Person::class]);
   }
 
   public function getName() {

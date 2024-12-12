@@ -30,14 +30,8 @@ use Doctrine\ORM\EntityManager;
  */
 class SubjectKeywordToStringTransformer implements DataTransformerInterface {
   
-  /**
-   * @var EntityManager
-   */
-  private $em;
-
-  
-  public function __construct(EntityManager $em) {
-    $this->em = $em;
+  public function __construct(private EntityManager $em)
+  {
   }  
 
 
@@ -55,7 +49,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
       return new ArrayCollection();
     }*/
 
-    $options = array();
+    $options = [];
     foreach ($array as $subjectKeyword) {
       $options[] = $subjectKeyword->getKeyword();
     }
@@ -80,11 +74,11 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     if (!$array) {
       return null;
     }
-    $keywords = array();
+    $keywords = [];
     foreach ($array as $key=>$value) {
       $keyword = $this->em
         ->getRepository('App:SubjectKeyword')
-        ->findOneBy(array('keyword'=>$value));
+        ->findOneBy(['keyword'=>$value]);
       if (!is_null($keyword)) {
         $keywords[$key] = $keyword;
       }

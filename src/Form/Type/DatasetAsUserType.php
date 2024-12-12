@@ -32,8 +32,6 @@ class DatasetAsUserType extends AbstractType {
 
   protected $years;
   protected $yearsIncludingPresent;
-  protected $userIsAdmin;
-  protected $datasetUid;
   
   /**
    * Build the form
@@ -42,125 +40,25 @@ class DatasetAsUserType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     //identifying information
-    $builder->add('title', 'text', array(
-      'required' => true,
-      'label'    => 'Dataset Title'));
-    $builder->add('description', 'textarea', array(
-      'required' => true,
-      'attr'=>array('rows'=>'7','placeholder'=>'Please provide a brief description of the dataset'),
-      'label'    => 'Description'));
+    $builder->add('title', 'text', ['required' => true, 'label'    => 'Dataset Title']);
+    $builder->add('description', 'textarea', ['required' => true, 'attr'=>['rows'=>'7', 'placeholder'=>'Please provide a brief description of the dataset'], 'label'    => 'Description']);
 
-    $builder->add('access_instructions', 'textarea', array(
-      'attr'=>array('rows'=>'7', 'placeholder'=>'Provide any information on restrictions or conditions for gaining access to data'),
-      'label'    => 'Access Instructions'));
+    $builder->add('access_instructions', 'textarea', ['attr'=>['rows'=>'7', 'placeholder'=>'Provide any information on restrictions or conditions for gaining access to data'], 'label'    => 'Access Instructions']);
     //technical details
-    $builder->add('related_equipment', 'entity', array(
-      'class'   => 'App:RelatedEquipment',
-      'property'=> 'related_equipment',
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.related_equipment','ASC');
-      },
-      'required' => false,
-      'attr'    => array('style'=>'width:100%'),
-      'multiple' => true,
-      'by_reference'=>false,
-      'label'     => 'Equipment used to collect/create the dataset',
-    ));
-    $builder->add('related_software', 'entity', array(
-      'class'   => 'App:RelatedSoftware',
-      'property'=> 'software_name',
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
-      },
-      'choice_label' => function ($related_software) {
-        return $related_software->getDisplayName();
-    	},
-      'required' => false,
-      'attr'    => array('style'=>'width:100%'),
-      'multiple' => true,
-      'by_reference'=>false,
-      'label'     => 'Software used to create, collect or analyze the dataset',
-    ));
-    $builder->add('dataset_formats', 'entity', array(
-      'class'   => 'App:DatasetFormat',
-      'property'=> 'format',
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.format','ASC');
-      },
-      'required' => false,
-      'attr'    => array('id'=>'dataset_subject_population_ages','style'=>'width:100%'),
-      'multiple' => true,
-      'by_reference'=>false,
-      'label'     => 'Dataset File Format',
-    ));
-    $builder->add('resource_types', 'entity', array(
-      'class'   => 'AppBundle:ResourceType',
-      'property'=> 'resource_type',
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC');
-      },
-      'required' => false,
-      'attr'    => array('id'=>'dataset_subject_population_ages','style'=>'width:100%'),
-      'multiple' => true,
-      'by_reference'=>false,
-      'label'     => 'Resource Type',
-    ));
-    $builder->add('data_collection_instruments', 'entity', array(
-      'class'   => 'App:DataCollectionInstrument',
-      'property'=> 'data_collection_instrument_name',
-      'required' => false,
-      'attr'=>array('style'=>'width:100%', 'placeholder'=>''),
-      'multiple' => true,
-      'by_reference'=>false,
-      'label'     => 'Data Collection Instruments',
-    ));
+    $builder->add('related_equipment', 'entity', ['class'   => 'App:RelatedEquipment', 'property'=> 'related_equipment', 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.related_equipment','ASC'), 'required' => false, 'attr'    => ['style'=>'width:100%'], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Equipment used to collect/create the dataset']);
+    $builder->add('related_software', 'entity', ['class'   => 'App:RelatedSoftware', 'property'=> 'software_name', 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.software_name','ASC'), 'choice_label' => fn($related_software) => $related_software->getDisplayName(), 'required' => false, 'attr'    => ['style'=>'width:100%'], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Software used to create, collect or analyze the dataset']);
+    $builder->add('dataset_formats', 'entity', ['class'   => 'App:DatasetFormat', 'property'=> 'format', 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.format','ASC'), 'required' => false, 'attr'    => ['id'=>'dataset_subject_population_ages', 'style'=>'width:100%'], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Dataset File Format']);
+    $builder->add('resource_types', 'entity', ['class'   => 'AppBundle:ResourceType', 'property'=> 'resource_type', 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.resource_type','ASC'), 'required' => false, 'attr'    => ['id'=>'dataset_subject_population_ages', 'style'=>'width:100%'], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Resource Type']);
+    $builder->add('data_collection_instruments', 'entity', ['class'   => 'App:DataCollectionInstrument', 'property'=> 'data_collection_instrument_name', 'required' => false, 'attr'=>['style'=>'width:100%', 'placeholder'=>''], 'multiple' => true, 'by_reference'=>false, 'label'     => 'Data Collection Instruments']);
     //content information
-    $builder->add('authorships', 'collection', array(
-      'type' => new PersonAssociationType(),
-      'prototype' => true,
-      'required'=>false,
-      'by_reference'=>false,
-      'label'=>'Authors',
-      'allow_delete'=>true,
-      'allow_add'=>true
-    ));
-    $builder->add('subject_start_date', 'choice', array(
-      'choices'  => $this->yearsIncludingPresent,
-      'required' => false,
-      'label'    => 'Year Data Collection Started'));
-    $builder->add('subject_end_date', 'choice', array(
-      'choices'  => $this->yearsIncludingPresent,
-      'required' => false,
-      'label'    => 'Year Data Collection Ended'));
-    $builder->add('subject_of_study', 'entity', array(
-      'class'    => 'App:SubjectOfStudy',
-      'property' => 'subject_of_study',
-      'required' => false,
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');
-      },
-      'multiple' => true,
-      'attr'=>array('style'=>'width:100%'),
-      'by_reference'=>false,
-      'label'     => 'Subject of Study',
-    ));
-    $builder->add('subject_keywords', 'entity', array(
-      'class'   => 'App:SubjectKeyword',
-      'property'=> 'keyword',
-      'required' => false,
-      'query_builder'=> function(EntityRepository $er) {
-          return $er->createQueryBuilder('u')->orderBy('u.keyword','ASC');
-      },
-      'multiple' => true,
-      'attr'=>array('style'=>'width:100%'),
-      'by_reference'=>false,
-      'label'     => 'Subject Keywords',
-    ));
+    $builder->add('authorships', 'collection', ['type' => new PersonAssociationType(), 'prototype' => true, 'required'=>false, 'by_reference'=>false, 'label'=>'Authors', 'allow_delete'=>true, 'allow_add'=>true]);
+    $builder->add('subject_start_date', 'choice', ['choices'  => $this->yearsIncludingPresent, 'required' => false, 'label'    => 'Year Data Collection Started']);
+    $builder->add('subject_end_date', 'choice', ['choices'  => $this->yearsIncludingPresent, 'required' => false, 'label'    => 'Year Data Collection Ended']);
+    $builder->add('subject_of_study', 'entity', ['class'    => 'App:SubjectOfStudy', 'property' => 'subject_of_study', 'required' => false, 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC'), 'multiple' => true, 'attr'=>['style'=>'width:100%'], 'by_reference'=>false, 'label'     => 'Subject of Study']);
+    $builder->add('subject_keywords', 'entity', ['class'   => 'App:SubjectKeyword', 'property'=> 'keyword', 'required' => false, 'query_builder'=> fn(EntityRepository $er) => $er->createQueryBuilder('u')->orderBy('u.keyword','ASC'), 'multiple' => true, 'attr'=>['style'=>'width:100%'], 'by_reference'=>false, 'label'     => 'Subject Keywords']);
 
 
-    $builder->add('save',SubmitType::class,array(
-      "label"=>"Submit",
-      'attr'=>array('class'=>'spacer')));
+    $builder->add('save',SubmitType::class,["label"=>"Submit", 'attr'=>['class'=>'spacer']]);
      
 
   }
@@ -169,13 +67,11 @@ class DatasetAsUserType extends AbstractType {
     return 'dataset';
   }
 
-  public function __construct($userIsAdmin = false, $datasetUid = 0) {
+  public function __construct(protected $userIsAdmin = false, protected $datasetUid = 0) {
     $this->years = range(date('Y'),1790);
     $yearList = range(date('Y'),1790);
     array_unshift($yearList, "Present");
     $this->yearsIncludingPresent = array_combine($yearList, $yearList);
-    $this->userIsAdmin = $userIsAdmin;
-    $this->datasetUid = $datasetUid;
   }
 
   /**
@@ -184,9 +80,7 @@ class DatasetAsUserType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\Dataset',
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\Dataset::class]);
   }
 
 }

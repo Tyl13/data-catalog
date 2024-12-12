@@ -23,7 +23,7 @@ class ApiUserProvider implements UserProviderInterface {
      */
     public function loadUserByIdentifier(string $identifier): UserInterface {
         var_dump("using API provider");
-        $user = User::find(array('apiKey'=>$identifier));
+        $user = User::find(['apiKey'=>$identifier]);
         if(empty($user)){
             throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException('Could not find user. Sorry!');
         }

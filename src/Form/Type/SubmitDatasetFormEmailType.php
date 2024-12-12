@@ -49,52 +49,25 @@ class SubmitDatasetFormEmailType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
 
-    $builder->add('full_name', TextType::class, array(
-      'required' => true,
-      'label_attr'=>array('class'=>'asterisk')));
+    $builder->add('full_name', TextType::class, ['required' => true, 'label_attr'=>['class'=>'asterisk']]);
 
-    $builder->add('email_address', EmailType::class, array(
-      'label_attr'=>array('class'=>'asterisk')));
+    $builder->add('email_address', EmailType::class, ['label_attr'=>['class'=>'asterisk']]);
 
-    $builder->add('phone_number', TextType::class, array(
-      'required' => false,
-      'label' => 'Phone number (if phone call preferred)',
-      'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('phone_number', TextType::class, ['required' => false, 'label' => 'Phone number (if phone call preferred)', 'label_attr'=>['class'=>'no-asterisk']]);
 
-    $builder->add('school_center', TextType::class, array(
-      'required' => false,
-      'label'=> 'School/Center',
-	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('school_center', TextType::class, ['required' => false, 'label'=> 'School/Center', 'label_attr'=>['class'=>'no-asterisk']]);
 
-    $builder->add('department', TextType::class, array(
-      'required' => false,
-      'label'=> 'Department',
-	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('department', TextType::class, ['required' => false, 'label'=> 'Department', 'label_attr'=>['class'=>'no-asterisk']]);
 
-    $builder->add('dataset_url', TextType::class, array(
-      'required' => false,
-      'label'=> 'If your dataset(s) is already publicly available, please provide the URL',
-	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('dataset_url', TextType::class, ['required' => false, 'label'=> 'If your dataset(s) is already publicly available, please provide the URL', 'label_attr'=>['class'=>'no-asterisk']]);
 
-    $builder->add('details', TextareaType::class, array(
-      'required' => false,
-      'attr' => array('rows'=>'5'),
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'label'=>'Please tell us some details about your research and your datasets',
-    ));
+    $builder->add('details', TextareaType::class, ['required' => false, 'attr' => ['rows'=>'5'], 'label_attr'=>['class'=>'no-asterisk'], 'label'=>'Please tell us some details about your research and your datasets']);
 
-    $builder->add('comments', TextareaType::class, array(
-      'required' => false,
-      'attr' => array('rows'=>'5'),
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'label'=>'Any other questions or comments',
-    ));
+    $builder->add('comments', TextareaType::class, ['required' => false, 'attr' => ['rows'=>'5'], 'label_attr'=>['class'=>'no-asterisk'], 'label'=>'Any other questions or comments']);
 
-    $builder->add('recaptcha', EWZRecaptchaType::class, array(
-    	'label' => false,
-    ));
+    $builder->add('recaptcha', EWZRecaptchaType::class, ['label' => false]);
 
-    $builder->add('save',SubmitType::class,array('label'=>'Send'));
+    $builder->add('save',SubmitType::class,['label'=>'Send']);
   }
 
 
@@ -104,10 +77,7 @@ class SubmitDatasetFormEmailType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\SubmitDatasetFormEmail',
-      'affiliationOptions' => null,
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\SubmitDatasetFormEmail::class, 'affiliationOptions' => null]);
   }
 
 

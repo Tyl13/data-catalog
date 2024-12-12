@@ -190,10 +190,7 @@ class SubjectKeyword {
      * @return array
      */
     public function getAllProperties() {
-      return array(
-        'keyword'=>$this->keyword,
-        'mesh_code'=>$this->mesh_code
-      );
+      return ['keyword'=>$this->keyword, 'mesh_code'=>$this->mesh_code];
     }
 
 }

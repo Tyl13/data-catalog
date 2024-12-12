@@ -35,13 +35,9 @@ class SubjectOfStudyType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('subject_of_study', TextType::class, array('label'=>'Subject of Study'));
-    $builder->add('species', TextType::class, array(
-      'label'=>'Species (Strain)',
-      'required'=>false,
-    
-    ));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('subject_of_study', TextType::class, ['label'=>'Subject of Study']);
+    $builder->add('species', TextType::class, ['label'=>'Species (Strain)', 'required'=>false]);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -50,9 +46,7 @@ class SubjectOfStudyType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\SubjectOfStudy'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\SubjectOfStudy::class]);
   }
 
   public function getName() {

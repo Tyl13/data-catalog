@@ -35,7 +35,7 @@ class DataTypeType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('data_type');
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -44,9 +44,7 @@ class DataTypeType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\DataType'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\DataType::class]);
   }
 
   public function getName() {

@@ -27,13 +27,6 @@ use App\Entity\SearchState;
  */
 class SolrSearchr {
 
-  // App-level defaults are set in parameters.yml
-  protected $solrBaseURL;
-  protected $solrFormat;
-  protected $solrFacets;
-  protected $solrDisplayFields;
-  protected $solrSearchFields;
-
   // Request-level defaults are set here
   protected $solrSort = "dataset_title_str+asc";
   protected $solrResultsPP = 10;
@@ -45,28 +38,15 @@ class SolrSearchr {
   protected $currentSearch;
 
   // Maps user-friendly values to Solr-friendly values
-  protected $sortMappings = array(
-                             'relevance'     => 'score+desc',
-                             'date added'    => 'date_added+desc',
-                             'name'          => 'dataset_title_str+asc',
-                            );
+  protected $sortMappings = ['relevance'     => 'score+desc', 'date added'    => 'date_added+desc', 'name'          => 'dataset_title_str+asc'];
 
 
   /**
    * These config parameters are set in parameters.yml and supplied by Symfony automatically
    * when this service is instantiated in GeneralController.php
    */
-  public function __construct($solrServer,
-                              $solrFormat,
-                              $solrFacets,
-                              $solrDisplayFields,
-                              $solrSearchFields) {
-
-    $this->solrBaseURL  = $solrServer;
-    $this->solrFormat   = $solrFormat;
-    $this->solrFacets   = $solrFacets;
-    $this->solrDisplayFields   = $solrDisplayFields;
-    $this->solrSearchFields   = $solrSearchFields;
+  public function __construct(protected $solrBaseURL, protected $solrFormat, protected $solrFacets, protected $solrDisplayFields, protected $solrSearchFields)
+  {
   }
 
 
@@ -95,7 +75,7 @@ class SolrSearchr {
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $requestURL);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-type: application/json"]);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     if (!$resp = curl_exec($ch)) {
@@ -158,9 +138,9 @@ class SolrSearchr {
     $final_query_string = $keyword_query_string;
     // is this query trying to return ALL results? if so, let it through
     if ($keyword_query_string !== "*") {
-      if (strpos($keyword_query_string, ":") === false) {
+      if (!str_contains($keyword_query_string, ":")) {
         // if we have a general query of all fields
-        if (strpos($keyword_query_string, '"') === false) {
+        if (!str_contains($keyword_query_string, '"')) {
           // if user did NOT use double quotes, add them here
           $quoted_keyword_query_string = '"' . $keyword_query_string . '"';
         } else {
@@ -175,7 +155,7 @@ class SolrSearchr {
         // before we can check for quotes we have to separate the string on the colon
         $field_and_term = explode(':', $keyword_query_string);
         // make sure user has quoted their search term for Solr
-        $quoted_search_term = substr($field_and_term[1], 0, 1) === '"' ? $field_and_term[1] : '"' . $field_and_term[1] . '"';
+        $quoted_search_term = str_starts_with($field_and_term[1], '"') ? $field_and_term[1] : '"' . $field_and_term[1] . '"';
         $final_query_string = $field_and_term[0] . ":" . $quoted_search_term;
       }
     }
@@ -213,7 +193,7 @@ class SolrSearchr {
     if ($this->solrFacetQuery) {
       for($i=0,$size=count($this->solrFacetQuery); $i<$size; ++$i) {
         // If it's a date facet, we need to use a different function
-        if (strpos($this->solrFacetQuery[$i], 'dataset_years') !== FALSE) {
+        if (str_contains($this->solrFacetQuery[$i], 'dataset_years')) {
           $this_facet_string = "&fq=" . urlencode($this->makeDateRangeFilterQuery($this->solrFacetQuery[$i]));
         } else {
           $this_facet_string = "&fq=" . urlencode($this->solrFacetQuery[$i]);
@@ -236,11 +216,11 @@ class SolrSearchr {
    */
   protected function makeDateRangeFilterQuery($facet) {
     $parts = explode(':', str_replace('"','',$facet));
-    if (strpos($parts[1], 'Prior to') !== FALSE) {
+    if (str_contains($parts[1], 'Prior to')) {
       $start = '1700-01-01T00:00:00Z';
       $end   = substr($parts[1], -4);
       $end = ($end - 1) . '-12-29T12:59:59Z';
-    } elseif (strpos($parts[1], 'Present') !== FALSE) {
+    } elseif (str_contains($parts[1], 'Present')) {
       $start = substr($parts[1], 0,4) . '-01-01T00:00:00Z';
       $end   = "NOW";
     } else {

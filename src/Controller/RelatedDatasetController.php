@@ -45,7 +45,7 @@ class RelatedDatasetController extends AbstractController
 
     $em = $this->getDoctrine()->getManager()->getRepository('App:Dataset');;
 
-    $datasetsForDisplay = array();
+    $datasetsForDisplay = [];
     foreach ($relatedDatasets as $related) {
       // find dataset IF it is published AND not archived
 
@@ -61,7 +61,7 @@ class RelatedDatasetController extends AbstractController
 
 
       if ($relatedDataset) {
-        $section = array('dataset' => $relatedDataset);
+        $section = ['dataset' => $relatedDataset];
         $notes = $related->getRelationshipNotes();
         if ($notes) {
           $section['relationshipNotes'] = $notes;
@@ -73,11 +73,11 @@ class RelatedDatasetController extends AbstractController
     if ($datasetsForDisplay !== []) {
       if ($format == 'html') {
 	      return $this->render('default/related_dataset_links.html.twig',
-		      array('relatedDatasets' => $datasetsForDisplay)
+		      ['relatedDatasets' => $datasetsForDisplay]
               );
       } elseif ($format == 'json') {
 	      return $this->render('default/related_datasets_JSON_LD.html.twig',
-		      array('relatedDatasets' => $datasetsForDisplay)
+		      ['relatedDatasets' => $datasetsForDisplay]
 	      );
       }
     } else {

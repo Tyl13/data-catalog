@@ -35,9 +35,8 @@ class DatasetFormatType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('format', TextType::class, array(
-      'required' => false));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('format', TextType::class, ['required' => false]);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -46,9 +45,7 @@ class DatasetFormatType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\DatasetFormat'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\DatasetFormat::class]);
   }
 
   public function getName() {

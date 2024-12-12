@@ -37,11 +37,8 @@ class RelatedEquipmentType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('related_equipment');
     $builder->add('equipment_description');
-    $builder->add('equipment_url', TextType::class, array(
-      'label' => 'Equipment URL',
-      'required' => false
-    ));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('equipment_url', TextType::class, ['label' => 'Equipment URL', 'required' => false]);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -50,9 +47,7 @@ class RelatedEquipmentType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\RelatedEquipment'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\RelatedEquipment::class]);
   }
 
   public function getName() {

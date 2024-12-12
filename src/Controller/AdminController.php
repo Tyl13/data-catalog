@@ -46,9 +46,7 @@ class AdminController extends AbstractController
    */
   public function admin()
   {
-      return $this->render('default/admin-home.html.twig',array(
-        'adminPage'=>true,
-                  ));
+      return $this->render('default/admin-home.html.twig',['adminPage'=>true]);
   }
   
   
@@ -63,9 +61,7 @@ class AdminController extends AbstractController
    */
   public function adminManage()
   {
-      return $this->render('default/admin-manage.html.twig',array(
-        'adminPage'=>true,
-                  ));
+      return $this->render('default/admin-manage.html.twig',['adminPage'=>true]);
   }
 
   /**
@@ -79,9 +75,7 @@ class AdminController extends AbstractController
    */
   public function adminUsers()
   {
-      return $this->render('default/admin-users.html.twig',array(
-        'adminPage'=>true,
-                  ));
+      return $this->render('default/admin-users.html.twig',['adminPage'=>true]);
   }
   
 }

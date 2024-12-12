@@ -33,9 +33,8 @@ class ResourceTypeType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('resource_type', 'text', array(
-      'required' => false));
-    $builder->add('save','submit',array('label'=>'Submit'));
+    $builder->add('resource_type', 'text', ['required' => false]);
+    $builder->add('save','submit',['label'=>'Submit']);
   }
 
   /**
@@ -44,9 +43,7 @@ class ResourceTypeType extends AbstractType {
    * @param OptionsResolverInterface
    */
   public function setDefaultOptions(OptionsResolverInterface $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'AppBundle\Entity\ResourceType'
-    ));
+    $resolver->setDefaults(['data_class' => 'AppBundle\Entity\ResourceType']);
   }
 
   public function getName() {

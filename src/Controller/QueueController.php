@@ -48,10 +48,7 @@ class QueueController extends AbstractController
          ->countAllUnpublished();
     
 
-    return $this->render('default/queue_notification.html.twig',array(
-                'queueLength' => $queueLength,
-                'adminPage'=>true,
-                ));
+    return $this->render('default/queue_notification.html.twig',['queueLength' => $queueLength, 'adminPage'=>true]);
     
   }
 
@@ -69,10 +66,7 @@ class QueueController extends AbstractController
      $approvalQueue = $em->getRepository('App:Dataset')
           ->findAllUnpublished();
 
-     return $this->render('default/approval_queue.html.twig',array(
-                 'approvalQueue' => $approvalQueue,
-                 'adminPage'=>true,
-                  ));
+     return $this->render('default/approval_queue.html.twig',['approvalQueue' => $approvalQueue, 'adminPage'=>true]);
 
    }
 

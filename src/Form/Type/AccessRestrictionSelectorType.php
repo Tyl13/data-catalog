@@ -55,9 +55,7 @@ class AccessRestrictionSelectorType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected access restriction does not exist',
-        ));
+        $resolver->setDefaults(['invalid_message' => 'The selected access restriction does not exist']);
     }
 
     public function getParent()

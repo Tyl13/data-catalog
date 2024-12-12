@@ -61,7 +61,7 @@ class OAIController extends AbstractController
 							$found=0;
 							$dl=$rv->getDataLocations();
 							foreach($dl as $dv) {
-								if (strpos($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')!==FALSE) {
+								if (str_contains($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')) {
 									$found=1;
 									break;
 								}
@@ -75,7 +75,7 @@ class OAIController extends AbstractController
 							
 							$dl=$rv->getDataLocations();
 							foreach($dl as $dv) {
-								if (strpos($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')!==FALSE) {
+								if (str_contains($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')) {
 									unset($results[$r]);
 									break;
 								}
@@ -108,14 +108,7 @@ class OAIController extends AbstractController
         }
 
         $response = new Response(
-            $this->renderView('oai_base.xml.twig', array(
-                'oai_template' => $template,
-                'timestamp' => date('Y-m-d\TH:i:s\Z'),
-                'base_url' => $base_url,
-                'base_identifier' => $base_identifier,
-                'publisher' => '',
-                'results' => $results
-            ))
+            $this->renderView('oai_base.xml.twig', ['oai_template' => $template, 'timestamp' => date('Y-m-d\TH:i:s\Z'), 'base_url' => $base_url, 'base_identifier' => $base_identifier, 'publisher' => '', 'results' => $results])
         );
         $response->headers->set('Content-Type', 'text/xml');
         return $response;

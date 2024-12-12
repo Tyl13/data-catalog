@@ -35,7 +35,7 @@ class SubjectGenderType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('subject_gender');
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -44,9 +44,7 @@ class SubjectGenderType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\SubjectGender'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\SubjectGender::class]);
   }
 
   public function getName() {

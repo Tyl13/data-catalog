@@ -36,16 +36,10 @@ class PublicationType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('citation', TextareaType::class, array(
-      'attr' => array('rows'=>'7')
-    ));
-    $builder->add('url', TextType::class, array(
-      'label'=>'URL',
-      'required'=>false));
-    $builder->add('doi', TextType::class,array(
-     'required'=>false,
-     'label'   => 'DOI'));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('citation', TextareaType::class, ['attr' => ['rows'=>'7']]);
+    $builder->add('url', TextType::class, ['label'=>'URL', 'required'=>false]);
+    $builder->add('doi', TextType::class,['required'=>false, 'label'   => 'DOI']);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -54,9 +48,7 @@ class PublicationType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\Publication'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\Publication::class]);
   }
 
   public function getName() {

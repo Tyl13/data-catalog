@@ -35,20 +35,11 @@ class OtherResourceType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('resource_name',TextType::class,array(
-      'label'=>false,
-      'required'=>true,
-      'attr'=>array('placeholder'=>'* Resource Name/Type'))
+    $builder->add('resource_name',TextType::class,['label'=>false, 'required'=>true, 'attr'=>['placeholder'=>'* Resource Name/Type']]
       );
-    $builder->add('resource_description',TextType::class,array(
-      'label'=>false,
-      'required'=>false,
-      'attr'=>array('placeholder'=>'Resource Description'))
+    $builder->add('resource_description',TextType::class,['label'=>false, 'required'=>false, 'attr'=>['placeholder'=>'Resource Description']]
       );
-    $builder->add('resource_url',TextType::class,array(
-      'label'=>false,
-      'required'=>true,
-      'attr'=>array('placeholder'=>'* Resource URL'))
+    $builder->add('resource_url',TextType::class,['label'=>false, 'required'=>true, 'attr'=>['placeholder'=>'* Resource URL']]
       );
   }
 
@@ -58,9 +49,7 @@ class OtherResourceType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\OtherResource'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\OtherResource::class]);
   }
 
   public function getName() {

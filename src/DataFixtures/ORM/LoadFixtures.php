@@ -8,11 +8,7 @@ class LoadFixtures implements FixtureInterface {
 
     public function load(ObjectManager $manager) {
 
-        $new_roles=array(
-           "Administrator" => "ROLE_ADMIN",
-           "User" => "ROLE_USER",
-           "API User" => "ROLE_API_SUBMITTER",
-        );
+        $new_roles=["Administrator" => "ROLE_ADMIN", "User" => "ROLE_USER", "API User" => "ROLE_API_SUBMITTER"];
 
         foreach($new_roles as $name => $symfony_role) {
 

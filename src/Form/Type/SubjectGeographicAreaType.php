@@ -36,7 +36,7 @@ class SubjectGeographicAreaType extends AbstractType {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('geographic_area_name');
     $builder->add('geographic_area_authority');
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -45,9 +45,7 @@ class SubjectGeographicAreaType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\SubjectGeographicArea'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\SubjectGeographicArea::class]);
   }
 
   public function getName() {

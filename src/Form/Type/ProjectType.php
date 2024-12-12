@@ -35,19 +35,10 @@ class ProjectType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('project_name',TextType::class,array(
-      'label'=>'Project Name',
-      'required'=>true,
-      ));
-    $builder->add('project_description',TextType::class,array(
-      'label'=>'Project Description',
-      'required'=>false,
-      ));
-    $builder->add('project_url',TextType::class,array(
-      'label'=>'Project URL',
-      'required'=>true,
-      ));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('project_name',TextType::class,['label'=>'Project Name', 'required'=>true]);
+    $builder->add('project_description',TextType::class,['label'=>'Project Description', 'required'=>false]);
+    $builder->add('project_url',TextType::class,['label'=>'Project URL', 'required'=>true]);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -56,9 +47,7 @@ class ProjectType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\Project'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\Project::class]);
   }
 
   public function getName() {

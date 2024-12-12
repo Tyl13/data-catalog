@@ -36,10 +36,8 @@ use App\Utils\Slugger;
  */
 class UpdateController extends AbstractController {
 
-  private $security;
-
-  public function __construct(Security $security) {
-    $this->security = $security;
+  public function __construct(private Security $security)
+  {
   }
 
 
@@ -65,16 +63,10 @@ class UpdateController extends AbstractController {
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($uid == null) {
-      $allEntities = $em->getRepository('App\Entity\Dataset')->findBy([], ['slug'=>'ASC']);
-      return $this->render('default/list_of_entities_to_update.html.twig', array(
-        'entities'    => $allEntities,
-        'entityName'  => 'Dataset',
-        'adminPage'   => true,
-        'userIsAdmin' => $userIsAdmin,
-        'displayName' => 'Dataset'
-      ));
+      $allEntities = $em->getRepository(\App\Entity\Dataset::class)->findBy([], ['slug'=>'ASC']);
+      return $this->render('default/list_of_entities_to_update.html.twig', ['entities'    => $allEntities, 'entityName'  => 'Dataset', 'adminPage'   => true, 'userIsAdmin' => $userIsAdmin, 'displayName' => 'Dataset']);
     }
-    $thisEntity = $em->getRepository('App\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
+    $thisEntity = $em->getRepository(\App\Entity\Dataset::class)->findOneBy(['dataset_uid'=>$uid]);
     if (!$thisEntity) {
       throw $this->createNotFoundException(
         'No dataset with UID ' . $uid . ' was found.'
@@ -92,7 +84,7 @@ class UpdateController extends AbstractController {
       $newSlug = Slugger::slugify($addedEntityName);
       $thisEntity->setSlug($newSlug);
       $newAuthorships = $thisEntity->getAuthorships();
-      $oldDataset = $em->getRepository('App\Entity\Dataset')->findOneBy(array('dataset_uid'=>$uid));
+      $oldDataset = $em->getRepository(\App\Entity\Dataset::class)->findOneBy(['dataset_uid'=>$uid]);
       $oldAuthorships = $oldDataset->getAuthorships();
       foreach ($oldAuthorships as $oldAuthor) {
         if (!$newAuthorships->contains($oldAuthor)) {
@@ -105,24 +97,10 @@ class UpdateController extends AbstractController {
       }
       $thisEntity->setDateUpdated(new \DateTime("now"));
       $em->flush();
-      return $this->render('default/update_success.html.twig', array(
-        'adminPage'       => true,
-        'displayName'     => 'Dataset',
-        'entityName'      => 'Dataset',
-        'addedEntityName' => $addedEntityName,
-        'uid'             => $uid,
-        'newSlug'         => $newSlug,));
+      return $this->render('default/update_success.html.twig', ['adminPage'       => true, 'displayName'     => 'Dataset', 'entityName'      => 'Dataset', 'addedEntityName' => $addedEntityName, 'uid'             => $uid, 'newSlug'         => $newSlug]);
     } else {
       $formToRender = $userIsAdmin ? 'default/update_dataset_admin.html.twig' : 'default/update_dataset_user.html.twig';
-      return $this->render($formToRender, array(
-        'form'       => $form->createView(),
-        'displayName'=> 'Dataset',
-        'adminPage'  => true,
-        'userIsAdmin'=> $userIsAdmin,
-        'uid'        => $uid,
-        'entityName' => 'Dataset',
-        'tak_ttl' => $tak_ttl
-      ));
+      return $this->render($formToRender, ['form'       => $form->createView(), 'displayName'=> 'Dataset', 'adminPage'  => true, 'userIsAdmin'=> $userIsAdmin, 'uid'        => $uid, 'entityName' => 'Dataset', 'tak_ttl' => $tak_ttl]);
     }
   }
 
@@ -144,13 +122,7 @@ class UpdateController extends AbstractController {
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($user == null) {
       $allEntities = $em->getRepository('App\Entity\Security\User')->findBy([], ['slug'=>'ASC']);
-      return $this->render('default/list_of_entities_to_update.html.twig', array(
-        'entities'   => $allEntities,
-        'entityName' => 'User',
-        'adminPage'  => true,
-        'userIsAdmin'=>$userIsAdmin,
-        'displayName'=>'User',
-      ));
+      return $this->render('default/list_of_entities_to_update.html.twig', ['entities'   => $allEntities, 'entityName' => 'User', 'adminPage'  => true, 'userIsAdmin'=>$userIsAdmin, 'displayName'=>'User']);
     }
     $thisEntity = $em->getRepository('App\Entity\Security\User')->findOneBySlug($user);
     if (!$thisEntity) {
@@ -173,20 +145,9 @@ class UpdateController extends AbstractController {
         }
       }
       $em->flush();
-      return $this->render('default/update_success.html.twig', array(
-        'adminPage'       => true,
-        'displayName'     => 'User',
-        'entityName'      => 'User',
-        'addedEntityName' => $addedUser,
-        'newSlug'         => $newSlug,));
+      return $this->render('default/update_success.html.twig', ['adminPage'       => true, 'displayName'     => 'User', 'entityName'      => 'User', 'addedEntityName' => $addedUser, 'newSlug'         => $newSlug]);
     } else {
-      return $this->render('default/update_user.html.twig', array(
-        'form'       => $form->createView(),
-        'displayName'=>'User',
-        'adminPage'  =>true,
-        'userIsAdmin'=>$userIsAdmin,
-        'entityName' =>'User'
-      ));
+      return $this->render('default/update_user.html.twig', ['form'       => $form->createView(), 'displayName'=>'User', 'adminPage'  =>true, 'userIsAdmin'=>$userIsAdmin, 'entityName' =>'User']);
     }
   }
 
@@ -238,13 +199,7 @@ class UpdateController extends AbstractController {
       } else {
         $allEntities = $em->getRepository($updateEntity)->findBy([], ['slug'=>'ASC']);
       }
-      return $this->render('default/list_of_entities_to_update.html.twig', array(
-        'entities'    => $allEntities,
-        'entityName'  => $entityName,
-        'adminPage'   => true,
-        'userIsAdmin' => $userIsAdmin,
-        'displayName' => $entityTypeDisplayName
-      ));
+      return $this->render('default/list_of_entities_to_update.html.twig', ['entities'    => $allEntities, 'entityName'  => $entityName, 'adminPage'   => true, 'userIsAdmin' => $userIsAdmin, 'displayName' => $entityTypeDisplayName]);
     }
 
     $thisEntity = $em->getRepository($updateEntity)->findOneBySlug($slug);
@@ -264,21 +219,10 @@ class UpdateController extends AbstractController {
         $thisEntity->setDateUpdated(new \DateTime("now"));
       }
       $em->flush();
-      return $this->render('default/update_success.html.twig', array(
-        'adminPage'=>true,
-        'displayName'=>$entityTypeDisplayName,
-        'entityName' =>$entityName,
-        'addedEntityName' => $addedEntityName,
-        'newSlug'    => $newSlug,));
+      return $this->render('default/update_success.html.twig', ['adminPage'=>true, 'displayName'=>$entityTypeDisplayName, 'entityName' =>$entityName, 'addedEntityName' => $addedEntityName, 'newSlug'    => $newSlug]);
 
     } else {
-      return $this->render('default/update.html.twig', array(
-        'form'    => $form->createView(),
-        'displayName'=>$entityTypeDisplayName,
-        'adminPage'=>true,
-        'userIsAdmin'=>$userIsAdmin,
-        'slug'       =>$slug,
-        'entityName' =>$entityName));
+      return $this->render('default/update.html.twig', ['form'    => $form->createView(), 'displayName'=>$entityTypeDisplayName, 'adminPage'=>true, 'userIsAdmin'=>$userIsAdmin, 'slug'       =>$slug, 'entityName' =>$entityName]);
     }
   }
 

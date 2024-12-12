@@ -37,20 +37,7 @@ class SearchResults {
   /**
    * Maps Solr facet names to user-friendly facet names
    */
-  public $facetMappings = array(
-    'Subject Domain' => 'subject_domain_fq',
-    'Origin' => 'origin_fq',
-    'Timeframe' => 'dataset_years',
-    'Geographic Coverage' => 'subject_geographic_area_fq',
-    'Access Restrictions' => 'access_restrictions_fq',
-    'Resource Types' => 'resource_types_fq',
-    'subject_domain_fq' => 'Subject Domain',
-    'resource_types_fq' => 'Resource Types',
-    'origin_fq' => 'Origin',
-    'dataset_years' => 'Dataset Timeframes',
-    'subject_geographic_area_fq' => 'Geographic Coverage',
-    'access_restrictions_fq' => 'Access Restrictions',
-  );
+  public $facetMappings = ['Subject Domain' => 'subject_domain_fq', 'Origin' => 'origin_fq', 'Timeframe' => 'dataset_years', 'Geographic Coverage' => 'subject_geographic_area_fq', 'Access Restrictions' => 'access_restrictions_fq', 'Resource Types' => 'resource_types_fq', 'subject_domain_fq' => 'Subject Domain', 'resource_types_fq' => 'Resource Types', 'origin_fq' => 'Origin', 'dataset_years' => 'Dataset Timeframes', 'subject_geographic_area_fq' => 'Geographic Coverage', 'access_restrictions_fq' => 'Access Restrictions'];
 
 
   /**
@@ -90,15 +77,12 @@ class SearchResults {
    * @return array $translatedFacets A sane array of facet data for Twig
    */
   protected function translateFacets($rawFacets) {
-    $translatedFacets = array();
+    $translatedFacets = [];
     $rawFacets = (array) $rawFacets;
     foreach ($rawFacets as $key=>$value) {
       $newFacetName = array_search($key, $this->facetMappings);
       foreach ($value as $facetItem) {
-        $translatedFacets[$newFacetName][] = array(
-          'facetItem' => $facetItem[0],
-          'facetCount'=> $facetItem[1]
-        );
+        $translatedFacets[$newFacetName][] = ['facetItem' => $facetItem[0], 'facetCount'=> $facetItem[1]];
       }
     }
     /*

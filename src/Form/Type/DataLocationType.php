@@ -35,25 +35,13 @@ class DataLocationType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('data_location',TextType::class,array(
-      'label'=>false,
-      'required'=>true,
-      'attr'=>array('placeholder'=>'* Data Location'))
+    $builder->add('data_location',TextType::class,['label'=>false, 'required'=>true, 'attr'=>['placeholder'=>'* Data Location']]
       );
-    $builder->add('location_content',TextType::class,array(
-      'label'=>false,
-      'required'=>false,
-      'attr'=>array('placeholder'=>'Location Content'))
+    $builder->add('location_content',TextType::class,['label'=>false, 'required'=>false, 'attr'=>['placeholder'=>'Location Content']]
       );
-    $builder->add('data_access_url',TextType::class,array(
-      'label'=>false,
-      'required'=>true,
-      'attr'=>array('placeholder'=>'* Location URL'))
+    $builder->add('data_access_url',TextType::class,['label'=>false, 'required'=>true, 'attr'=>['placeholder'=>'* Location URL']]
       );
-    $builder->add('accession_number', TextType::class, array(
-      'required' => false,
-      'label'    => false,
-      'attr'=>array('placeholder'=>'Accession Number'))
+    $builder->add('accession_number', TextType::class, ['required' => false, 'label'    => false, 'attr'=>['placeholder'=>'Accession Number']]
       );
   }
 
@@ -63,9 +51,7 @@ class DataLocationType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\DataLocation'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\DataLocation::class]);
   }
 
   public function getName() {

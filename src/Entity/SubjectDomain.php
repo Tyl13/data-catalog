@@ -189,9 +189,6 @@ class SubjectDomain {
      * @return array
      */
     public function getAllProperties() {
-        return array(
-            'subject_domain'=>$this->subject_domain,
-            'mesh_code'=>$this->mesh_code
-        );
+        return ['subject_domain'=>$this->subject_domain, 'mesh_code'=>$this->mesh_code];
     }
 }

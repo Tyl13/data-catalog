@@ -219,11 +219,7 @@ class DataCollectionInstrument {
      * @return array
      **/
     public function getAllProperties() {
-      return array(
-        'data_collection_instrument_name' => $this->data_collection_instrument_name,
-        'url' => $this->url,
-        'notes' => $this->notes
-      );
+      return ['data_collection_instrument_name' => $this->data_collection_instrument_name, 'url' => $this->url, 'notes' => $this->notes];
     }
 
 }

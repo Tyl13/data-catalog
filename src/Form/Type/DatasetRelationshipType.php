@@ -37,28 +37,11 @@ class DatasetRelationshipType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('related_dataset_uid',TextType::class,array(
-      'label'=>false,
-      'required'=>true,
-      'attr'=>array('placeholder'=>'* Related Dataset UID'))
+    $builder->add('related_dataset_uid',TextType::class,['label'=>false, 'required'=>true, 'attr'=>['placeholder'=>'* Related Dataset UID']]
       );
-    $builder->add('relationship_attributes',ChoiceType::class,array(
-      'label'=>false,
-      'required'=>false,
-      'attr'=>array('data-placeholder'=>'Relationship'),
-      'choices'=>array('Superseded by'=>'Superseded by',
-                       'Preceded by'  =>'Preceded by',
-                       'Sibling of'  =>'Sibling of',
-                       'Derived from'  =>'Derived from',
-                       'Transformed to'  =>'Transformed to',
-                       'Same publisher as'  =>'Same publisher as',
-                       'Linkage dataset between'  =>'Linkage dataset between'),
-        )
+    $builder->add('relationship_attributes',ChoiceType::class,['label'=>false, 'required'=>false, 'attr'=>['data-placeholder'=>'Relationship'], 'choices'=>['Superseded by'=>'Superseded by', 'Preceded by'  =>'Preceded by', 'Sibling of'  =>'Sibling of', 'Derived from'  =>'Derived from', 'Transformed to'  =>'Transformed to', 'Same publisher as'  =>'Same publisher as', 'Linkage dataset between'  =>'Linkage dataset between']]
       );
-    $builder->add('relationship_notes',TextareaType::class,array(
-      'label'=>false,
-      'required'=>false,
-      'attr'=>array('placeholder'=>'Relationship Notes'))
+    $builder->add('relationship_notes',TextareaType::class,['label'=>false, 'required'=>false, 'attr'=>['placeholder'=>'Relationship Notes']]
       );
   }
 
@@ -68,9 +51,7 @@ class DatasetRelationshipType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\DatasetRelationship'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\DatasetRelationship::class]);
   }
 
   public function getName() {

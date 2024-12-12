@@ -35,9 +35,7 @@ class DatasetAlternateTitleType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('alt_title',TextType::class,array(
-      'label'=>false,
-      'attr'=>array('placeholder'=>'Alternate Title'))
+    $builder->add('alt_title',TextType::class,['label'=>false, 'attr'=>['placeholder'=>'Alternate Title']]
       );
   }
 
@@ -47,9 +45,7 @@ class DatasetAlternateTitleType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\DatasetAlternateTitle'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\DatasetAlternateTitle::class]);
   }
 
   public function getName() {

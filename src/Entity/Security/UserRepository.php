@@ -114,7 +114,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(
-                sprintf('Instances of "%s" are not supported.', get_class($user))
+                sprintf('Instances of "%s" are not supported.', $user::class)
             );
         }
 

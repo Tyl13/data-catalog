@@ -217,10 +217,6 @@ class Publication {
     * @return array
     */
     public function getAllProperties() {
-      return array(
-        'citation'=>$this->citation,
-        'url'=>$this->url,
-        'doi'=>$this->doi
-      );
+      return ['citation'=>$this->citation, 'url'=>$this->url, 'doi'=>$this->doi];
     }
 }

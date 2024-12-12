@@ -36,10 +36,8 @@ class SubjectDomainType extends AbstractType {
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('subject_domain');
-    $builder->add('mesh_code', TextType::class, array(
-      'label' => 'MeSH URI',
-    ));
-    $builder->add('save',SubmitType::class,array('label'=>'Submit'));
+    $builder->add('mesh_code', TextType::class, ['label' => 'MeSH URI']);
+    $builder->add('save',SubmitType::class,['label'=>'Submit']);
   }
 
   /**
@@ -48,9 +46,7 @@ class SubjectDomainType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\SubjectDomain'
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\SubjectDomain::class]);
   }
 
   public function getName() {

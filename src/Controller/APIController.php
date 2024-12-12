@@ -37,20 +37,14 @@ use App\Utils\Slugger;
 class APIController extends AbstractController 
 {
 
-  private $security;
-
   /**
    *  We have several pseudo-entities that all relate back to the Person
    *  entity. We'll check this array so we know if we encounter one of them.
    */
-  public $personEntities = array(
-     'Author',
-     'LocalExpert',
-     'CorrespondingAuthor',
-  );
+  public $personEntities = ['Author', 'LocalExpert', 'CorrespondingAuthor'];
 
-  public function __construct(Security $security) {
-    $this->security = $security;
+  public function __construct(private Security $security)
+  {
   }
 
   /**
@@ -98,13 +92,13 @@ class APIController extends AbstractController
         break;
       case "solr":
         // for Solr
-        $content = array();
+        $content = [];
         foreach ($datasets as $dataset) {
           $content[] = $dataset->serializeForSolr();
         }
         break;
       case "complete":
-        $content = array();
+        $content = [];
         foreach ($datasets as $dataset) {
           $content[] = $dataset->serializeComplete();
         }
@@ -148,7 +142,7 @@ class APIController extends AbstractController
     $dataset->setDatasetUid($datasetUid);
 
     if ($userCanSubmit) {
-      $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, array('csrf_protection'=>false));
+      $form = $this->createForm(new DatasetViaApiType($userCanSubmit, $datasetUid), $dataset, ['csrf_protection'=>false]);
       $form->submit($submittedData);
       if ($form->isSubmitted() && $form->isValid()) {
         $dataset = $form->getData();
@@ -202,14 +196,14 @@ class APIController extends AbstractController
     $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
     
     //prefix with namespaces so it can be called dynamically
-    $newEntity = in_array($entityName, $this->personEntities) ? 'App\Entity\\Person' : 'App\Entity\\' . $entityName;
+    $newEntity = in_array($entityName, $this->personEntities) ? \App\Entity\Person::class : 'App\Entity\\' . $entityName;
     $newEntityFormType = 'App\Form\Type\\' . $entityName . "Type";
 
     $em = $this->getDoctrine()->getManager();
     if ($userCanSubmit) {
       $form = $this->createForm(new $newEntityFormType(), 
                                 new $newEntity(),
-                                array('csrf_protection'=>false));
+                                ['csrf_protection'=>false]);
       $form->submit($submittedData);
       if ($form->isSubmitted() && $form->isValid()) {
         $entity = $form->getData();
@@ -258,7 +252,7 @@ class APIController extends AbstractController
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
-    $entity = in_array($entityName, $this->personEntities) ? 'App\Entity\\Person' : 'App\Entity\\' . $entityName;
+    $entity = in_array($entityName, $this->personEntities) ? \App\Entity\Person::class : 'App\Entity\\' . $entityName;
 
     if ($slug == "all") {
       $entities = $qb->select('e')

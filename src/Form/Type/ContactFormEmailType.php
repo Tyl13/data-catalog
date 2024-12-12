@@ -48,42 +48,18 @@ class ContactFormEmailType extends AbstractType {
    * @param FormBuilderInterface
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
-    $builder->add('full_name', TextType::class, array(
-      'required' => true,
-      'label_attr'=>array('class'=>'asterisk')));
-    $builder->add('email_address', EmailType::class, array(
-      'label_attr'=>array('class'=>'asterisk')));
-    $builder->add('school_center', TextType::class, array(
-      'required' => false,
-      'label'=> 'School/Center',
-	  'label_attr'=>array('class'=>'no-asterisk')));
-    $builder->add('department', TextType::class, array(
-      'required' => false,
-      'label'=> 'Department',
-	  'label_attr'=>array('class'=>'no-asterisk')));
+    $builder->add('full_name', TextType::class, ['required' => true, 'label_attr'=>['class'=>'asterisk']]);
+    $builder->add('email_address', EmailType::class, ['label_attr'=>['class'=>'asterisk']]);
+    $builder->add('school_center', TextType::class, ['required' => false, 'label'=> 'School/Center', 'label_attr'=>['class'=>'no-asterisk']]);
+    $builder->add('department', TextType::class, ['required' => false, 'label'=> 'Department', 'label_attr'=>['class'=>'no-asterisk']]);
        
-    $builder->add('reason', ChoiceType::class, array(
-      'expanded'=>true,
-      'required' => true,
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'choices' =>array(
-        'General inquiry'    => 'General question or comments',
-        'Technical problem' => 'Technical problem',
-      ),
-      'multiple'=>false)
+    $builder->add('reason', ChoiceType::class, ['expanded'=>true, 'required' => true, 'label_attr'=>['class'=>'no-asterisk'], 'choices' =>['General inquiry'    => 'General question or comments', 'Technical problem' => 'Technical problem'], 'multiple'=>false]
     );
-    $builder->add('message_body', TextareaType::class, array(
-      'required' => false,
-      'attr' => array('rows'=>'5'),
-      'label_attr'=>array('class'=>'no-asterisk'),
-      'label'=>'Please provide some details about your question/comment',
-    ));
+    $builder->add('message_body', TextareaType::class, ['required' => false, 'attr' => ['rows'=>'5'], 'label_attr'=>['class'=>'no-asterisk'], 'label'=>'Please provide some details about your question/comment']);
 
-    $builder->add('recaptcha', EWZRecaptchaType::class, array(
-    	'label' => false,
-    ));
+    $builder->add('recaptcha', EWZRecaptchaType::class, ['label' => false]);
 
-    $builder->add('save',SubmitType::class,array('label'=>'Send'));
+    $builder->add('save',SubmitType::class,['label'=>'Send']);
   }
 
   /**
@@ -92,10 +68,7 @@ class ContactFormEmailType extends AbstractType {
    * @param OptionsResolver
    */
   public function configureOptions(OptionsResolver $resolver) {
-    $resolver->setDefaults(array(
-      'data_class' => 'App\Entity\ContactFormEmail',
-      'affiliationOptions' => null,
-    ));
+    $resolver->setDefaults(['data_class' => \App\Entity\ContactFormEmail::class, 'affiliationOptions' => null]);
   }
 
 

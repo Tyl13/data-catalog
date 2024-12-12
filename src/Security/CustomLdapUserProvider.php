@@ -20,10 +20,10 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof LdapUser) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
-        if ($user == None){
+        if ($user == \NONE){
             throw new UserNotFoundException();
         }
 

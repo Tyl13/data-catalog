@@ -47,10 +47,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
   */
 class GeneralController extends AbstractController 
 {
-  private $security;
-
-  public function __construct(Security $security) {
-    $this->security = $security;
+  public function __construct(private Security $security)
+  {
   }
 
 
@@ -63,10 +61,10 @@ class GeneralController extends AbstractController
   public function index()
   {
       if ($this->get('twig')->getLoader()->exists('institution/index.html.twig')) {
-        return $this->render('institution/index.html.twig',array()); 
+        return $this->render('institution/index.html.twig',[]); 
       }
       else {
-        return $this->render('index.html.twig', array());
+        return $this->render('index.html.twig', []);
       }
   }
 
@@ -91,15 +89,9 @@ class GeneralController extends AbstractController
     $results = new SearchResults($resultsFromSolr);
 
     if ($results->numResults == 0) {
-      return $this->render('default/no_results.html.twig', array(
-        'results' => $results,
-        'currentSearch'=>$currentSearch,
-      ));
+      return $this->render('default/no_results.html.twig', ['results' => $results, 'currentSearch'=>$currentSearch]);
     } else {
-      return $this->render('default/results.html.twig',array(
-                  'results' => $results,
-                  'currentSearch' => $currentSearch,
-                  ));
+      return $this->render('default/results.html.twig',['results' => $results, 'currentSearch' => $currentSearch]);
     }
     
   }
@@ -119,10 +111,10 @@ class GeneralController extends AbstractController
   public function about()
   {
       if ($this->get('twig')->getLoader()->exists('institution/about.html.twig')) {
-        return $this->render('institution/about.html.twig',array()); 
+        return $this->render('institution/about.html.twig',[]); 
       }
       else {
-        return $this->render('about.html.twig', array());
+        return $this->render('about.html.twig', []);
       }
   }
 
@@ -139,10 +131,10 @@ class GeneralController extends AbstractController
   public function howToUseTheCatalog()
   {
       if ($this->get('twig')->getLoader()->exists('institution/how_to_use_catalog.html.twig')) {
-        return $this->render('institution/how_to_use_catalog.html.twig',array()); 
+        return $this->render('institution/how_to_use_catalog.html.twig',[]); 
       }
       else {
-        return $this->render('how_to_use_catalog.html.twig', array());
+        return $this->render('how_to_use_catalog.html.twig', []);
       }
   }
 
@@ -159,10 +151,10 @@ class GeneralController extends AbstractController
   public function faq()
   {
       if ($this->get('twig')->getLoader()->exists('institution/faq.html.twig')) {
-        return $this->render('institution/faq.html.twig',array()); 
+        return $this->render('institution/faq.html.twig',[]); 
       }
       else {
-        return $this->render('faq.html.twig', array());
+        return $this->render('faq.html.twig', []);
       }
   }
 
@@ -214,14 +206,10 @@ class GeneralController extends AbstractController
         ->context(['msg' => $email ]);
       $mailer->send($message);
 	
-      return $this->render('default/contact_email_send_success.html.twig', array(
-        'form' => $form->createView(),
-      ));
+      return $this->render('default/contact_email_send_success.html.twig', ['form' => $form->createView()]);
     }
 
-    return $this->render('default/contact.html.twig', array(
-      'form' => $form->createView(),
-    ));
+    return $this->render('default/contact.html.twig', ['form' => $form->createView()]);
 
   }
 
@@ -268,14 +256,10 @@ class GeneralController extends AbstractController
 
       $mailer->send($message);
 
-      return $this->render('default/submit_dataset_email_send_success.html.twig', array(
-        'form' => $form->createView(),
-      ));
+      return $this->render('default/submit_dataset_email_send_success.html.twig', ['form' => $form->createView()]);
     }
 
-    return $this->render('default/submit_dataset.html.twig', array(
-      'form' => $form->createView(),
-    ));
+    return $this->render('default/submit_dataset.html.twig', ['form' => $form->createView()]);
 
   }
 
@@ -294,7 +278,7 @@ class GeneralController extends AbstractController
   public function view($uid, Request $request) {
     $dataset = $this->getDoctrine()
       ->getRepository('App:Dataset')
-      ->findOneBy(array('dataset_uid'=>$uid));
+      ->findOneBy(['dataset_uid'=>$uid]);
 
     // dataset not found
     if (!$dataset) {
@@ -320,7 +304,7 @@ class GeneralController extends AbstractController
 			
 			if ($request->get('tak') && !$dataset->getPublished()) {
 	
-				$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(array('dataset_association'=>$uid, 'uuid'=>$request->get('tak')) );
+				$tak=$this->getDoctrine()->getRepository('App:TempAccessKey')->findOneBy(['dataset_association'=>$uid, 'uuid'=>$request->get('tak')] );
 			
 				if (!empty($tak)) {
 					
@@ -362,13 +346,9 @@ class GeneralController extends AbstractController
 		}
 
 		if ($dataset->getOrigin() == 'Internal') {
-			return $this->render('default/view_dataset_internal.html.twig', array(
-				'dataset' => $dataset,
-			));
+			return $this->render('default/view_dataset_internal.html.twig', ['dataset' => $dataset]);
 		} else {
-			return $this->render('default/view_dataset_external.html.twig', array(
-				'dataset' => $dataset,
-			));
+			return $this->render('default/view_dataset_external.html.twig', ['dataset' => $dataset]);
 		}
   
   }
