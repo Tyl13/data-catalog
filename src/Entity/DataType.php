@@ -29,8 +29,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="data_types")
- * @UniqueEntity("data_type")
  */
+#[UniqueEntity('data_type')]
 class DataType {
   /**
    * @ORM\Column(type="integer",name="data_type_id")

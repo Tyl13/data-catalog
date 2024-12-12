@@ -164,16 +164,16 @@ class APIController extends Controller
         }
         $em->flush();
 
-        return new Response('Dataset Successfully Added', 201);
+        return new Response('Dataset Successfully Added', \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
       } else {
           $errors = $form->getErrorsAsString();
-          $response = new Response(json_encode($errors), 422);
+          $response = new Response(json_encode($errors), \Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY);
           $response->headers->set('Content-Type', 'application/json');
 
           return $response;
       }
     } else {
-        return new Response('Unauthorized', 401);
+        return new Response('Unauthorized', \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED);
     }
   }
 
@@ -193,7 +193,7 @@ class APIController extends Controller
     $submittedData = json_decode($request->getContent(), true);
 
     if ($entityName == 'User') {
-      return new Response('Users cannot be added via API', 403);
+      return new Response('Users cannot be added via API', \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
     } else {
       $addTemplate = 'add.html.twig';
     }
@@ -225,16 +225,16 @@ class APIController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new Response($entityName . ': "' . $addedEntityName . '" successfully added.', 201);
+        return new Response($entityName . ': "' . $addedEntityName . '" successfully added.', \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
       } else {
         $errors = $form->getErrorsAsString();
-        $response = new Response(json_encode($errors), 422);
+        $response = new Response(json_encode($errors), \Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
       }
     } else {
-      return new Response('Unauthorized', 401);
+      return new Response('Unauthorized', \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED);
     } 
   }
 
@@ -256,7 +256,7 @@ class APIController extends Controller
    */ 
   public function APIEntityGetAction($entityName, $slug, $_format, Request $request) {
     if ($entityName == 'User') {
-      return new Response('Users cannot be fetched via API', 403);
+      return new Response('Users cannot be fetched via API', \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
     }
 
     $em = $this->getDoctrine()->getManager();

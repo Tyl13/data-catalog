@@ -20,3 +20,7 @@
 /public/css/institution/
 /public/img/institution/
 /templates/institution/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

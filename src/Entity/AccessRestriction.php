@@ -28,8 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="access_restrictions")
- * @UniqueEntity("restriction")
  */
+#[UniqueEntity('restriction')]
 class AccessRestriction {
   /**
    * @ORM\Column(type="integer",name="restriction_id")

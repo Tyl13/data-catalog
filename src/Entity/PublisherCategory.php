@@ -26,8 +26,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="publisher_categories")
- * @UniqueEntity("publisher_category")
  */
+#[UniqueEntity('publisher_category')]
 class PublisherCategory {
   /**
    * @ORM\Column(type="integer", name="publisher_category_id")

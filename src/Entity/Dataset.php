@@ -30,14 +30,14 @@ use JsonSerializable;
  *
  * @ORM\Entity(repositoryClass="App\Entity\DatasetRepository")
  * @ORM\Table(name="datasets")
- * @UniqueEntity("title")
  */
+#[UniqueEntity('title')]
 class Dataset implements JsonSerializable {
   /**
-   * @Assert\NotBlank()
    * @ORM\Id
    * @ORM\Column(type="integer", unique=true)
    */
+  #[Assert\NotBlank]
   protected $dataset_uid;
 
   /**
@@ -46,9 +46,9 @@ class Dataset implements JsonSerializable {
   protected $origin;
 
   /**
-   * @Assert\NotBlank()
    * @ORM\Column(type="string", length=255, unique=true)
    */
+  #[Assert\NotBlank]
   protected $title;
 
   /**
@@ -63,9 +63,9 @@ class Dataset implements JsonSerializable {
 
 
   /**
-   * @Assert\NotBlank()
    * @ORM\Column(type="text", length=3000)
    */
+  #[Assert\NotBlank]
   protected $description;
 
 

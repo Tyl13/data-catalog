@@ -32,8 +32,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="measurement_standards")
- * @UniqueEntity("data_collection_instrument_name")
  */
+#[UniqueEntity('data_collection_instrument_name')]
 class DataCollectionInstrument {
   /**
    * @ORM\Column(type="integer",name="standard_id")

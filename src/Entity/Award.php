@@ -28,8 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity(repositoryClass="App\Entity\AwardRepository")
  * @ORM\Table(name="awards")
- * @UniqueEntity("award")
  */
+#[UniqueEntity('award')]
 class Award {
   /**
    * @ORM\Column(type="integer",name="award_id")

@@ -29,9 +29,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Entity
  * @ORM\Table(name="person")
- * @UniqueEntity("kid")
- * @UniqueEntity("slug")
  */
+#[UniqueEntity('kid')]
+#[UniqueEntity('slug')]
 class Person {
   /**
    * @ORM\Column(type="integer",name="person_id")

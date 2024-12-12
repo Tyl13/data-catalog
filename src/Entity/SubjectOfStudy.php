@@ -28,8 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="subject_of_study")
- * @UniqueEntity("subject_of_study")
  */
+#[UniqueEntity('subject_of_study')]
 class SubjectOfStudy {
   /**
    * @ORM\Column(type="integer",name="subject_of_study_id")

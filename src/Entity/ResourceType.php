@@ -27,8 +27,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="resource_types")
- * @UniqueEntity("resource_type")
  */
+#[UniqueEntity('resource_type')]
 class ResourceType {
   /**
    * @ORM\Column(type="integer",name="resource_type_id")

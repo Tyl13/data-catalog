@@ -17,10 +17,14 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof LdapUser) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        }
+
+        if ($user == None){
+            throw new UserNotFoundException();
         }
 
         return new LdapUser($user->getEntry(), $user->getUsername(), null, $user->getRoles());
@@ -29,7 +33,7 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class): bool
     {
 	return LdapUser::class === $class || is_subclass_of($class, LdapUser::class);
     }
@@ -37,16 +41,16 @@ class CustomLdapUserProvider extends BaseLdapUserProvider implements ContainerAw
     /**
      * {@inheritdoc}
      */
-    protected function loadUser($username, Entry $entry)
+    protected function loadUser(string $identifier, Entry $entry): UserInterface
     {
 
-        $user = parent::loadUser($username, $entry);
+        $user = parent::loadUser($identifier, $entry);
         
         // Fetch the user's actual roles from our database
         $userRepository = $this->container->get('doctrine.orm.entity_manager')->getRepository('App\Entity\Security\User');        
-        $databaseRoles = $userRepository->getDatabaseRoles($username);
+        $databaseRoles = $userRepository->getDatabaseRoles($identifier);
         
-        return new LdapUser($entry, $username, $user->getPassword(), $databaseRoles);
+        return new LdapUser($entry, $identifier, $user->getPassword(), $databaseRoles);
     }
 
 

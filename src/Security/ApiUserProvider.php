@@ -19,11 +19,11 @@ class ApiUserProvider implements UserProviderInterface {
      * @throws UsernameNotFoundException if the user is not found
      * @param string $username The username
      *
-     * @return UserInterface
+     * @return TUser
      */
-    function loadUserByUsername($apiKey) {
+    public function loadUserByIdentifier(string $identifier): UserInterface {
         var_dump("using API provider");
-        $user = User::find(array('apiKey'=>$apiKey));
+        $user = User::find(array('apiKey'=>$identifier));
         if(empty($user)){
             throw new UsernameNotFoundException('Could not find user. Sorry!');
         }
@@ -32,12 +32,18 @@ class ApiUserProvider implements UserProviderInterface {
     }
 
     /**
-     * @throws UnsupportedUserException if the account is not supported
+     * 
+     *
+     * @psalm-return TUser
+     *
+     * @throws UnsupportedUserException if the user is not supported
+     * @throws UserNotFoundException    if the user is not found
+     * 
      * @param UserInterface $user
      *
      * @return UserInterface
      */
-    function refreshUser(UserInterface $user) {
+    public function refreshUser(UserInterface $user) {
         return $user;
     }
 

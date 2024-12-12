@@ -28,8 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="subject_geographic_areas")
- * @UniqueEntity("geographic_area_name")
  */
+#[UniqueEntity('geographic_area_name')]
 class SubjectGeographicArea {
   /**
    * @ORM\Column(type="integer",name="area_id")

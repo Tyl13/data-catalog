@@ -80,7 +80,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   protected $roles = [];
 
 
-  public function getRoles() {
+  public function getRoles(): array {
     $roles = $this->roles;
     $roles[] = 'ROLE_USER';
 
@@ -149,6 +149,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this->username;
     }
 
+    public function getUserIdentifier(): string {
+        return $this->apiKey;
+    }
+
     /**
      * Erase credentials
      */
@@ -163,7 +167,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return bool
      */
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if (!$user instanceof User) {
             return false;

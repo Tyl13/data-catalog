@@ -78,8 +78,8 @@ class ContactFormEmail {
 
   /**
    * @ORM\Column(type="string",length=128,nullable=true)
-   * @Assert\Blank()
    */
+  #[Assert\Blank]
   protected $checker;
 
 

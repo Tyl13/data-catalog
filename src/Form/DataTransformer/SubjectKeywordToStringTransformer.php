@@ -57,7 +57,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     /*if (!($array instanceof PersistentCollection)) {
       return new ArrayCollection();
     }*/
-    
+
     $options = array();
     foreach ($array as $key=>$subjectKeyword) {
       $options[] = $subjectKeyword->getKeyword();
