@@ -39,7 +39,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      *
      * @return mixed The user's data
      *
-     * @throws UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      */
     public function loadUserByUsername($username)
     {
@@ -54,7 +54,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $message = sprintf(
           'Unable to find database user "%s"', $username
         );
-        throw new UsernameNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
       }
 
       return $userData;
@@ -74,7 +74,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $message = sprintf(
           'Unable to find database user "%s"', $username
         );
-        throw new UsernameNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
       }
      
       $databaseRoles = $userData->getRoles();
@@ -96,7 +96,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $message = sprintf(
           'Unable to find user with API key: "%s"', $username
         );
-        throw new UsernameNotFoundException($message, 0, $e);
+        throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
       }
 
       return $userData;

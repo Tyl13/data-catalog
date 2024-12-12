@@ -37,7 +37,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRouting(\Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator $routes): void
     {
         $confDir = $this->getProjectDir().'/config';
 

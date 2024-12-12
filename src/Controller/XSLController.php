@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\SearchResults;
 use App\Entity\SearchState;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 
-class XSLController extends Controller
+class XSLController extends AbstractController 
 {
     public function indexAction(){
 

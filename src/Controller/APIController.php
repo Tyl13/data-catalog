@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\DatasetViaApiType;
 use App\Entity\Dataset;
@@ -34,7 +34,7 @@ use App\Utils\Slugger;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-class APIController extends Controller
+class APIController extends AbstractController 
 {
 
   private $security;

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\SearchResults;
@@ -45,7 +45,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
   *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   *
   */
-class GeneralController extends Controller
+class GeneralController extends AbstractController 
 {
   private $security;
 

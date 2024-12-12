@@ -16,7 +16,7 @@ class ApiUserProvider implements UserProviderInterface {
     }
 
     /**
-     * @throws UsernameNotFoundException if the user is not found
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException if the user is not found
      * @param string $username The username
      *
      * @return TUser
@@ -25,7 +25,7 @@ class ApiUserProvider implements UserProviderInterface {
         var_dump("using API provider");
         $user = User::find(array('apiKey'=>$identifier));
         if(empty($user)){
-            throw new UsernameNotFoundException('Could not find user. Sorry!');
+            throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException('Could not find user. Sorry!');
         }
         $this->user = $user;
         return $user;
