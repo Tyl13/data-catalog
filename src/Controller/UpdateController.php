@@ -55,7 +55,7 @@ class UpdateController extends AbstractController {
    *
    * @Route("/update/Dataset/{uid}", defaults={"uid"=null}, name="update_dataset")
    */
-  public function UpdateDatasetAction($uid, Request $request) {
+  public function UpdateDataset($uid, Request $request) {
   
 		$tak_ttl="PT72H";
 		if ($this->container->hasParameter('tak_ttl')) {
@@ -139,7 +139,7 @@ class UpdateController extends AbstractController {
    *
    * @Route("/update/User/{user}", defaults={"user"=null}, name="update_user")
    */
-  public function UpdateUserAction($user, Request $request) {
+  public function UpdateUser($user, Request $request) {
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
     if ($user == null) {
@@ -204,7 +204,7 @@ class UpdateController extends AbstractController {
    *
    * @Route("/update/{entityName}/{slug}", defaults={"slug"=null}, name="update_entity")
    */
-  public function updateEntityAction($entityName, $slug, Request $request) {
+  public function updateEntity($entityName, $slug, Request $request) {
 
 		//
 		// Joel Marchewka, 20210615

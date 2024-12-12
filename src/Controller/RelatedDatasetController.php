@@ -41,7 +41,7 @@ class RelatedDatasetController extends AbstractController
    *
    * @return Response A Response instance
    */
-  public function relatedDatasetAction($relatedDatasets, $format) {
+  public function relatedDataset($relatedDatasets, $format) {
 
     $em = $this->getDoctrine()->getManager()->getRepository('App:Dataset');;
 

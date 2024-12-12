@@ -50,7 +50,7 @@ class RemoveController extends AbstractController {
    *
    * @Route("/remove/Dataset/{uid}", defaults={"uid"=null}, name="remove_dataset")
    */
-  public function removeDatasetAction($uid, Request $request) {
+  public function removeDataset($uid, Request $request) {
     $em = $this->getDoctrine()->getManager();
     $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
 
@@ -105,7 +105,7 @@ class RemoveController extends AbstractController {
    *
    * @Route("/remove/{entityName}/{slug}", defaults={"slug"=null}, name="remove_entity")
    */
-  public function removeEntityAction($entityName, $slug, Request $request) {
+  public function removeEntity($entityName, $slug, Request $request) {
     //preface with namespace so it can be called dynamically
     if ($entityName == 'User') {
       $removeEntity = 'App\Entity\Security\\' . $entityName;

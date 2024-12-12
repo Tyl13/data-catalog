@@ -60,13 +60,14 @@ class GeneralController extends AbstractController
    * @return Response A Response instance
    * @Route("/", name="homepage")
    */
-  public function indexAction(Request $request) {
-    if ($this->get('twig')->getLoader()->exists('institution/index.html.twig')) {
-      return $this->render('institution/index.html.twig',array()); 
-    }
-    else {
-      return $this->render('index.html.twig', array());
-    }
+  public function index()
+  {
+      if ($this->get('twig')->getLoader()->exists('institution/index.html.twig')) {
+        return $this->render('institution/index.html.twig',array()); 
+      }
+      else {
+        return $this->render('index.html.twig', array());
+      }
   }
 
 
@@ -79,7 +80,7 @@ class GeneralController extends AbstractController
    *
    * @Route("/search", name="user_search_results")
    */
-  public function searchAction(Request $request) {
+  public function search(Request $request) {
     
     $currentSearch = new SearchState($request);
 
@@ -115,15 +116,14 @@ class GeneralController extends AbstractController
    * @return Response A Response instance
    * @Route("/about", name="about")
    */
-  public function aboutAction(Request $request) {
-
-    if ($this->get('twig')->getLoader()->exists('institution/about.html.twig')) {
-      return $this->render('institution/about.html.twig',array()); 
-    }
-    else {
-      return $this->render('about.html.twig', array());
-    }
-
+  public function about()
+  {
+      if ($this->get('twig')->getLoader()->exists('institution/about.html.twig')) {
+        return $this->render('institution/about.html.twig',array()); 
+      }
+      else {
+        return $this->render('about.html.twig', array());
+      }
   }
 
 
@@ -136,15 +136,14 @@ class GeneralController extends AbstractController
    * @return Response A Response instance
    * @Route("/how-to-use-the-catalog", name="how_to_use_catalog")
    */
-  public function howToUseTheCatalogAction(Request $request) {
-
-    if ($this->get('twig')->getLoader()->exists('institution/how_to_use_catalog.html.twig')) {
-      return $this->render('institution/how_to_use_catalog.html.twig',array()); 
-    }
-    else {
-      return $this->render('how_to_use_catalog.html.twig', array());
-    }
-
+  public function howToUseTheCatalog()
+  {
+      if ($this->get('twig')->getLoader()->exists('institution/how_to_use_catalog.html.twig')) {
+        return $this->render('institution/how_to_use_catalog.html.twig',array()); 
+      }
+      else {
+        return $this->render('how_to_use_catalog.html.twig', array());
+      }
   }
 
 
@@ -157,14 +156,14 @@ class GeneralController extends AbstractController
    * @return Response A Response instance
    * @Route("/frequently-asked-questions", name="faq")
    */
-  public function faqAction(Request $request) {
-
-    if ($this->get('twig')->getLoader()->exists('institution/faq.html.twig')) {
-      return $this->render('institution/faq.html.twig',array()); 
-    }
-    else {
-      return $this->render('faq.html.twig', array());
-    }
+  public function faq()
+  {
+      if ($this->get('twig')->getLoader()->exists('institution/faq.html.twig')) {
+        return $this->render('institution/faq.html.twig',array()); 
+      }
+      else {
+        return $this->render('faq.html.twig', array());
+      }
   }
 
 
@@ -181,7 +180,7 @@ class GeneralController extends AbstractController
    *
    * @Route("/contact-us", name="contact")
    */
-  public function contactAction(Request $request, MailerInterface $mailer) {
+  public function contact(Request $request, MailerInterface $mailer) {
     $contactFormEmail = new \App\Entity\ContactFormEmail();
 
     // Get email addresses and institution list from parameters.yml
@@ -241,7 +240,7 @@ class GeneralController extends AbstractController
    * @Route("/submit-dataset", name="submitdataset")
    */
 
-  public function submitdatasetAction(Request $request, MailerInterface $mailer) {
+  public function submitdataset(Request $request, MailerInterface $mailer) {
     $submitDatasetFormEmail = new \App\Entity\SubmitDatasetFormEmail();
 
     // Get email addresses and institution list from parameters.yml
@@ -292,7 +291,7 @@ class GeneralController extends AbstractController
    *
    * @Route("/dataset/{uid}", name="view_dataset")
    */
-  public function viewAction($uid, Request $request) {
+  public function view($uid, Request $request) {
     $dataset = $this->getDoctrine()
       ->getRepository('App:Dataset')
       ->findOneBy(array('dataset_uid'=>$uid));

@@ -48,19 +48,17 @@ class CacheController extends AbstractController {
    *
    * @Route("/admin/cache/clear", name="cache_clear")
    */
-  public function clearCache(Request $request) {
-
-    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
-
-    if ($userIsAdmin) {
-      apc_clear_cache();
-      apc_clear_cache('user');
-      apc_clear_cache('opcode');
-      return new Response('success');
-    } else {
-      throw new AccessDeniedException();
-    }
-
+  public function clearCache()
+  {
+      $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
+      if ($userIsAdmin) {
+        apc_clear_cache();
+        apc_clear_cache('user');
+        apc_clear_cache('opcode');
+        return new Response('success');
+      } else {
+        throw new AccessDeniedException();
+      }
   }
 
   /**
@@ -72,15 +70,13 @@ class CacheController extends AbstractController {
    *
    * @Route("/admin/cache/view", name="cache_info")
    */
-  public function viewCache(Request $request) {
-
-    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
-
-    if ($userIsAdmin) {
-      return new Response(var_dump(apc_cache_info()));
-    } else {
-      throw new AccessDeniedException();
-    }
-
+  public function viewCache()
+  {
+      $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
+      if ($userIsAdmin) {
+        return new Response(var_dump(apc_cache_info()));
+      } else {
+        throw new AccessDeniedException();
+      }
   }
 }

@@ -21,7 +21,7 @@ class OAIController extends AbstractController
 	 * @Route("/oai", name="oai_base")
    */
 
-    public function indexAction(){
+    public function index(){
         date_default_timezone_set('UTC');
 
         $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'];

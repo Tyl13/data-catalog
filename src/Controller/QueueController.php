@@ -40,7 +40,7 @@ class QueueController extends AbstractController
    *
    * @return Response A Response instance
    */
-  public function queueLengthAction() {
+  public function queueLength() {
 
     $em = $this->getDoctrine()->getManager();
 
@@ -63,7 +63,7 @@ class QueueController extends AbstractController
    *
    * @Route("/admin/approval-queue", name="approval_queue")
    */
-   public function viewApprovalQueueAction() {
+   public function viewApprovalQueue() {
      
      $em = $this->getDoctrine()->getManager();
      $approvalQueue = $em->getRepository('App:Dataset')

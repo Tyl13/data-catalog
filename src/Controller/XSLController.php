@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class XSLController extends AbstractController 
 {
-    public function indexAction(){
+    public function index(){
 
         //date_default_timezone_set('UTC');
 

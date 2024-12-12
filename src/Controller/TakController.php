@@ -56,7 +56,7 @@ class TakController extends AbstractController
    * @Route("/tak/gen/{uid}", name="tak_generate")
    */
 
-  public function generateTak($uid, Request $request) {
+  public function generateTak($uid) {
   
 		if ($this->security->isGranted('ROLE_ADMIN')) {
 
@@ -116,7 +116,7 @@ class TakController extends AbstractController
    * @Route("/tak/get/{uid}", name="tak_get_for_uid")
    */
   
-  public function getTaks($uid, Request $request) {
+  public function getTaks($uid) {
 
 		$data = ['response'=>'DENIED','keys'=>[],'dataset'=>0];
 
@@ -161,7 +161,7 @@ class TakController extends AbstractController
    * @Route("/tak/delete/{uuid}", name="tak_delete_id")
    */
   
-  public function deleteTak($uuid, Request $request) {
+  public function deleteTak($uuid) {
 
 		$data = ['response'=>'DENIED', 'uuid'=>'', 'dataset'=>0];
 

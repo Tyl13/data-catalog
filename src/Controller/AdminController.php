@@ -44,11 +44,11 @@ class AdminController extends AbstractController
    *
    * @Route("/dashboard", name="admin_panel")
    */
-  public function adminAction(Request $request) {
-    return $this->render('default/admin-home.html.twig',array(
-      'adminPage'=>true,
-                ));
-    
+  public function admin()
+  {
+      return $this->render('default/admin-home.html.twig',array(
+        'adminPage'=>true,
+                  ));
   }
   
   
@@ -61,13 +61,11 @@ class AdminController extends AbstractController
    *
    * @Route("/manage", name="admin_manage")
    */
-  public function adminManageAction(Request $request) {
-    
-
-    return $this->render('default/admin-manage.html.twig',array(
-      'adminPage'=>true,
-                ));
-    
+  public function adminManage()
+  {
+      return $this->render('default/admin-manage.html.twig',array(
+        'adminPage'=>true,
+                  ));
   }
 
   /**
@@ -79,13 +77,11 @@ class AdminController extends AbstractController
    *
    * @Route("/users", name="admin_users")
    */
-  public function adminUsersAction(Request $request) {
-    
-
-    return $this->render('default/admin-users.html.twig',array(
-      'adminPage'=>true,
-                ));
-    
+  public function adminUsers()
+  {
+      return $this->render('default/admin-users.html.twig',array(
+        'adminPage'=>true,
+                  ));
   }
   
 }

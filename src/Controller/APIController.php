@@ -68,7 +68,7 @@ class APIController extends AbstractController
    * ) 
    * @Method("GET")
    */ 
-  public function APIDatasetGetAction($uid, $_format, Request $request) {
+  public function APIDatasetGet($uid, $_format, Request $request) {
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
@@ -136,7 +136,7 @@ class APIController extends AbstractController
    * @Route("/api/Dataset")
    * @Method("POST")
    */
-  public function APIDatasetPostAction(Request $request) {
+  public function APIDatasetPost(Request $request) {
     $submittedData = json_decode($request->getContent(), true);
     $dataset = new Dataset();
     $em = $this->getDoctrine()->getManager();
@@ -189,7 +189,7 @@ class APIController extends AbstractController
    * @Route("/api/{entityName}")
    * @Method("POST")
    */
-  public function APIEntityPostAction($entityName, Request $request) {
+  public function APIEntityPost($entityName, Request $request) {
     $submittedData = json_decode($request->getContent(), true);
 
     if ($entityName == 'User') {
@@ -254,7 +254,7 @@ class APIController extends AbstractController
    * ) 
    * @Method("GET")
    */ 
-  public function APIEntityGetAction($entityName, $slug, $_format, Request $request) {
+  public function APIEntityGet($entityName, $slug, $_format) {
     if ($entityName == 'User') {
       return new Response('Users cannot be fetched via API', \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
     }

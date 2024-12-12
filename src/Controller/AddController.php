@@ -60,35 +60,33 @@ class AddController extends AbstractController {
    *
    * @Route("/add/Dataset", name="add_dataset")
    */
-  public function addAction(Request $request) {
-    $dataset = new Dataset();
-    $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
-    $em = $this->getDoctrine()->getManager();
-    $datasetUid = $em->getRepository('App:Dataset')
-                     ->getNewDatasetId();
-    $dataset->setDatasetUid($datasetUid);
-
-    if ($userIsAdmin) {
-      $form = $this->createForm(DatasetAsAdminType::class, $dataset, array(
-				  'datasetUid' => $datasetUid,
-          'action' => $this->generateUrl('ingest_dataset')));
-      return $this->render('default/add_dataset_admin.html.twig', array(
-        'form'=> $form->createView(),
-        'adminPage'=>true,
-        'userIsAdmin'=>$userIsAdmin,
-      ));
-    } else {
-      $form = $this->createForm(DatasetAsUserType::class, $dataset, array(
-	  'datasetUid' => $datasetUid,
-          'action' => $this->generateUrl('ingest_dataset')));
-      return $this->render('default/add_dataset_user.html.twig', array(
-        'form'=> $form->createView(),
-        'adminPage'=>true,
-        'userIsAdmin'=>$userIsAdmin,
-      ));
-    }
-  
-
+  public function add()
+  {
+      $dataset = new Dataset();
+      $userIsAdmin = $this->security->isGranted('ROLE_ADMIN');
+      $em = $this->getDoctrine()->getManager();
+      $datasetUid = $em->getRepository('App:Dataset')
+                       ->getNewDatasetId();
+      $dataset->setDatasetUid($datasetUid);
+      if ($userIsAdmin) {
+        $form = $this->createForm(DatasetAsAdminType::class, $dataset, array(
+  				  'datasetUid' => $datasetUid,
+            'action' => $this->generateUrl('ingest_dataset')));
+        return $this->render('default/add_dataset_admin.html.twig', array(
+          'form'=> $form->createView(),
+          'adminPage'=>true,
+          'userIsAdmin'=>$userIsAdmin,
+        ));
+      } else {
+        $form = $this->createForm(DatasetAsUserType::class, $dataset, array(
+  	  'datasetUid' => $datasetUid,
+            'action' => $this->generateUrl('ingest_dataset')));
+        return $this->render('default/add_dataset_user.html.twig', array(
+          'form'=> $form->createView(),
+          'adminPage'=>true,
+          'userIsAdmin'=>$userIsAdmin,
+        ));
+      }
   }
   
   
