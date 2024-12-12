@@ -1096,7 +1096,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add dataset_formats
      *
-     * @param \App\Entity\DatasetFormat $datasetFormats
      * @return Dataset
      */
     public function addDatasetFormat(\App\Entity\DatasetFormat $datasetFormats)
@@ -1108,8 +1107,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove dataset_formats
-     *
-     * @param \App\Entity\DatasetFormat $datasetFormats
      */
     public function removeDatasetFormat(\App\Entity\DatasetFormat $datasetFormats)
     {
@@ -1132,7 +1129,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add resource_types
      *
-     * @param \App\Entity\ResourceType $resourceTypes
      * @return Dataset
      */
     public function addResourceType(\App\Entity\ResourceType $resourceTypes)
@@ -1144,8 +1140,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove resource_types
-     *
-     * @param \App\Entity\ResourceType $resourceTypes
      */
     public function removeResourceType(\App\Entity\ResourceType $resourceTypes)
     {
@@ -1170,7 +1164,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add awards
      *
-     * @param \App\Entity\Award $awards
      * @return Dataset
      */
     public function addAward(\App\Entity\Award $awards)
@@ -1182,8 +1175,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove awards
-     *
-     * @param \App\Entity\Award $awards
      */
     public function removeAward(\App\Entity\Award $awards)
     {
@@ -1204,7 +1195,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add projects
      *
-     * @param \App\Entity\Project $projects
      * @return Dataset
      */
     public function addProject(\App\Entity\Project $projects)
@@ -1216,8 +1206,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove projects
-     *
-     * @param \App\Entity\Project $projects
      */
     public function removeProject(\App\Entity\Project $projects)
     {
@@ -1238,7 +1226,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add access_restrictions
      *
-     * @param \App\Entity\AccessRestriction $accessRestrictions
      * @return Dataset
      */
     public function addAccessRestriction(\App\Entity\AccessRestriction $accessRestrictions)
@@ -1250,8 +1237,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove access_restrictions
-     *
-     * @param \App\Entity\AccessRestriction $accessRestrictions
      */
     public function removeAccessRestriction(\App\Entity\AccessRestriction $accessRestrictions)
     {
@@ -1304,7 +1289,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_genders
      *
-     * @param \App\Entity\SubjectGender $subjectGenders
      * @return Dataset
      */
     public function addSubjectGender(\App\Entity\SubjectGender $subjectGenders)
@@ -1316,8 +1300,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_genders
-     *
-     * @param \App\Entity\SubjectGender $subjectGenders
      */
     public function removeSubjectGender(\App\Entity\SubjectGender $subjectGenders)
     {
@@ -1371,7 +1353,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_population_ages
      *
-     * @param \App\Entity\SubjectPopulationAge $subjectPopulationAges
      * @return Dataset
      */
     public function addSubjectPopulationAge(\App\Entity\SubjectPopulationAge $subjectPopulationAges)
@@ -1383,8 +1364,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_population_ages
-     *
-     * @param \App\Entity\SubjectPopulationAge $subjectPopulationAges
      */
     public function removeSubjectPopulationAge(\App\Entity\SubjectPopulationAge $subjectPopulationAges)
     {
@@ -1404,7 +1383,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add data_types
      *
-     * @param \App\Entity\DataType $dataTypes
      * @return Dataset
      */
     public function addDataType(\App\Entity\DataType $dataTypes)
@@ -1416,8 +1394,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove data_types
-     *
-     * @param \App\Entity\DataType $dataTypes
      */
     public function removeDataType(\App\Entity\DataType $dataTypes)
     {
@@ -1437,7 +1413,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_geographic_areas
      *
-     * @param \App\Entity\SubjectGeographicArea $subjectGeographicAreas
      * @return Dataset
      */
     public function addSubjectGeographicArea(\App\Entity\SubjectGeographicArea $subjectGeographicAreas)
@@ -1449,8 +1424,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_geographic_areas
-     *
-     * @param \App\Entity\SubjectGeographicArea $subjectGeographicAreas
      */
     public function removeSubjectGeographicArea(\App\Entity\SubjectGeographicArea $subjectGeographicAreas)
     {
@@ -1481,8 +1454,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_geographic_area_details
-     *
-     * @param \App\Entity\SubjectGeographicAreaDetail $subjectGeographicAreaDetails
      */
     public function removeSubjectGeographicAreaDetail(\App\Entity\SubjectGeographicAreaDetail $subjectGeographicAreaDetails)
     {
@@ -1502,7 +1473,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_domains
      *
-     * @param \App\Entity\SubjectDomain $subjectDomains
      * @return Dataset
      */
     public function addSubjectDomain(\App\Entity\SubjectDomain $subjectDomains)
@@ -1514,8 +1484,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_domains
-     *
-     * @param \App\Entity\SubjectDomain $subjectDomains
      */
     public function removeSubjectDomain(\App\Entity\SubjectDomain $subjectDomains)
     {
@@ -1535,7 +1503,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add publications
      *
-     * @param \App\Entity\Publication $publications
      * @return Dataset
      */
     public function addPublication(\App\Entity\Publication $publications)
@@ -1547,8 +1514,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove publications
-     *
-     * @param \App\Entity\Publication $publications
      */
     public function removePublication(\App\Entity\Publication $publications)
     {
@@ -1568,7 +1533,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_keywords
      *
-     * @param \App\Entity\SubjectKeyword $subjectKeywords
      * @return Dataset
      */
     public function addSubjectKeyword(\App\Entity\SubjectKeyword $subjectKeywords)
@@ -1580,8 +1544,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_keywords
-     *
-     * @param \App\Entity\SubjectKeyword $subjectKeywords
      */
     public function removeSubjectKeyword(\App\Entity\SubjectKeyword $subjectKeywords)
     {
@@ -1604,7 +1566,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add study_types
      *
-     * @param \App\Entity\StudyType $studyType
      * @return Dataset
      */
     public function addStudyType(\App\Entity\StudyType $studyType)
@@ -1616,8 +1577,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove study_types
-     *
-     * @param \App\Entity\StudyType $studyType
      */
     public function removeStudyType(\App\Entity\StudyType $studyType)
     {
@@ -1640,7 +1599,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add publishers
      *
-     * @param \App\Entity\Publisher $publishers
      * @return Dataset
      */
     public function addPublisher(\App\Entity\Publisher $publishers)
@@ -1652,8 +1610,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove publishers
-     *
-     * @param \App\Entity\Publisher $publishers
      */
     public function removePublisher(\App\Entity\Publisher $publishers)
     {
@@ -1673,7 +1629,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add data_location
      *
-     * @param \App\Entity\DataLocation $dataLocation
      * @return Dataset
      */
     public function addDataLocation(\App\Entity\DataLocation $dataLocation)
@@ -1688,8 +1643,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove data_location
-     *
-     * @param \App\Entity\DataLocation $dataLocation
      */
     public function removeDataLocation(\App\Entity\DataLocation $dataLocation)
     {
@@ -1712,7 +1665,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add other_resource
      *
-     * @param \App\Entity\OtherResource $otherResource
      * @return Dataset
      */
     public function addOtherResource(\App\Entity\OtherResource $otherResource)
@@ -1727,8 +1679,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove other_resource
-     *
-     * @param \App\Entity\OtherResource $otherResource
      */
     public function removeOtherResource(\App\Entity\OtherResource $otherResource)
     {
@@ -1752,7 +1702,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add dataset_alternate_titles
      *
-     * @param \App\Entity\DatasetAlternateTitle $datasetAlternateTitle
      * @return Dataset
      */
     public function addDatasetAlternateTitle(\App\Entity\DatasetAlternateTitle $datasetAlternateTitle)
@@ -1767,8 +1716,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove dataset_alternate_titles
-     *
-     * @param \App\Entity\DatasetAlternateTitle $datasetAlternateTitle
      */
     public function removeDatasetAlternateTitle(\App\Entity\DatasetAlternateTitle $datasetAlternateTitle)
     {
@@ -1791,7 +1738,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add related_datasets
      *
-     * @param \App\Entity\DatasetRelationship $relatedDataset
      * @return Dataset
      */
     public function addRelatedDataset(\App\Entity\DatasetRelationship $relatedDataset)
@@ -1806,8 +1752,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove related_datasets
-     *
-     * @param \App\Entity\DatasetRelationship $relatedDataset
      */
     public function removeRelatedDataset(\App\Entity\DatasetRelationship $relatedDataset)
     {
@@ -1861,7 +1805,6 @@ class Dataset implements JsonSerializable {
       $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
-      $data_locations = $akas = $related_datasets = [];
 
       // these related entities can be added on the fly so we use getAllProperties
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
@@ -2040,7 +1983,6 @@ class Dataset implements JsonSerializable {
       $equipment = $software = $subject_of_study = $others = [];
       $locs = $rel = $areas = $area_details = $domains = $publications = $keywords = $publishers = [];
       $authors = $data_type_array = $types_of_study = $corresponding_authors = $experts = [];
-      $data_locations = $akas = $related_datasets = [];
 
       foreach ($this->data_locations as $loc) { $locs[]=$loc->getAllProperties(); }
       foreach ($this->dataset_alternate_titles as $alt) { $akas[]=$alt->getDisplayName(); }
@@ -2115,7 +2057,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add author
      *
-     * @param \App\Entity\PersonAssociation $authorship
      * @return Dataset
      */
     public function addAuthorship(\App\Entity\PersonAssociation $authorship)
@@ -2129,8 +2070,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove authorship
-     *
-     * @param \App\Entity\PersonAssociation $authorship
      */
     public function removeAuthorship(\App\Entity\PersonAssociation $authorship)
     {
@@ -2178,7 +2117,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add corresponding authors
      *
-     * @param \App\Entity\Person $corresponding_authors
      * @return Dataset
      */
     public function addCorrespondingAuthor(\App\Entity\Person $corresponding_authors)
@@ -2190,8 +2128,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove corresponding authors
-     *
-     * @param \App\Entity\Person $corresponding_authors
      */
     public function removeCorrespondingAuthor(\App\Entity\Person $corresponding_authors)
     {
@@ -2212,7 +2148,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add local_experts
      *
-     * @param \App\Entity\Person $localExperts
      * @return Dataset
      */
     public function addLocalExpert(\App\Entity\Person $localExperts)
@@ -2224,8 +2159,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove local_experts
-     *
-     * @param \App\Entity\Person $localExperts
      */
     public function removeLocalExpert(\App\Entity\Person $localExperts)
     {
@@ -2246,7 +2179,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add related_software
      *
-     * @param \App\Entity\RelatedSoftware $relatedSoftware
      * @return Dataset
      */
     public function addRelatedSoftware(\App\Entity\RelatedSoftware $relatedSoftware)
@@ -2258,8 +2190,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove related_software
-     *
-     * @param \App\Entity\RelatedSoftware $relatedSoftware
      */
     public function removeRelatedSoftware(\App\Entity\RelatedSoftware $relatedSoftware)
     {
@@ -2279,7 +2209,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add dataset_edits
      *
-     * @param \App\Entity\DatasetEdit $datasetEdits
      * @return Dataset
      */
     public function addDatasetEdits(\App\Entity\DatasetEdit $datasetEdits)
@@ -2291,8 +2220,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove dataset_edit
-     *
-     * @param \App\Entity\DatasetEdit $datasetEdits
      */
     public function removeDatasetEdits(\App\Entity\DatasetEdit $datasetEdits)
     {
@@ -2313,7 +2240,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add temp_access_keys
      *
-     * @param \App\Entity\TempAccessKey $tempAccessKeys
      * @return Dataset
      */
     public function addTempAccessKeys(\App\Entity\TempAccessKey $tempAccessKeys)
@@ -2325,8 +2251,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove temp_access_keys
-     *
-     * @param \App\Entity\TempAccessKey $tempAccessKeys
      */
     public function removeTempAccessKeys(\App\Entity\TempAccessKey $tempAccessKeys)
     {
@@ -2351,7 +2275,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add related_equipment
      *
-     * @param \App\Entity\RelatedEquipment $relatedEquipment
      * @return Dataset
      */
     public function addRelatedEquipment(\App\Entity\RelatedEquipment $relatedEquipment)
@@ -2363,8 +2286,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove related_equipment
-     *
-     * @param \App\Entity\RelatedEquipment $relatedEquipment
      */
     public function removeRelatedEquipment(\App\Entity\RelatedEquipment $relatedEquipment)
     {
@@ -2384,7 +2305,6 @@ class Dataset implements JsonSerializable {
     /**
      * Add subject_of_study
      *
-     * @param \App\Entity\SubjectOfStudy $subjectOfStudy
      * @return Dataset
      */
     public function addSubjectOfStudy(\App\Entity\SubjectOfStudy $subjectOfStudy)
@@ -2396,8 +2316,6 @@ class Dataset implements JsonSerializable {
 
     /**
      * Remove subject_of_study
-     *
-     * @param \App\Entity\SubjectOfStudy $subjectOfStudy
      */
     public function removeSubjectOfStudy(\App\Entity\SubjectOfStudy $subjectOfStudy)
     {

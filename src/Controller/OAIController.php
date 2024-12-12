@@ -61,7 +61,7 @@ class OAIController extends AbstractController
 							
 							$found=0;
 							$dl=$rv->getDataLocations();
-							foreach($dl as $d=>$dv) {
+							foreach($dl as $dv) {
 								if (strpos($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')!==FALSE) {
 									$found=1;
 									break;
@@ -77,7 +77,7 @@ class OAIController extends AbstractController
 						foreach($results as $r=>$rv) {
 							
 							$dl=$rv->getDataLocations();
-							foreach($dl as $d=>$dv) {
+							foreach($dl as $dv) {
 								if (strpos($dv->getDataAccessUrl(), 'd-scholarship.pitt.edu')!==FALSE) {
 									unset($results[$r]);
 									break;
@@ -97,8 +97,6 @@ class OAIController extends AbstractController
                 $template = 'oai_identify.xml.twig';
                 break;
             case 'ListRecords':
-                $template = 'oai_list_records.xml.twig';
-                break;
             case 'GetRecord':
                 $template = 'oai_list_records.xml.twig';
                 break;

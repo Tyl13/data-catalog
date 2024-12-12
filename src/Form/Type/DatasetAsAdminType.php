@@ -62,7 +62,6 @@ class DatasetAsAdminType extends AbstractType {
    * Build the form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     //identifying information
@@ -176,7 +175,6 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('related_software', EntityType::class, array(
       'class'   => 'App:RelatedSoftware',
-      'choice_label'=> 'software_name',
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.software_name','ASC');
       },
@@ -399,7 +397,6 @@ class DatasetAsAdminType extends AbstractType {
     ));
     $builder->add('subject_of_study', EntityType::class, array(
       'class'    => 'App:SubjectOfStudy',
-      'choice_label' => 'subject_of_study',
       'required' => false,
       'query_builder'=> function(EntityRepository $er) {
           return $er->createQueryBuilder('u')->orderBy('u.subject_of_study','ASC');

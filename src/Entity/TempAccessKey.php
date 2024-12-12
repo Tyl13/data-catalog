@@ -90,7 +90,6 @@ class TempAccessKey {
     /**
      * Set datasetAssociation
      *
-     * @param \App\Entity\Dataset $dataset_association
      * @return TempAccessKey
      */
     public function setDatasetAssociation(\App\Entity\Dataset $dataset_association)

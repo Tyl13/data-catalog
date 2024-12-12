@@ -133,7 +133,6 @@ class DataLocation {
     /**
      * Set datasets_dataset_uid
      *
-     * @param \App\Entity\Dataset $datasetsDatasetUid
      * @return DataLocationURL
      */
     public function setDatasetsDatasetUid(\App\Entity\Dataset $datasetsDatasetUid = null)

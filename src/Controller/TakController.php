@@ -128,7 +128,7 @@ class TakController extends AbstractController
 
 				$taks=$this->getDoctrine()->getRepository('App:TempAccessKey')->findBy(array('dataset_association'=>$dataset->getId() ));
 
-				foreach($taks as $t=>$v) {
+				foreach($taks as $v) {
 
 					$data['keys'][]=['id'=>$v->getId(), 'uuid'=>$v->getUuid(), 'generated'=>$v->getGenerated(), 'first_access'=>$v->getFirstAccess() ];
 

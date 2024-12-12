@@ -33,7 +33,6 @@ class DatasetAlternateTitleType extends AbstractType {
    * Build the form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('alt_title',TextType::class,array(

@@ -175,7 +175,6 @@ class AddController extends AbstractController {
     $successTemplate = 'add_success.html.twig';
     $action = '/add/'.$entityName;
     if ($modal) {
-      $action . '?modal=true';
       $addTemplate = "modal_" . $addTemplate;
       $successTemplate = "modal_" . $successTemplate;
     }

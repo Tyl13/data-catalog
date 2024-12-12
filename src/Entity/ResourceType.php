@@ -127,7 +127,6 @@ class ResourceType {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return ResourceType
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -139,8 +138,6 @@ class ResourceType {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

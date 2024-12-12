@@ -34,7 +34,6 @@ class DataCollectionInstrumentType extends AbstractType {
    * Build the form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('data_collection_instrument_name', TextType::class, array(

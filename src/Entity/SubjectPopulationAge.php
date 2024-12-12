@@ -127,7 +127,6 @@ class SubjectPopulationAge {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return SubjectPopulationAge
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -139,8 +138,6 @@ class SubjectPopulationAge {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

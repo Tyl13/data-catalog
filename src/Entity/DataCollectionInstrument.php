@@ -186,7 +186,6 @@ class DataCollectionInstrument {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return DataCollectionInstrument
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -198,8 +197,6 @@ class DataCollectionInstrument {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

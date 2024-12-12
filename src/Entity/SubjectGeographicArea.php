@@ -157,7 +157,6 @@ class SubjectGeographicArea {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return SubjectGeographicArea
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -169,8 +168,6 @@ class SubjectGeographicArea {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

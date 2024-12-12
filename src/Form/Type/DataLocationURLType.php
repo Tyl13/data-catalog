@@ -28,11 +28,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class DataLocationURLType extends AbstractType {
 
-  /** 
+  /**
    * Build the form·
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('data_access_url','text',array(

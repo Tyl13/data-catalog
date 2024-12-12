@@ -39,7 +39,7 @@ class SolrSearchr {
   protected $solrResultsPP = 10;
   protected $solrPageNum = 1;
   protected $solrKeyword = "*";
-  protected $solrFacetQuery = null;
+  protected $solrFacetQuery;
 
   // Will become a SearchState object representing current user query
   protected $currentSearch;
@@ -197,9 +197,7 @@ class SolrSearchr {
    * @return string The Fields portion of the URL
    */
   protected function makeFieldsQuery() {
-    $fields_query_string = '&fl=' . join(',', $this->solrDisplayFields);
-
-    return $fields_query_string;
+    return '&fl=' . join(',', $this->solrDisplayFields);
   }
 
 
@@ -257,9 +255,7 @@ class SolrSearchr {
       $end   = $years[1] . "-12-29T12:59:59Z";
     }
 
-    $date_range = $parts[0] . ":" . "[" . $start . " TO " . $end . "]";
-
-    return $date_range;
+    return $parts[0] . ":" . "[" . $start . " TO " . $end . "]";
     
   }
 
@@ -272,9 +268,8 @@ class SolrSearchr {
   protected function makeDateRangeFacetQuery() {
     $date_range_query  = "&facet.range=dataset_years&f.dataset_years.facet.range.start=NOW/YEAR-40YEAR";
     $date_range_query .= "&f.dataset_years.facet.range.end=NOW/YEAR&f.dataset_years.facet.range.gap=%2b10YEAR";
-    $date_range_query .= "&f.dataset_years.facet.range.hardend=true&f.dataset_years.facet.range.other=before";
 
-    return $date_range_query;
+    return $date_range_query . "&f.dataset_years.facet.range.hardend=true&f.dataset_years.facet.range.other=before";
   }
 
 
@@ -285,8 +280,7 @@ class SolrSearchr {
    */
   protected function makeSortQuery() {
 
-    $sort_query_string = "&sort=" . $this->sortMappings[$this->solrSort];
-    return $sort_query_string;
+    return "&sort=" . $this->sortMappings[$this->solrSort];
 
   }
 
@@ -301,9 +295,7 @@ class SolrSearchr {
     $start_query_string = "&start=";
     $start_num = ($this->solrPageNum - 1) * $this->solrResultsPP;
 
-    $start_query_string .= $start_num;
-
-    return $start_query_string;
+    return $start_query_string . $start_num;
   }
 
 
@@ -314,8 +306,7 @@ class SolrSearchr {
    */
   protected function makeRowsQuery() {
 
-    $rows_query_string = "&rows=" . $this->solrResultsPP;
-    return $rows_query_string;
+    return "&rows=" . $this->solrResultsPP;
 
   }
 

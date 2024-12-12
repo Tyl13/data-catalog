@@ -79,7 +79,6 @@ class OtherResource {
     /**
      * Set datasets_dataset_uid
      *
-     * @param \App\Entity\Dataset $datasetsDatasetUid
      * @return OtherResource
      */
     public function setDatasetsDatasetUid(\App\Entity\Dataset $datasetsDatasetUid = null)

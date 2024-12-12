@@ -37,17 +37,15 @@ class SubmitDatasetFormEmailType extends AbstractType {
 
   /**
    * Build institutional affiliation options list
-   * 
-   * @param array $options
    */
-  public function __construct(array $options = []) {
+  public function __construct()
+  {
   }
 
   /**
    * Build the form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
 

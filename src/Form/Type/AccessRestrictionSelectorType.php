@@ -34,9 +34,6 @@ class AccessRestrictionSelectorType extends AbstractType
      */
     private $om;
 
-    /**
-     * @param ObjectManager $om
-     */
     public function __construct(ObjectManager $om)
     {
         $this->om = $om;
@@ -46,7 +43,6 @@ class AccessRestrictionSelectorType extends AbstractType
      * Build form
      *
      * @param FormBuilderInterface
-     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

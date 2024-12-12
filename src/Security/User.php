@@ -92,11 +92,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     return $this;
   }
-
-    public function __construct()
-    {
-
-    }
     
   /**
    * Get name for display
@@ -160,12 +155,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
     }
 
-    /** 
+    /**
      * Required by interface
      *
      * @param UserInterface
-     *
-     * @return bool
      */
     public function isEqualTo(UserInterface $user): bool
     {

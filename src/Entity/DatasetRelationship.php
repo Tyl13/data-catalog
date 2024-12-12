@@ -139,7 +139,6 @@ class DatasetRelationship {
     /**
      * Set parent_dataset_uid
      *
-     * @param \App\Entity\Dataset $parentDatasetUid
      * @return DatasetRelationship
      */
     public function setParentDatasetUid(\App\Entity\Dataset $parentDatasetUid = null)

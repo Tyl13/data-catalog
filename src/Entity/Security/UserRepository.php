@@ -76,10 +76,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         );
         throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException($message, 0, $e);
       }
-     
-      $databaseRoles = $userData->getRoles();
 
-      return $databaseRoles;
+      return $userData->getRoles();
     }
 
 

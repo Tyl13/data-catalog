@@ -34,9 +34,6 @@ class AccessRestrictionToStringTransformer implements DataTransformerInterface {
   private $om;
 
   
-  /**
-   * @param ObjectManager $om
-   */
   public function __construct(ObjectManager $om) {
     $this->om = $om;
   }  
@@ -56,8 +53,7 @@ class AccessRestrictionToStringTransformer implements DataTransformerInterface {
     foreach ($accessRestriction as $restriction) {
       $options[] = $restriction->getRestriction();
     }
-    $opts = implode(",", $options);
-    return $opts;
+    return implode(",", $options);
   }
 
 
@@ -73,7 +69,7 @@ class AccessRestrictionToStringTransformer implements DataTransformerInterface {
       return null;
     }
 
-    $issue = $this->om
+    $this->om
       ->getRepository('App:AccessRestriction')
       ->findOneBy(array('restriction'=>$restriction));
 

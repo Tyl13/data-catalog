@@ -36,9 +36,6 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
   private $em;
 
   
-  /**
-   * @param EntityManager $em
-   */
   public function __construct(EntityManager $em) {
     $this->em = $em;
   }  
@@ -59,7 +56,7 @@ class SubjectKeywordToStringTransformer implements DataTransformerInterface {
     }*/
 
     $options = array();
-    foreach ($array as $key=>$subjectKeyword) {
+    foreach ($array as $subjectKeyword) {
       $options[] = $subjectKeyword->getKeyword();
     }
     return new ArrayCollection($options);

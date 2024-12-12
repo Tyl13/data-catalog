@@ -25,7 +25,7 @@ class UserChecker implements UserCheckerInterface
         $userRepo = $this->em->getRepository('App\Entity\Security\User');
 
         // loadUserByUsername will throw an exception if database user isn't found
-        $userInfo = $userRepo->loadUserByUsername($username);
+        $userRepo->loadUserByUsername($username);
 
     }
 
@@ -39,23 +39,6 @@ class UserChecker implements UserCheckerInterface
         if ($user->isExpired()) {
             throw new AccountExpiredException('...');
         }
-    }
-
-    private function verifyDatacatUser($username)
-    {
-        $q = $this->createQueryBuilder('u')
-                  ->where('u.username = :username')
-                  ->setParameter('username', $username)
-                  ->getQuery();
-
-        try {
-            $userData = $q->getSingleResult();
-        } catch (NoResultException $e) {
-            $message = sprintf('Unable to find database user "%s"', $username);
-            throw new UsernameNotFoundException($message, 0, $e);
-        }
-
-        return true;
     }
 
 

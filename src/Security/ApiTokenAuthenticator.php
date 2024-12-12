@@ -17,11 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 class ApiTokenAuthenticator extends AbstractAuthenticator
 {
 
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct()
     {
-        $this->em = $em;
     }
     /**
      * Called on every request to decide if this authenticator should be

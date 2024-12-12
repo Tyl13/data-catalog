@@ -30,10 +30,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class UserType extends AbstractType {
 
-  private $apiKey;
-
-  public function __construct() {
-    $this->apiKey = $this->generateSecureRandomAPIKey();
+  public function __construct()
+  {
   }
 
 
@@ -42,7 +40,6 @@ class UserType extends AbstractType {
    * Build form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('username');
@@ -75,12 +72,6 @@ class UserType extends AbstractType {
     $resolver->setDefaults(array(
       'data_class' => 'App\Entity\Security\User'
     ));
-  }
-
-  private function generateSecureRandomAPIKey() {
-    $apiKey = sha1(random_bytes(32));
-
-    return $apiKey;
   }
 
   public function getName() {

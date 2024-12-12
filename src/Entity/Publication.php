@@ -184,7 +184,6 @@ class Publication {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return Publication
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -196,8 +195,6 @@ class Publication {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

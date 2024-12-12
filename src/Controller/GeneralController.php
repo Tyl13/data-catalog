@@ -188,7 +188,7 @@ class GeneralController extends AbstractController
     $emailFrom = $this->container->getParameter('contact_email_from');
     $affiliations = $this->container->getParameter('institutional_affiliation_options');
     $affiliationOptions = [];
-    foreach ($affiliations as $key=>$value) {
+    foreach ($affiliations as $value) {
       $affiliationOptions[$value] = $value;
     }
        

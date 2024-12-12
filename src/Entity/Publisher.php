@@ -65,7 +65,6 @@ class Publisher {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return DataType
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -77,8 +76,6 @@ class Publisher {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

@@ -32,14 +32,13 @@ class ApiUserProvider implements UserProviderInterface {
     }
 
     /**
-     * 
+     *
      *
      * @psalm-return TUser
      *
      * @throws UnsupportedUserException if the user is not supported
      * @throws UserNotFoundException    if the user is not found
-     * 
-     * @param UserInterface $user
+     *
      *
      * @return UserInterface
      */

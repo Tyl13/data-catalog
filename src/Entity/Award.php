@@ -213,7 +213,6 @@ class Award {
     /**
      * Add datasets
      *
-     * @param \App\Entity\Dataset $datasets
      * @return Award
      */
     public function addDataset(\App\Entity\Dataset $datasets)
@@ -225,8 +224,6 @@ class Award {
 
     /**
      * Remove datasets
-     *
-     * @param \App\Entity\Dataset $datasets
      */
     public function removeDataset(\App\Entity\Dataset $datasets)
     {

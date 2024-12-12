@@ -30,10 +30,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DataLocationType extends AbstractType {
 
   /**
-   * Build the form 
+   * Build the form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('data_location',TextType::class,array(

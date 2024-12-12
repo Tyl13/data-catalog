@@ -147,7 +147,6 @@ class PersonAssociation {
     /**
      * Set person
      *
-     * @param \App\Entity\Person $person
      * @return PersonAssociation
      */
     public function setPerson(\App\Entity\Person $person = null)
@@ -170,7 +169,6 @@ class PersonAssociation {
     /**
      * Set dataset
      *
-     * @param \App\Entity\Dataset $dataset
      * @return PersonAssociation
      */
     public function setDataset(\App\Entity\Dataset $dataset)

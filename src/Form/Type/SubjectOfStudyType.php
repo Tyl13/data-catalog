@@ -33,7 +33,6 @@ class SubjectOfStudyType extends AbstractType {
    * Build form
    *
    * @param FormBuilderInterface
-   * @param array $options
    */
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('subject_of_study', TextType::class, array('label'=>'Subject of Study'));
