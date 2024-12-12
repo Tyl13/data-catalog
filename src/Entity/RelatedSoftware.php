@@ -77,7 +77,7 @@ class RelatedSoftware {
   public function getDisplayName() {
   	
   	$sdn=$this->software_name;
-  	if (!empty($this->software_version)) {
+  	if ($this->software_version !== null && $this->software_version !== '' && $this->software_version !== '0') {
   		$sdn.=", ".$this->software_version;
   	}
   

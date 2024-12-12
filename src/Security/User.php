@@ -32,6 +32,10 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 class User implements UserInterface, EquatableInterface, \Serializable
 {
   /**
+   * @var int
+   */
+  public $id;
+  /**
    * @ORM\Column(type="integer", name="user_id")
    * @ORM\Id
    * @ORM\GeneratedValue()
@@ -169,12 +173,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         if ($this->password !== $user->getPassword()) {
             return false;
         }
-
-        if ($this->username !== $user->getUsername()) {
-            return false;
-        }
-
-        return true;
+        return $this->username === $user->getUsername();
     }
 
     /**

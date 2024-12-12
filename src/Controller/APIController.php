@@ -121,6 +121,7 @@ class APIController extends AbstractController
 
       return $response;
     }
+    return null;
 
 
   }
@@ -201,11 +202,7 @@ class APIController extends AbstractController
     $userCanSubmit = $this->security->isGranted('ROLE_API_SUBMITTER');
     
     //prefix with namespaces so it can be called dynamically
-    if (in_array($entityName, $this->personEntities)) {
-      $newEntity = 'App\Entity\\Person';
-    } else {
-      $newEntity = 'App\Entity\\' . $entityName;
-    }
+    $newEntity = in_array($entityName, $this->personEntities) ? 'App\Entity\\Person' : 'App\Entity\\' . $entityName;
     $newEntityFormType = 'App\Form\Type\\' . $entityName . "Type";
 
     $em = $this->getDoctrine()->getManager();
@@ -261,11 +258,7 @@ class APIController extends AbstractController
 
     $em = $this->getDoctrine()->getManager();
     $qb = $em->createQueryBuilder();
-    if (in_array($entityName, $this->personEntities)) {
-      $entity = 'App\Entity\\Person';
-    } else {
-      $entity = 'App\Entity\\' . $entityName;
-    }
+    $entity = in_array($entityName, $this->personEntities) ? 'App\Entity\\Person' : 'App\Entity\\' . $entityName;
 
     if ($slug == "all") {
       $entities = $qb->select('e')
@@ -278,7 +271,8 @@ class APIController extends AbstractController
                      ->setParameter('slug', $slug)
                      ->getQuery()->getResult();
     }
-    for ($i = 0; $i < count($entities); $i++) {
+    $counter = count($entities);
+    for ($i = 0; $i < $counter; $i++) {
       $entities[$i] = $entities[$i]->getAllProperties();
     }
 
@@ -289,6 +283,7 @@ class APIController extends AbstractController
 
       return $response;
     }
+    return null;
 
 
   }

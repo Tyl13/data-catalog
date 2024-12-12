@@ -53,11 +53,10 @@ class OAIController extends AbstractController
 				
         $set = isset($_GET['set'])?trim($_GET['set']):null;
 				
-				if (!empty($set)) {
+				if ($set !== null && $set !== '' && $set !== '0') {
 				
 					if ($set==='DNI-Primo') {
-				
-						foreach($results as $r=>$rv) {
+                        foreach($results as $r=>$rv) {
 							
 							$found=0;
 							$dl=$rv->getDataLocations();
@@ -71,10 +70,8 @@ class OAIController extends AbstractController
 							if ($found==0) {unset($results[$r]);}
 
 						}
-
-					} else if ($set==='PrimoIngest') {
-				
-						foreach($results as $r=>$rv) {
+                    } elseif ($set==='PrimoIngest') {
+                        foreach($results as $r=>$rv) {
 							
 							$dl=$rv->getDataLocations();
 							foreach($dl as $dv) {
@@ -85,8 +82,7 @@ class OAIController extends AbstractController
 							}
 
 						}
-
-					}
+                    }
 
 				}
 

@@ -50,7 +50,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
         $apiKey = $credentials['token'];
 
         if (null === $apiKey) {
-            return;
+            return null;
         }
 
         // if a User object, checkCredentials() is called

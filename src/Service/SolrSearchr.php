@@ -157,7 +157,7 @@ class SolrSearchr {
     // the default state:
     $final_query_string = $keyword_query_string;
     // is this query trying to return ALL results? if so, let it through
-    if ($keyword_query_string != "*") {
+    if ($keyword_query_string !== "*") {
       if (strpos($keyword_query_string, ":") === false) {
         // if we have a general query of all fields
         if (strpos($keyword_query_string, '"') === false) {
@@ -175,13 +175,7 @@ class SolrSearchr {
         // before we can check for quotes we have to separate the string on the colon
         $field_and_term = explode(':', $keyword_query_string);
         // make sure user has quoted their search term for Solr
-        if (substr($field_and_term[1], 0, 1) === '"') {
-          // if user has quoted their search term just use it
-          $quoted_search_term = $field_and_term[1];
-        } else {
-          // if user has not quoted their search term, add quotes here
-          $quoted_search_term = '"' . $field_and_term[1] . '"';
-        }
+        $quoted_search_term = substr($field_and_term[1], 0, 1) === '"' ? $field_and_term[1] : '"' . $field_and_term[1] . '"';
         $final_query_string = $field_and_term[0] . ":" . $quoted_search_term;
       }
     }
@@ -197,7 +191,7 @@ class SolrSearchr {
    * @return string The Fields portion of the URL
    */
   protected function makeFieldsQuery() {
-    return '&fl=' . join(',', $this->solrDisplayFields);
+    return '&fl=' . implode(',', $this->solrDisplayFields);
   }
 
 

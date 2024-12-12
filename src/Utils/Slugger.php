@@ -28,7 +28,7 @@ class Slugger {
     $text = preg_replace('~[^-\w]+~', '', $text);
     $text = substr($text, 0, 100);
     $text = $text . '-' . $title_hash;
-    if (empty($text))
+    if ($text === '' || $text === '0')
     {
       return 'n-a';
     }

@@ -70,7 +70,7 @@ class RelatedDatasetController extends AbstractController
       }
     }
     
-    if ($datasetsForDisplay) {
+    if ($datasetsForDisplay !== []) {
       if ($format == 'html') {
 	      return $this->render('default/related_dataset_links.html.twig',
 		      array('relatedDatasets' => $datasetsForDisplay)
@@ -83,7 +83,8 @@ class RelatedDatasetController extends AbstractController
     } else {
       // return empty response so the "Related Datasets" field will not appear
       return new Response();
-    } 
+    }
+    return null; 
   }
 
 }

@@ -30,6 +30,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="project")
  */
 class Project {
+  public $datasets_dataset_uid;
   /**
    * @ORM\Column(type="integer",name="project_id")
    * @ORM\Id

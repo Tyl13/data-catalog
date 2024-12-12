@@ -12,6 +12,10 @@ use Symfony\Bridge\Monolog\Logger;
 
 class UserChecker implements UserCheckerInterface
 {
+    /**
+     * @var \Symfony\Bridge\Monolog\Logger
+     */
+    public $logger;
     protected $em;
 
     public function __construct(EntityManager $entityManager, Logger $logger) {

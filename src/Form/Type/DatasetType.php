@@ -31,6 +31,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
  */
 class DatasetType extends AbstractType {
 
+  public $container;
   protected $years;
   protected $yearsIncludingPresent;
   protected $userIsAdmin;

@@ -73,8 +73,8 @@ class DatasetEditListener
         // check if we are archiving or unarchiving this dataset
         if (array_key_exists('archived', $changeset)) {
             $changes = $changeset['archived'];
-            $previousValue = array_key_exists(0, $changes) ? $changes[0] : null;
-            $newValue = array_key_exists(1, $changes) ? $changes[1] : null;
+            $previousValue = $changes[0] ?? null;
+            $newValue = $changes[1] ?? null;
             if ($previousValue == false && $newValue != false) {
                 // this means we are archiving it
                 $edit->setEditType("archived");
@@ -110,12 +110,12 @@ class DatasetEditListener
     public function getUser()
     {
         if (null === $token = $this->tokenStorage->getToken()) {
-            return;
+            return null;
         }
 
         if (!is_object($user = $token->getUser())) {
             // e.g. anonymous authentication
-            return;
+            return null;
         }
 
         return $user;

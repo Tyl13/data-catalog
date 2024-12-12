@@ -217,7 +217,7 @@ class UpdateController extends AbstractController {
 		
 		//
 
-		if (!empty($display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))])) {
+		if (isset($display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))]) && ($display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))] !== '' && $display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))] !== '0')) {
 			$entityTypeDisplayName=$display_name_exception_map[trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName))];
 		} else {
     	$entityTypeDisplayName = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $entityName));

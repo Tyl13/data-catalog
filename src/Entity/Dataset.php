@@ -43,7 +43,7 @@ class Dataset implements JsonSerializable {
   /**
    * @ORM\Column(type="string",length=16, options={"default"="Internal"})
    */
-  protected ?string $origin = null;
+  protected ?string $origin = "Internal";
 
   /**
    * @ORM\Column(type="string", length=255, unique=true)
@@ -54,7 +54,7 @@ class Dataset implements JsonSerializable {
   /**
    * @ORM\Column(type="boolean", options={"default"=false})
    */
-  protected ?bool $published = null;
+  protected ?bool $published = false;
 
   /**
    * @ORM\Column(type="string", length=512, nullable=true)
@@ -157,7 +157,7 @@ class Dataset implements JsonSerializable {
   /**
    * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
    */
-  protected ?bool $archived = null;
+  protected ?bool $archived = false;
 
 
   /**
@@ -532,11 +532,6 @@ class Dataset implements JsonSerializable {
     $this->subject_of_study = new \Doctrine\Common\Collections\ArrayCollection();
     $this->authorships = new \Doctrine\Common\Collections\ArrayCollection();
     $this->temp_access_keys = new \Doctrine\Common\Collections\ArrayCollection();
-
-    // set field defaults
-    $this->published = false;
-    $this->archived  = false;
-    $this->origin    = "Internal";
   }
 
   /**
