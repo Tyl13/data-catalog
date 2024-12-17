@@ -25,45 +25,34 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="project")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'project')]
 class Project {
   public $datasets_dataset_uid;
 
-  /**
-   * @ORM\Column(type="integer",name="project_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'project_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $project_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $project_description = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028)
-   */
+  #[ORM\Column(type: 'string', length: 1028)]
   protected ?string $project_url = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="projects")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'projects')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

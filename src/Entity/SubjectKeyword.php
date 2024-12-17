@@ -25,40 +25,29 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="subject_keywords")
  */
 #[UniqueEntity('keyword')]
+#[ORM\Entity]
+#[ORM\Table(name: 'subject_keywords')]
 class SubjectKeyword {
-  /**
-   * @ORM\Column(type="integer",name="keyword_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'keyword_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $keyword = null;
 
-  /**
-   * @ORM\Column(type="string",length=256, nullable=true)
-   */
-
+  #[ORM\Column(type: 'string', length: 256, nullable: true)]
   protected ?string $mesh_code = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
-
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_keywords")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'subject_keywords')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**

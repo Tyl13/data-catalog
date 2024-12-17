@@ -25,44 +25,33 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="publications")
  */
 #[UniqueEntity('slug')]
+#[ORM\Entity]
+#[ORM\Table(name: 'publications')]
 class Publication {
-  /**
-   * @ORM\Column(type="integer",name="publication_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'publication_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=4096)
-   */
+  #[ORM\Column(type: 'string', length: 4096)]
   protected ?string $citation = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $url = null;
 
-  /**
-   * @ORM\Column(type="string",length=128, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $doi = null;
 
-  /**
-   * @ORM\Column(type="string",length=128, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, unique: true)]
   protected ?string $slug = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="publications")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'publications')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

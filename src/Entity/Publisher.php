@@ -25,38 +25,29 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="publishers")
  */
 #[UniqueEntity('publisher_name')]
+#[ORM\Entity]
+#[ORM\Table(name: 'publishers')]
 class Publisher {
-  /**
-   * @ORM\Column(type="integer",name="publisher_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'publisher_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $publisher_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=512)
-   */
+  #[ORM\Column(type: 'string', length: 512)]
   protected ?string $slug = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $publisher_url = null;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="publishers")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    */
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'publishers')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
 

@@ -23,48 +23,35 @@ use Doctrine\ORM\Mapping as ORM;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @ORM\Entity(repositoryClass="App\Entity\DatasetEditRepository")
- * @ORM\Table(name="dataset_edits")
  */
+#[ORM\Entity(repositoryClass: \App\Entity\DatasetEditRepository::class)]
+#[ORM\Table(name: 'dataset_edits')]
 class DatasetEdit {
 
-  /**
-   * @ORM\Column(type="integer",name="edit_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'edit_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $user = null;
 
 
-  /**
-   * @ORM\Column(type="datetime")
-   */
+  #[ORM\Column(type: 'datetime')]
   protected ?\DateTimeInterface $timestamp = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=64)
-   */
+  #[ORM\Column(type: 'string', length: 64)]
   protected ?string $edit_type = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=500, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 500, nullable: true)]
   protected ?string $edit_notes = null;
 
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Dataset", inversedBy="dataset_edits")
-   * @ORM\JoinColumn(name="parent_dataset_uid", referencedColumnName="dataset_uid")
-   **/
+  #[ORM\ManyToOne(targetEntity: \Dataset::class, inversedBy: 'dataset_edits')]
+  #[ORM\JoinColumn(name: 'parent_dataset_uid', referencedColumnName: 'dataset_uid')]
   protected ?\App\Entity\Dataset $parent_dataset_uid = null;
 
 

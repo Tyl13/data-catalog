@@ -23,32 +23,25 @@ use Doctrine\ORM\Mapping as ORM;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="subject_sexes")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'subject_sexes')]
 class SubjectSex {
-  /**
-   * @ORM\Column(type="integer",name="sex_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'sex_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $subject_sex = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $slug = null;
     
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_sexes")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'subject_sexes')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

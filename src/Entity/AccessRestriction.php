@@ -25,35 +25,28 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="access_restrictions")
  */
 #[UniqueEntity('restriction')]
+#[ORM\Entity]
+#[ORM\Table(name: 'access_restrictions')]
 class AccessRestriction {
-  /**
-   * @ORM\Column(type="integer",name="restriction_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'restriction_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $restriction = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="access_restrictions")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'access_restrictions')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

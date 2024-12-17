@@ -25,44 +25,33 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="subject_of_study")
  */
 #[UniqueEntity('subject_of_study')]
+#[ORM\Entity]
+#[ORM\Table(name: 'subject_of_study')]
 class SubjectOfStudy {
-  /**
-   * @ORM\Column(type="integer",name="subject_of_study_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'subject_of_study_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $subject_of_study = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   protected ?string $species = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   protected ?string $tissue_cell_line = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="subject_of_study")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'subject_of_study')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**

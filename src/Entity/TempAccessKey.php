@@ -26,10 +26,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="temp_access_keys")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'temp_access_keys')]
 class TempAccessKey {
   public $full_name;
 
@@ -40,32 +39,22 @@ class TempAccessKey {
 
   public $container;
 
-  /**
-   * @ORM\Column(type="integer",name="tak_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'tak_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $uuid = null;
 
-  /**
-   * @ORM\Column(type="datetime",length=128,nullable=false)
-   */
+  #[ORM\Column(type: 'datetime', length: 128, nullable: false)]
   protected \DateTimeInterface $generation;
 
-  /**
-   * @ORM\Column(type="datetime",nullable=false)
-   */
+  #[ORM\Column(type: 'datetime', nullable: false)]
   protected \DateTimeInterface $first_access;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Dataset")
-   * @ORM\JoinColumn(name="dataset_association",referencedColumnName="dataset_uid", nullable=FALSE)
-   */
+  #[ORM\ManyToOne(targetEntity: \Dataset::class)]
+  #[ORM\JoinColumn(name: 'dataset_association', referencedColumnName: 'dataset_uid', nullable: false)]
   protected ?\App\Entity\Dataset $dataset_association = null;
 
   /**

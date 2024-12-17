@@ -29,43 +29,32 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * **********
  * NOTE: For ease of upgrading, database tables will retain their old names for now
  * **********
- *
- * @ORM\Entity
- * @ORM\Table(name="measurement_standards")
  */
 #[UniqueEntity('data_collection_instrument_name')]
+#[ORM\Entity]
+#[ORM\Table(name: 'measurement_standards')]
 class DataCollectionInstrument {
-  /**
-   * @ORM\Column(type="integer",name="standard_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'standard_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $data_collection_instrument_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
-  /**
-   * @ORM\Column(type="string", length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $url = null;
 
-  /**
-   * @ORM\Column(type="string", length=1026)
-   */
+  #[ORM\Column(type: 'string', length: 1026)]
   protected ?string $notes = null;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="data_collection_instruments")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'data_collection_instruments')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

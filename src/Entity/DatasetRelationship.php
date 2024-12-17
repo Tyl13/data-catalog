@@ -23,37 +23,26 @@ use Doctrine\ORM\Mapping as ORM;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="dataset_relationships")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'dataset_relationships')]
 class DatasetRelationship {
-  /**
-   * @ORM\Column(type="integer",name="relationship_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'relationship_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, nullable: true)]
   protected ?string $relationship_attributes = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, nullable: true)]
   protected ?string $relationship_notes = null;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   protected ?int $related_dataset_uid = null;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="related_datasets")
-   * @ORM\JoinColumn(name="parent_dataset_uid",referencedColumnName="dataset_uid")
-   */
+  #[ORM\ManyToOne(targetEntity: \Dataset::class, inversedBy: 'related_datasets')]
+  #[ORM\JoinColumn(name: 'parent_dataset_uid', referencedColumnName: 'dataset_uid')]
   protected ?\App\Entity\Dataset $parent_dataset_uid = null;
 
 

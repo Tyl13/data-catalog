@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Related resources such as code on Github 
+ * Related resources such as code on Github
  *
  *   This file is part of the Data Catalog project.
  *   Copyright (C) 2016 NYU Health Sciences Library
@@ -23,37 +23,26 @@ use Doctrine\ORM\Mapping as ORM;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="other_resources")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'other_resources')]
 class OtherResource {
-  /**
-   * @ORM\Column(type="integer",name="other_resource_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'other_resource_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $resource_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $resource_description = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028)
-   */
+  #[ORM\Column(type: 'string', length: 1028)]
   protected ?string $resource_url = null;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="other_resources")
-   * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
-   */
+  #[ORM\ManyToOne(targetEntity: \Dataset::class, inversedBy: 'other_resources')]
+  #[ORM\JoinColumn(name: 'datasets_dataset_uid', referencedColumnName: 'dataset_uid')]
   protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 

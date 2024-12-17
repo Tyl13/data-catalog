@@ -24,34 +24,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="resource_types")
  */
 #[UniqueEntity('resource_type')]
+#[ORM\Entity]
+#[ORM\Table(name: 'resource_types')]
 class ResourceType {
-  /**
-   * @ORM\Column(type="integer",name="resource_type_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'resource_type_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, unique: true)]
   protected ?string $resource_type = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $slug = null;
   
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="resource_types")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'resource_types')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

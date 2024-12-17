@@ -25,50 +25,37 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @ORM\Entity(repositoryClass="App\Entity\AwardRepository")
- * @ORM\Table(name="awards")
  */
 #[UniqueEntity('award')]
+#[ORM\Entity(repositoryClass: \App\Entity\AwardRepository::class)]
+#[ORM\Table(name: 'awards')]
 class Award {
-  /**
-   * @ORM\Column(type="integer",name="award_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'award_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=255, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $award = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, nullable: true)]
   protected ?string $award_funder = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $award_url = null;
     
-  /**
-   * @ORM\Column(type="string",length=64, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 64, nullable: true)]
   protected ?string $funder_type = null;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="awards")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'awards')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

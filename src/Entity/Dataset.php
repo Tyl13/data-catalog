@@ -27,148 +27,101 @@ use JsonSerializable;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity(repositoryClass="App\Entity\DatasetRepository")
- * @ORM\Table(name="datasets")
  */
 #[UniqueEntity('title')]
+#[ORM\Entity(repositoryClass: \App\Entity\DatasetRepository::class)]
+#[ORM\Table(name: 'datasets')]
 class Dataset implements JsonSerializable {
-  /**
-   * @ORM\Id
-   * @ORM\Column(type="integer", unique=true)
-   */
   #[Assert\NotBlank]
+  #[ORM\Id]
+  #[ORM\Column(type: 'integer', unique: true)]
   protected ?int $dataset_uid = null;
 
-  /**
-   * @ORM\Column(type="string",length=16, options={"default"="Internal"})
-   */
+  #[ORM\Column(type: 'string', length: 16, options: ['default' => 'Internal'])]
   protected ?string $origin = "Internal";
 
-  /**
-   * @ORM\Column(type="string", length=255, unique=true)
-   */
   #[Assert\NotBlank]
+  #[ORM\Column(type: 'string', length: 255, unique: true)]
   protected ?string $title = null;
 
-  /**
-   * @ORM\Column(type="boolean", options={"default"=false})
-   */
+  #[ORM\Column(type: 'boolean', options: ['default' => false])]
   protected ?bool $published = false;
 
-  /**
-   * @ORM\Column(type="string", length=512, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, nullable: true)]
   protected ?string $slug = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=3000)
-   */
   #[Assert\NotBlank]
+  #[ORM\Column(type: 'text', length: 3000)]
   protected ?string $description = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=16, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 16, nullable: true)]
   protected ?string $subject_start_date = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=16, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 16, nullable: true)]
   protected ?string $subject_end_date = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=128, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $dataset_size = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=256, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 256, nullable: true)]
   protected ?string $subscriber = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=3000, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 3000, nullable: true)]
   protected ?string $access_instructions = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=3000, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 3000, nullable: true)]
   protected ?string $licensing_details = null;
 
 
-  /**
-   * @ORM\Column(type="date", nullable=true)
-   */
+  #[ORM\Column(type: 'date', nullable: true)]
   protected ?\DateTimeInterface $license_expiration_date = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 1028, nullable: true)]
   protected ?string $erd_url = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 1028, nullable: true)]
   protected ?string $library_catalog_url = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=256, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 256, nullable: true)]
   protected ?string $funder_category = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 1028, nullable: true)]
   protected ?string $pubmed_search = null;
 
 
 
-  /**
-   * @ORM\Column(type="date", nullable=true)
-   */
+  #[ORM\Column(type: 'date', nullable: true)]
   protected ?\DateTimeInterface $date_added = null;
 
 
-  /**
-   * @ORM\Column(type="date", nullable=true)
-   */
+  #[ORM\Column(type: 'date', nullable: true)]
   protected ?\DateTimeInterface $date_updated = null;
 
 
-  /**
-   * @ORM\Column(type="date", nullable=true)
-   */
+  #[ORM\Column(type: 'date', nullable: true)]
   protected ?\DateTimeInterface $date_archived = null;
 
 
-  /**
-   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
-   */
+  #[ORM\Column(type: 'boolean', options: ['default' => false], nullable: true)]
   protected ?bool $archived = false;
 
 
-  /**
-   * @ORM\Column(type="string", length=500, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 500, nullable: true)]
   protected ?string $archival_notes = null;
 
 
-  /**
-   * @ORM\Column(type="text", length=3000, nullable=true)
-   */
+  #[ORM\Column(type: 'text', length: 3000, nullable: true)]
   protected ?string $data_location_description = null;
 
 
@@ -177,9 +130,8 @@ class Dataset implements JsonSerializable {
    * DatasetEdit entity, but since we want to also capture archival_notes in that entity, we're
    * using the onFlush handler, which only works if the field is managed by Doctrine. So the easiest
    * way to do that is to make an additional field here which can be captured in the onFlush handler.
-   *
-   * @ORM\Column(type="text", length=500, nullable=true)
    */
+  #[ORM\Column(type: 'text', length: 500, nullable: true)]
   protected ?string $last_edit_notes = null;
 
   //
@@ -188,255 +140,233 @@ class Dataset implements JsonSerializable {
   //
   //
   /**
-   * @ORM\ManyToMany(targetEntity="DatasetFormat", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_dataset_formats",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="data_format_id",referencedColumnName="data_format_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetFormat>
    */
+  #[ORM\JoinTable(name: 'datasets_dataset_formats')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'data_format_id', referencedColumnName: 'data_format_id')]
+  #[ORM\ManyToMany(targetEntity: \DatasetFormat::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $dataset_formats;
 
   /**
-   * @ORM\ManyToMany(targetEntity="ResourceType", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_resource_types",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="resource_type_id",referencedColumnName="resource_type_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ResourceType>
    */
+  #[ORM\JoinTable(name: 'datasets_resource_types')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'resource_type_id', referencedColumnName: 'resource_type_id')]
+  #[ORM\ManyToMany(targetEntity: \ResourceType::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $resource_types;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Award", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_awards",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="award_id",referencedColumnName="award_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Award>
    */
+  #[ORM\JoinTable(name: 'datasets_awards')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'award_id', referencedColumnName: 'award_id')]
+  #[ORM\ManyToMany(targetEntity: \Award::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $awards;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Project", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_projects",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="project_id",referencedColumnName="project_id")}
-   *                )
-   * @ORM\OrderBy({"project_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Project>
    */
+  #[ORM\JoinTable(name: 'datasets_projects')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'project_id', referencedColumnName: 'project_id')]
+  #[ORM\ManyToMany(targetEntity: \Project::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['project_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $projects;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="AccessRestriction", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_access_restrictions",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="restriction_id",referencedColumnName="restriction_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AccessRestriction>
    */
+  #[ORM\JoinTable(name: 'datasets_access_restrictions')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'restriction_id', referencedColumnName: 'restriction_id')]
+  #[ORM\ManyToMany(targetEntity: \AccessRestriction::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $access_restrictions;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="DataCollectionInstrument", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_standards",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="standard_id",referencedColumnName="standard_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataCollectionInstrument>
    */
+  #[ORM\JoinTable(name: 'datasets_standards')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'standard_id', referencedColumnName: 'standard_id')]
+  #[ORM\ManyToMany(targetEntity: \DataCollectionInstrument::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $data_collection_instruments;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectGender", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_genders",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="gender_id",referencedColumnName="gender_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGender>
    */
+  #[ORM\JoinTable(name: 'datasets_genders')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'gender_id', referencedColumnName: 'gender_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectGender::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $subject_genders;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectSex", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_sexes",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="sex_id",referencedColumnName="sex_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectSex>
    */
+  #[ORM\JoinTable(name: 'datasets_sexes')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'sex_id', referencedColumnName: 'sex_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectSex::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $subject_sexes;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectPopulationAge", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_ages",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="pop_age_id",referencedColumnName="pop_age_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectPopulationAge>
    */
+  #[ORM\JoinTable(name: 'datasets_ages')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'pop_age_id', referencedColumnName: 'pop_age_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectPopulationAge::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $subject_population_ages;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="DataType", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_data_types",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="data_type_id",referencedColumnName="data_type_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataType>
    */
+  #[ORM\JoinTable(name: 'datasets_data_types')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'data_type_id', referencedColumnName: 'data_type_id')]
+  #[ORM\ManyToMany(targetEntity: \DataType::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $data_types;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectGeographicArea", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_geographic_areas",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="area_id",referencedColumnName="area_id")}
-   *                )
-   * @ORM\OrderBy({"geographic_area_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicArea>
    */
+  #[ORM\JoinTable(name: 'datasets_geographic_areas')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'area_id', referencedColumnName: 'area_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectGeographicArea::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['geographic_area_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $subject_geographic_areas;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectGeographicAreaDetail", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_geographic_area_details",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="area_detail_id",referencedColumnName="area_detail_id")}
-   *                )
-   * @ORM\OrderBy({"geographic_area_detail_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectGeographicAreaDetail>
    */
+  #[ORM\JoinTable(name: 'datasets_geographic_area_details')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'area_detail_id', referencedColumnName: 'area_detail_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectGeographicAreaDetail::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['geographic_area_detail_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $subject_geographic_area_details;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectDomain", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_subject_domains",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="subject_domain_id",referencedColumnName="subject_domain_id")}
-   *                )
-   * @ORM\OrderBy({"subject_domain"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectDomain>
    */
+  #[ORM\JoinTable(name: 'datasets_subject_domains')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'subject_domain_id', referencedColumnName: 'subject_domain_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectDomain::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['subject_domain' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $subject_domains;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Publication", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_publications",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="publication_id",referencedColumnName="publication_id")}
-   *                )
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publication>
    */
+  #[ORM\JoinTable(name: 'datasets_publications')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'publication_id', referencedColumnName: 'publication_id')]
+  #[ORM\ManyToMany(targetEntity: \Publication::class, cascade: ['persist'], inversedBy: 'datasets')]
   protected \Doctrine\Common\Collections\Collection $publications;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectKeyword", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_keywords",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="keyword_id",referencedColumnName="keyword_id")}
-   *                )
-   * @ORM\OrderBy({"keyword"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectKeyword>
    */
+  #[ORM\JoinTable(name: 'datasets_keywords')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'keyword_id', referencedColumnName: 'keyword_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectKeyword::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['keyword' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $subject_keywords;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="StudyType", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_study_types",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="study_type_id",referencedColumnName="study_type_id")}
-   *                )
-   * @ORM\OrderBy({"study_type"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StudyType>
    */
+  #[ORM\JoinTable(name: 'datasets_study_types')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'study_type_id', referencedColumnName: 'study_type_id')]
+  #[ORM\ManyToMany(targetEntity: \StudyType::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['study_type' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $study_types;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Publisher", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_publishers",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="publisher_id",referencedColumnName="publisher_id")}
-   *                )
-   * @ORM\OrderBy({"publisher_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publisher>
    */
+  #[ORM\JoinTable(name: 'datasets_publishers')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'publisher_id', referencedColumnName: 'publisher_id')]
+  #[ORM\ManyToMany(targetEntity: \Publisher::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['publisher_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $publishers;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Person", cascade={"persist"})
-   * @ORM\JoinTable(name="datasets_corresponding_authors",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
-   *                )
-   * @ORM\OrderBy({"full_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Person>
    */
+  #[ORM\JoinTable(name: 'datasets_corresponding_authors')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'person_id', referencedColumnName: 'person_id')]
+  #[ORM\ManyToMany(targetEntity: \Person::class, cascade: ['persist'])]
+  #[ORM\OrderBy(['full_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $corresponding_authors;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Person", cascade={"persist"})
-   * @ORM\JoinTable(name="datasets_experts",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="person_id",referencedColumnName="person_id")}
-   *                )
-   * @ORM\OrderBy({"full_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Person>
    */
+  #[ORM\JoinTable(name: 'datasets_experts')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'person_id', referencedColumnName: 'person_id')]
+  #[ORM\ManyToMany(targetEntity: \Person::class, cascade: ['persist'])]
+  #[ORM\OrderBy(['full_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $local_experts;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="RelatedSoftware", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_related_software",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="related_software_id",referencedColumnName="related_software_id")}
-   *                )
-   * @ORM\OrderBy({"software_name"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\RelatedSoftware>
    */
+  #[ORM\JoinTable(name: 'datasets_related_software')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'related_software_id', referencedColumnName: 'related_software_id')]
+  #[ORM\ManyToMany(targetEntity: \RelatedSoftware::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['software_name' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $related_software;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="RelatedEquipment", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_related_equipment",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="related_equipment_id",referencedColumnName="related_equipment_id")}
-   *                )
-   * @ORM\OrderBy({"related_equipment"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\RelatedEquipment>
    */
+  #[ORM\JoinTable(name: 'datasets_related_equipment')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'related_equipment_id', referencedColumnName: 'related_equipment_id')]
+  #[ORM\ManyToMany(targetEntity: \RelatedEquipment::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['related_equipment' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $related_equipment;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="SubjectOfStudy", cascade={"persist"}, inversedBy="datasets")
-   * @ORM\JoinTable(name="datasets_subject_of_study",
-   *                joinColumns={@ORM\JoinColumn(name="dataset_uid",referencedColumnName="dataset_uid")},
-   *                inverseJoinColumns={@ORM\JoinColumn(name="subject_of_study_id",referencedColumnName="subject_of_study_id")}
-   *                )
-   * @ORM\OrderBy({"subject_of_study"="ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SubjectOfStudy>
    */
+  #[ORM\JoinTable(name: 'datasets_subject_of_study')]
+  #[ORM\JoinColumn(name: 'dataset_uid', referencedColumnName: 'dataset_uid')]
+  #[ORM\InverseJoinColumn(name: 'subject_of_study_id', referencedColumnName: 'subject_of_study_id')]
+  #[ORM\ManyToMany(targetEntity: \SubjectOfStudy::class, cascade: ['persist'], inversedBy: 'datasets')]
+  #[ORM\OrderBy(['subject_of_study' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $subject_of_study;
 
 
@@ -448,50 +378,50 @@ class Dataset implements JsonSerializable {
   //
   //
   /**
-   * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="dataset", orphanRemoval=TRUE)
-   * @ORM\OrderBy({"display_order" = "ASC"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonAssociation>
    */
+  #[ORM\OneToMany(targetEntity: \PersonAssociation::class, mappedBy: 'dataset', orphanRemoval: true)]
+  #[ORM\OrderBy(['display_order' => 'ASC'])]
   protected \Doctrine\Common\Collections\Collection $authorships;
 
   /**
-   * @ORM\OneToMany(targetEntity="DataLocation", mappedBy="datasets_dataset_uid", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataLocation>
    **/
+  #[ORM\OneToMany(targetEntity: \DataLocation::class, mappedBy: 'datasets_dataset_uid', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $data_locations;
 
 
   /**
-   * @ORM\OneToMany(targetEntity="OtherResource", mappedBy="datasets_dataset_uid", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\OtherResource>
    **/
+  #[ORM\OneToMany(targetEntity: \OtherResource::class, mappedBy: 'datasets_dataset_uid', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $other_resources;
 
 
   /**
-   * @ORM\OneToMany(targetEntity="DatasetAlternateTitle", mappedBy="datasets_dataset_uid", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetAlternateTitle>
    **/
+  #[ORM\OneToMany(targetEntity: \DatasetAlternateTitle::class, mappedBy: 'datasets_dataset_uid', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $dataset_alternate_titles;
 
 
   /**
-   * @ORM\OneToMany(targetEntity="DatasetRelationship", mappedBy="parent_dataset_uid", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetRelationship>
    **/
+  #[ORM\OneToMany(targetEntity: \DatasetRelationship::class, mappedBy: 'parent_dataset_uid', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $related_datasets;
 
 
   /**
-   * @ORM\OneToMany(targetEntity="DatasetEdit", mappedBy="parent_dataset_uid", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DatasetEdit>
    **/
+  #[ORM\OneToMany(targetEntity: \DatasetEdit::class, mappedBy: 'parent_dataset_uid', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $dataset_edits;
 
   /**
-   * @ORM\OneToMany(targetEntity="TempAccessKey", mappedBy="dataset_association", cascade={"all"})
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TempAccessKey>
    **/
+  #[ORM\OneToMany(targetEntity: \TempAccessKey::class, mappedBy: 'dataset_association', cascade: ['all'])]
   protected \Doctrine\Common\Collections\Collection $temp_access_keys;
 
 

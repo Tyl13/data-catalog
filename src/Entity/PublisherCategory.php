@@ -23,34 +23,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @ORM\Entity
- * @ORM\Table(name="publisher_categories")
  */
 #[UniqueEntity('publisher_category')]
+#[ORM\Entity]
+#[ORM\Table(name: 'publisher_categories')]
 class PublisherCategory {
-  /**
-   * @ORM\Column(type="integer", name="publisher_category_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'publisher_category_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $publisher_category = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Publisher", mappedBy="publisher_categories")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Publisher>
    */
+  #[ORM\ManyToMany(targetEntity: \Publisher::class, mappedBy: 'publisher_categories')]
   protected \Doctrine\Common\Collections\Collection $publishers;
 
     /**

@@ -25,16 +25,13 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="contact_form_emails")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'contact_form_emails')]
 class ContactFormEmail {
-  /**
-   * @ORM\Column(type="integer",name="email_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'email_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
   /** 
@@ -44,48 +41,32 @@ class ContactFormEmail {
 
 
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $school_center = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $department = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $full_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $email_address = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $affiliation = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $reason = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
   #[Assert\Blank]
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $checker = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $message_body = null;
 
 

@@ -26,16 +26,13 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="submitdatasetform_emails")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'submitdatasetform_emails')]
 class SubmitDatasetFormEmail {
-  /**
-   * @ORM\Column(type="integer",name="submitdataset_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'submitdataset_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
   /** 
@@ -45,50 +42,32 @@ class SubmitDatasetFormEmail {
 
 
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $school_center = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $department = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $full_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $email_address = null;
 
-  /**
-   * @ORM\Column(type="string",length=32,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 32, nullable: true)]
   protected ?string $phone_number = null;
 
-  /**
-   * @ORM\Column(type="string",length=1024,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1024, nullable: true)]
   protected ?string $dataset_url = null;
 
-  /**
-   * @ORM\Column(type="string",length=8192,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 8192, nullable: true)]
   protected ?string $details = null;
 
-  /**
-   * @ORM\Column(type="string",length=8192, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 8192, nullable: true)]
   protected ?string $comments = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
   #[Assert\Blank]
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $checker = null;
 
 

@@ -23,44 +23,31 @@ use Doctrine\ORM\Mapping as ORM;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="data_locations")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'data_locations')]
 class DataLocation {
-  /**
-   * @ORM\Column(type="integer",name="location_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'location_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $data_location = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $location_content = null;
 
-  /**
-   * @ORM\Column(type="string",length=1028)
-   */
+  #[ORM\Column(type: 'string', length: 1028)]
   protected ?string $data_access_url = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=512, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, nullable: true)]
   protected ?string $accession_number = null;
 
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Dataset",inversedBy="data_locations")
-   * @ORM\JoinColumn(name="datasets_dataset_uid",referencedColumnName="dataset_uid")
-   */
+  #[ORM\ManyToOne(targetEntity: \Dataset::class, inversedBy: 'data_locations')]
+  #[ORM\JoinColumn(name: 'datasets_dataset_uid', referencedColumnName: 'dataset_uid')]
   protected ?\App\Entity\Dataset $datasets_dataset_uid = null;
 
 

@@ -26,81 +26,58 @@ use Doctrine\Common\Collections\ArrayCollection;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="person")
  */
 #[UniqueEntity('kid')]
 #[UniqueEntity('slug')]
+#[ORM\Entity]
+#[ORM\Table(name: 'person')]
 class Person {
-  /**
-   * @ORM\Column(type="integer",name="person_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'person_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $full_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=128, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, unique: true)]
   protected ?string $slug = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $last_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=128,nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true)]
   protected ?string $first_name = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=16, nullable=true, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 16, nullable: true, unique: true)]
   protected ?string $kid = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128, nullable=true, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, nullable: true, unique: true)]
   protected ?string $orcid_id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=1028, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 1028, nullable: true)]
   protected ?string $bio_url = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=256, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 256, nullable: true)]
   protected ?string $email = null;
 
 
-  /**
-   * @ORM\Column(type="boolean", options={"default"=false}, nullable=true)
-   */
+  #[ORM\Column(type: 'boolean', options: ['default' => false], nullable: true)]
   protected ?bool $works_here = null;
 
 
   /**
-   * @ORM\OneToMany(targetEntity="PersonAssociation", mappedBy="person")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonAssociation>
    */
+  #[ORM\OneToMany(targetEntity: \PersonAssociation::class, mappedBy: 'person')]
   protected \Doctrine\Common\Collections\Collection $dataset_associations;
 
-  /**
-   * @ORM\Column(type="boolean",length=128)
-   */
+  #[ORM\Column(type: 'boolean', length: 128)]
   protected ?bool $is_institution_author = false;
 
 	/**

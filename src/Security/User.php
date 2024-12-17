@@ -25,10 +25,9 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity(repositoryClass="App\Entity\Security\UserRepository")
- * @ORM\Table(name="datacatalog_users")
  */
+#[ORM\Entity(repositoryClass: \App\Entity\Security\UserRepository::class)]
+#[ORM\Table(name: 'datacatalog_users')]
 class User implements UserInterface, EquatableInterface, \Serializable
 {
   /**
@@ -36,52 +35,36 @@ class User implements UserInterface, EquatableInterface, \Serializable
    */
   public $id;
 
-  /**
-   * @ORM\Column(type="integer", name="user_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue()
-   */
+  #[ORM\Column(type: 'integer', name: 'user_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
   protected ?int $user_id = null;
 
-  /**
-   * @ORM\Column(type="string", length=25, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 25, unique: true)]
   protected ?string $username = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=25, unique=true, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 25, unique: true, nullable: true)]
   protected ?string $slug = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=64, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 64, nullable: true)]
   protected ?string $password = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=50)
-   */
+  #[ORM\Column(type: 'string', length: 50)]
   protected ?string $firstName = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=50)
-   */
+  #[ORM\Column(type: 'string', length: 50)]
   protected ?string $lastName = null;
 
 
-  /**
-   * @ORM\Column(type="string", length=255, unique=true, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
   protected ?string $apiKey = null;
 
 
-  /**
-   * @ORM\Column(type="json")
-   */
+  #[ORM\Column(type: 'json')]
   protected $roles = [];
 
 

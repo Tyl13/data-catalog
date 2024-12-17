@@ -24,34 +24,27 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="dataset_formats")
  */
 #[UniqueEntity('format')]
+#[ORM\Entity]
+#[ORM\Table(name: 'dataset_formats')]
 class DatasetFormat {
-  /**
-   * @ORM\Column(type="integer",name="data_format_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'data_format_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
 
-  /**
-   * @ORM\Column(type="string",length=128, unique=true)
-   */
+  #[ORM\Column(type: 'string', length: 128, unique: true)]
   protected ?string $format = null;
 
-  /**
-   * @ORM\Column(type="string",length=128)
-   */
+  #[ORM\Column(type: 'string', length: 128)]
   protected ?string $slug = null;
   
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="dataset_formats")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'dataset_formats')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
     public function __construct() {

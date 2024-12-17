@@ -25,48 +25,35 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *
- * @ORM\Entity
- * @ORM\Table(name="related_software")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'related_software')]
 class RelatedSoftware {
-  /**
-   * @ORM\Column(type="integer",name="related_software_id")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+  #[ORM\Column(type: 'integer', name: 'related_software_id')]
+  #[ORM\Id]
+  #[ORM\GeneratedValue(strategy: 'AUTO')]
   protected ?int $id = null;
 
-  /**
-   * @ORM\Column(type="string",length=128, unique=false)
-   */
+  #[ORM\Column(type: 'string', length: 128, unique: false)]
   protected ?string $software_name = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, unique: false, nullable: true)]
   protected ?string $software_description = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, unique: false, nullable: true)]
   protected ?string $software_version = null;
 
-  /**
-   * @ORM\Column(type="string",length=512, unique=false, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 512, unique: false, nullable: true)]
   protected ?string $software_url = null;
 
-  /**
-   * @ORM\Column(type="string",length=256)
-   */
+  #[ORM\Column(type: 'string', length: 256)]
   protected ?string $slug = null;
 
 
   /**
-   * @ORM\ManyToMany(targetEntity="Dataset", mappedBy="related_software")
    * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Dataset>
    **/
+  #[ORM\ManyToMany(targetEntity: \Dataset::class, mappedBy: 'related_software')]
   protected \Doctrine\Common\Collections\Collection $datasets;
 
   /**
